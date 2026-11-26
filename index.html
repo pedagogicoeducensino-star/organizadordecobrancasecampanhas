@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Central CGD → WaSeller v3.2 | Educ Centro de Ensino</title>
+  <title>Central CGD → WaSeller v4.0 | Educ Centro de Ensino</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -71,25 +71,6 @@
 
     .container { max-width: 1440px; margin: 18px auto; padding: 0 18px; }
 
-    .mode-bar {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 10px; margin-bottom: 16px;
-    }
-    .mode-btn {
-      background: var(--card); border: 1.5px solid var(--beige-border); border-radius: 10px;
-      padding: 11px 14px; text-align: left; cursor: pointer; transition: .18s;
-      display: flex; align-items: center; gap: 11px; color: var(--brown-dark);
-    }
-    .mode-btn i { font-size: 1.2rem; color: var(--gold); }
-    .mode-btn strong { display: block; font-size: 0.88rem; }
-    .mode-btn small { color: var(--gray-muted); font-size: 0.73rem; }
-    .mode-btn:hover { border-color: var(--orange); background: #fffbf4; }
-    .mode-btn.active {
-      border-color: var(--orange); background: #fff6e9;
-      box-shadow: 0 3px 10px rgba(232, 106, 0, 0.12);
-    }
-    .mode-btn.active i { color: var(--orange); }
-
     .stats-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
       gap: 12px; margin-bottom: 16px;
@@ -104,6 +85,7 @@
     .stat-card span { font-size: 0.71rem; color: var(--gray-muted); text-transform: uppercase; letter-spacing: .4px; font-weight: 600; }
     .stat-card strong { display: block; font-size: 1.22rem; margin-top: 2px; color: var(--brown-dark); }
 
+    /* ESTRUTURA FIXA DE 2 COLUNAS + TABELA LARGA EMBAIXO */
     .workspace-grid { display: grid; grid-template-columns: 410px 1fr; gap: 18px; align-items: start; margin-bottom: 18px; }
     @media (max-width: 1040px) { .workspace-grid { grid-template-columns: 1fr; } }
 
@@ -140,43 +122,38 @@
     .field input:focus, .field select:focus, .field textarea:focus {
       outline: none; border-color: var(--orange); box-shadow: 0 0 0 2px rgba(232,106,0,0.14);
     }
-    .field textarea { min-height: 165px; resize: vertical; line-height: 1.48; }
+    .field textarea { min-height: 170px; resize: vertical; line-height: 1.48; }
 
-    /* GALERIA DE MENSAGENS PRONTAS */
-    .msg-gallery-box {
+    /* BANCO DE MENSAGENS DO APPS SCRIPT */
+    .msg-bank-box {
       background: var(--beige-bg);
       border: 1px solid var(--beige-border);
       border-radius: 10px;
       padding: 11px 12px;
       margin-bottom: 12px;
     }
-    .msg-gallery-header {
+    .msg-bank-top {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
       gap: 8px; margin-bottom: 8px;
     }
-    .msg-gallery-header strong { font-size: 0.8rem; color: var(--brown); display: flex; align-items: center; gap: 6px; }
-    .msg-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .msg-bank-top strong { font-size: 0.8rem; color: var(--brown); display: flex; align-items: center; gap: 6px; }
+    .msg-chips { display: flex; flex-wrap: wrap; gap: 6px; min-height: 30px; align-items: center; }
     .msg-chip {
       background: #fff; border: 1.5px solid var(--beige-border); color: var(--brown-dark);
-      padding: 6px 10px; border-radius: 8px; font-size: 0.76rem; font-weight: 600;
+      padding: 6px 10px; border-radius: 8px; font-size: 0.77rem; font-weight: 600;
       cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: .15s;
     }
     .msg-chip:hover { border-color: var(--orange); background: #fff7ec; }
     .msg-chip.active { background: var(--brown-dark); color: #fff; border-color: var(--brown-dark); }
     .msg-chip.active i { color: var(--gold-bright); }
-    .msg-chip .chip-del {
-      margin-left: 3px; color: var(--danger); opacity: .75; font-size: 0.72rem;
-    }
-    .msg-chip.active .chip-del { color: #ff9c9c; }
-    .msg-chip .chip-del:hover { opacity: 1; }
 
-    .save-inline-bar {
-      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; padding-top: 9px;
-      border-top: 1px dashed var(--beige-border); align-items: center;
+    .msg-editor-bar {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      margin-bottom: 10px;
     }
-    .save-inline-bar input {
-      flex: 1; min-width: 190px; padding: 6px 9px; border: 1px solid #d7c9b0;
-      border-radius: 7px; font-size: 0.81rem; background: #fff;
+    .msg-editor-bar input {
+      flex: 1; min-width: 210px; padding: 7px 10px; border: 1px solid #d7c9b0;
+      border-radius: 7px; font-size: 0.84rem; font-weight: 600; color: var(--brown-dark);
     }
 
     .check-group { display: flex; flex-direction: column; gap: 8px; margin: 8px 0; }
@@ -357,14 +334,14 @@
   <div class="brand">
     <div class="brand-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
     <div>
-      <h1>Central CGD → WaSeller v3.2</h1>
-      <small id="headerSubtitle">Educ Centro de Ensino • Campanha ativa: Cobrança Progressiva</small>
+      <h1>Central CGD → WaSeller v4.0</h1>
+      <small id="headerSubtitle">Educ Centro de Ensino • Mensagens sincronizadas com Google Sheets</small>
     </div>
   </div>
 
   <div class="header-actions">
     <button class="header-pill" onclick="abrirModal('modalModelos')">
-      <i class="fa-solid fa-bookmark"></i> Modelos
+      <i class="fa-solid fa-bookmark"></i> Regras Salvas
       <span class="pill-count" id="badgeModelos">0</span>
     </button>
     <button class="header-pill" onclick="abrirModal('modalTags')">
@@ -378,36 +355,20 @@
 </header>
 
 <div class="container">
-  <div class="mode-bar">
-    <button class="mode-btn active" id="mode_cobranca" onclick="trocarModo('cobranca')">
-      <i class="fa-solid fa-hand-holding-dollar"></i>
-      <div><strong>Cobrança & Negociação</strong><small>Juros, descontos por faixa e parcelas</small></div>
-    </button>
-    <button class="mode-btn" id="mode_lembrete" onclick="trocarModo('lembrete')">
-      <i class="fa-solid fa-bell"></i>
-      <div><strong>Lembrete de Vencimento</strong><small>Contagem de dias + valor limpo</small></div>
-    </button>
-    <button class="mode-btn" id="mode_promocao" onclick="trocarModo('promocao')">
-      <i class="fa-solid fa-gift"></i>
-      <div><strong>Promoção / Aniversário</strong><small>Mensagens prontas + tags extras</small></div>
-    </button>
-    <button class="mode-btn" id="mode_aviso" onclick="trocarModo('aviso')">
-      <i class="fa-solid fa-bullhorn"></i>
-      <div><strong>Aviso Geral / Práticas</strong><small>Contatos limpos + variáveis livres</small></div>
-    </button>
-  </div>
-
+  <!-- KPIs FIXOS -->
   <div class="stats-grid">
     <div class="stat-card"><span>Contatos Prontos</span><strong id="kpiContatos">0</strong></div>
     <div class="stat-card gold"><span>Duplicados / Inválidos</span><strong id="kpiRemovidos">0</strong></div>
-    <div class="stat-card brown" id="kpiCardOriginal"><span>Total Original</span><strong id="kpiOriginal">R$ 0,00</strong></div>
-    <div class="stat-card green" id="kpiCardFinal"><span>Total Final (Negociado)</span><strong id="kpiFinal">R$ 0,00</strong></div>
+    <div class="stat-card brown"><span>Total Original</span><strong id="kpiOriginal">R$ 0,00</strong></div>
+    <div class="stat-card green"><span>Total Final (Negociado)</span><strong id="kpiFinal">R$ 0,00</strong></div>
     <div class="stat-card"><span>Validação das Tags</span><strong id="kpiStatusTags" style="font-size:0.98rem;">Aguardando...</strong></div>
   </div>
 
+  <!-- WORKSPACE COM ESTRUTURA 100% FIXA -->
   <div class="workspace-grid">
-    <!-- ESQUERDA -->
+    <!-- COLUNA ESQUERDA FIXA -->
     <div>
+      <!-- 1. IMPORTAR CGD -->
       <div class="card">
         <h2>
           <span class="title-left"><i class="fa-solid fa-file-arrow-up"></i> 1. Importar Dados do CGD</span>
@@ -426,8 +387,9 @@
         </div>
       </div>
 
-      <div class="card" id="cardFinanceiro">
-        <h2><span class="title-left"><i class="fa-solid fa-calculator"></i> 2. Política de Juros e Descontos</span></h2>
+      <!-- 2. REGRAS DE CÁLCULO & VENCIMENTO (SEMPRE VISÍVEL, NUNCA MUDA) -->
+      <div class="card">
+        <h2><span class="title-left"><i class="fa-solid fa-calculator"></i> 2. Política de Juros, Descontos e Datas</span></h2>
         <div class="row-2">
           <div class="field">
             <label>Regra de Juros (interno)</label>
@@ -505,80 +467,72 @@
             </select>
           </div>
         </div>
-      </div>
 
-      <div class="card hidden" id="cardLembrete">
-        <h2><span class="title-left"><i class="fa-solid fa-calendar-day"></i> 2. Regra de Lembrete</span></h2>
+        <hr style="border:none; border-top:1px solid var(--beige-soft); margin:10px 0;" />
+
         <div class="row-2">
-          <div class="field">
-            <label>Data Base do Disparo</label>
+          <div class="field" style="margin-bottom:0;">
+            <label>Data Base (#prazo_texto)</label>
             <input type="date" id="dataRefLembrete" onchange="reprocessar()" />
           </div>
-          <div class="field">
-            <label>Filtrar Vencimentos</label>
+          <div class="field" style="margin-bottom:0;">
+            <label>Filtro de Vencimento</label>
             <select id="filtroLembrete" onchange="reprocessar()">
-              <option value="todos" selected>Manter todos da planilha</option>
+              <option value="todos" selected>Todos os registros</option>
               <option value="futuros">Só ainda não vencidos</option>
               <option value="ate5">Vencem nos próximos 5 dias</option>
             </select>
           </div>
         </div>
-        <small style="color:var(--gray-muted); font-size:0.78rem;">
-          Gera automaticamente <strong>#dias_vencimento</strong> e <strong>#prazo_texto</strong>.
-        </small>
-      </div>
-
-      <div class="card hidden" id="cardResumoExtras">
-        <h2><span class="title-left"><i class="fa-solid fa-sparkles"></i> 2. Variáveis da Campanha</span></h2>
-        <p style="font-size:0.82rem; color:var(--gray-muted); margin-bottom:10px;">
-          Crie e edite variáveis extras como <code>#premio</code>, <code>#cupom</code> ou <code>#assunto</code>.
-        </p>
-        <button class="btn btn-gold btn-sm btn-block" onclick="abrirModal('modalTags')">
-          <i class="fa-solid fa-tags"></i> Abrir Editor de Tags & Variáveis
-        </button>
       </div>
     </div>
 
-    <!-- DIREITA: GALERIA DE MENSAGENS + EDITOR + VALIDADOR + PRÉVIA -->
+    <!-- COLUNA DIREITA FIXA: MENSAGENS DO APPS SCRIPT + EDITOR + PRÉVIA -->
     <div class="card">
       <h2>
-        <span class="title-left"><i class="fa-brands fa-whatsapp"></i> 3. Mensagens da Campanha & Validador</span>
+        <span class="title-left"><i class="fa-brands fa-whatsapp"></i> 3. Mensagens da Campanha (Google Sheets)</span>
         <button class="btn btn-outline btn-xs" onclick="abrirModal('modalTags')"><i class="fa-solid fa-pen"></i> Editar Tags</button>
       </h2>
 
-      <!-- GALERIA VISUAL DE MENSAGENS SALVAS E PADRÕES EDUC -->
-      <div class="msg-gallery-box">
-        <div class="msg-gallery-header">
-          <strong><i class="fa-solid fa-book-open" style="color:var(--orange);"></i> Escolha uma mensagem salva ou escreva a sua:</strong>
+      <!-- LISTA DE MENSAGENS VINDAS DO APPS SCRIPT -->
+      <div class="msg-bank-box">
+        <div class="msg-bank-top">
+          <strong>
+            <i class="fa-solid fa-database" style="color:var(--orange);"></i>
+            Mensagens salvas na sua planilha:
+          </strong>
           <div style="display:flex; gap:6px;">
-            <button class="btn btn-outline btn-xs" onclick="novaMensagemEmBranco()">
-              <i class="fa-solid fa-file-pen"></i> Escrever do zero
+            <button class="btn btn-outline btn-xs" onclick="sincronizarTudo()" title="Recarregar do Google Sheets">
+              <i class="fa-solid fa-rotate"></i> Atualizar Lista
             </button>
-            <button class="btn btn-gold btn-xs" onclick="toggleSalvarInline()">
-              <i class="fa-solid fa-floppy-disk"></i> Salvar esta mensagem
+            <button class="btn btn-gold btn-xs" onclick="novaMensagem()">
+              <i class="fa-solid fa-plus"></i> Nova Mensagem
             </button>
           </div>
         </div>
-
-        <div class="msg-chips" id="msgChipsContainer"></div>
-
-        <!-- Barra rápida para salvar mensagem direto na nuvem -->
-        <div class="save-inline-bar hidden" id="saveInlineBar">
-          <input type="text" id="inlineMsgNome" placeholder="Nome para salvar esta mensagem (ex: Cobrança Maio)" />
-          <button class="btn btn-primary btn-xs" onclick="salvarMensagemRapida()">
-            <i class="fa-solid fa-check"></i> Confirmar e Salvar
-          </button>
-          <button class="btn btn-outline btn-xs" onclick="toggleSalvarInline(false)">Cancelar</button>
+        <div class="msg-chips" id="msgChipsContainer">
+          <span style="font-size:0.78rem; color:var(--gray-muted);">Carregando mensagens do Google Sheets...</span>
         </div>
       </div>
 
+      <!-- TÍTULO E AÇÕES DE SALVAR/ATUALIZAR/EXCLUIR NO APPS SCRIPT -->
+      <div class="msg-editor-bar">
+        <input type="text" id="msgTituloInput" placeholder="Título da mensagem (ex: Cobrança Mensalidade Maio)" />
+        <button class="btn btn-primary btn-sm" id="btnSalvarMsg" onclick="salvarMensagemNoAppsScript()">
+          <i class="fa-solid fa-floppy-disk"></i> Salvar no Sheets
+        </button>
+        <button class="btn btn-danger-soft btn-sm hidden" id="btnExcluirMsg" onclick="excluirMensagemAtual()" title="Excluir esta mensagem do Google Sheets">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+
       <p style="font-size:0.76rem; color:var(--gray-muted); margin-bottom:7px;">
-        Clique em qualquer tag abaixo para inserir no ponto onde estiver o cursor:
+        Clique em qualquer tag abaixo para inserir no texto:
       </p>
       <div class="tags-box" id="tagsBox"></div>
 
       <div class="field">
-        <textarea id="msgTemplate" oninput="validarEAtualizarPreview()" placeholder="Escreva sua mensagem aqui usando as #tags acima..."></textarea>
+        <textarea id="msgTemplate" oninput="validarEAtualizarPreview()" placeholder="Selecione uma mensagem salva acima ou escreva aqui usando as #tags..."></textarea>
       </div>
 
       <div id="validatorPanel" class="validator-panel validator-ok"></div>
@@ -645,34 +599,34 @@
   </div>
 </div>
 
-<!-- MODAL MODELOS -->
+<!-- MODAL REGRAS SALVAS (CAMPANHAS) -->
 <div class="modal-backdrop hidden" id="modalModelos" onclick="fecharModalBackdrop(event, 'modalModelos')">
   <div class="modal-box">
     <div class="modal-header">
-      <h3><i class="fa-solid fa-bookmark"></i> Biblioteca de Modelos & Mensagens</h3>
+      <h3><i class="fa-solid fa-bookmark"></i> Regras de Campanha Salvas (Juros, Faixas e Tags)</h3>
       <button class="modal-close" onclick="fecharModal('modalModelos')">&times;</button>
     </div>
     <div class="modal-body">
       <div style="background:var(--beige-bg); border:1px solid var(--beige-border); border-radius:10px; padding:12px; margin-bottom:14px;">
         <strong style="font-size:0.84rem; display:block; margin-bottom:8px;" id="modeloFormTitle">
-          Salvar campanha completa (regras + tags + mensagem atual)
+          Salvar regras atuais (juros, faixas, parcelas e tags ativas)
         </strong>
         <input type="hidden" id="editingModelId" value="" />
         <div class="row-2">
           <div class="field" style="margin-bottom:0;">
-            <label>Nome do Modelo</label>
-            <input type="text" id="nomeCampanha" value="Cobrança Progressiva" placeholder="Ex: Cobrança Mensalidade Aberta" />
+            <label>Nome do Conjunto de Regras</label>
+            <input type="text" id="nomeCampanha" value="Cobrança Padrão" placeholder="Ex: Black Friday 35%" />
           </div>
           <div style="display:flex; align-items:flex-end; gap:6px;">
             <button class="btn btn-primary btn-block" onclick="salvarCampanha()">
-              <i class="fa-solid fa-floppy-disk"></i> <span id="btnSalvarModeloTxt">Salvar Modelo</span>
+              <i class="fa-solid fa-floppy-disk"></i> <span id="btnSalvarModeloTxt">Salvar Regras</span>
             </button>
             <button class="btn btn-outline hidden" id="btnCancelarEdicaoModelo" onclick="cancelarEdicaoModelo()"><i class="fa-solid fa-xmark"></i></button>
           </div>
         </div>
       </div>
 
-      <strong style="font-size:0.83rem; color:var(--brown);">Modelos Salvos + Padrões da Educ:</strong>
+      <strong style="font-size:0.83rem; color:var(--brown);">Regras salvas no Google Sheets:</strong>
       <div class="model-list" id="modelListContainer"></div>
     </div>
     <div class="modal-footer">
@@ -699,7 +653,7 @@
         </button>
       </div>
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <span style="font-size:0.78rem; color:var(--gray-muted);">Marque as colunas e edite nomes (sem acento, espaço ou ponto):</span>
+        <span style="font-size:0.78rem; color:var(--gray-muted);">Marque as colunas desejadas e edite nomes (sem acento, espaço ou ponto):</span>
         <button class="btn btn-outline btn-xs" onclick="corrigirTodasAsTags()"><i class="fa-solid fa-magic"></i> Padronizar Nomes</button>
       </div>
       <div class="tag-editor-list" id="tagEditorList"></div>
@@ -755,7 +709,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const API_URL_PADRAO = 'https://script.google.com/macros/s/AKfycbx1d22VLJA1lflRc-E_-ECRWE-STUgOaHs0fA4IDo2kk1Wx60SgBhDJMamvtNeznP-e/exec';
+  const API_URL_PADRAO = 'https://script.google.com/macros/s/AKfycbyFsmwjgMWaIwpT-b773C84-_0cuUHW2poDNYSq-cPJNF9C2wkapB1rtVelKdWWs9aX/exec';
 
   if (window.pdfjsLib) {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -781,89 +735,6 @@
 
   let tagConfigs = JSON.parse(JSON.stringify(DEFAULT_TAG_CONFIGS));
 
-  // Os 3 modelos oficiais da Educ + Campanha com Desconto
-  const MODELOS_PADRAO_EDUC = [
-    {
-      id: 'educ_cobranca_formal',
-      nome: 'Cobrança Formal',
-      icone: 'fa-file-invoice',
-      modo: 'cobranca',
-      mensagem: `*Prezado(a) aluno(a),*
-
-Identificamos em nosso sistema uma pendência referente à mensalidade do seu curso (Matrícula *#matricula* - #aluno), com vencimento em *#vencimento*, que ainda consta em aberto.
-
-Reforçamos que a regularidade dos pagamentos é importante para a manutenção dos compromissos financeiros e administrativos junto à Educ Centro de Ensino.
-
-Dessa forma, solicitamos que entre em contato conosco ainda hoje para receber o link de pagamento e providenciar a regularização da pendência.
-
-Caso o pagamento já tenha sido realizado, pedimos a gentileza de desconsiderar esta mensagem e, se possível, encaminhar o comprovante para atualização em nosso sistema.
-
-Contamos com sua atenção e colaboração!
-
-*Atenciosamente,*
-*Educ Centro de Ensino* 💛`
-    },
-    {
-      id: 'educ_cobranca_suave',
-      nome: 'Cobrança Suave',
-      icone: 'fa-envelope-open-text',
-      modo: 'cobranca',
-      mensagem: `*Prezado(a) aluno(a),*
-
-Identificamos em nosso sistema que a mensalidade referente ao período letivo de *#aluno* (Matrícula *#matricula*), com vencimento em *#vencimento*, ainda consta em aberto.
-
-Pedimos, por gentileza, que verifique a pendência e, se possível, providencie a regularização o quanto antes.
-
-Para realizar o pagamento, basta entrar em contato conosco e solicitar o link. Estamos à disposição para esclarecer qualquer dúvida ou oferecer o suporte necessário.
-
-Caso o pagamento já tenha sido efetuado, pedimos que desconsidere esta mensagem.
-
-Agradecemos pela atenção, compreensão e parceria de sempre! 💛
-
-*Atenciosamente,*
-*Educ Centro de Ensino*`
-    },
-    {
-      id: 'educ_aniversariante',
-      nome: 'Aniversariantes do Mês',
-      icone: 'fa-cake-candles',
-      modo: 'promocao',
-      mensagem: `🎉✨ *#primeiroNome, este mês é todo seu!* ✨🎉
-
-Chegou o mês de comemorar a sua vida, e a Educ não poderia deixar essa data tão especial passar em branco! 🥳🎂
-
-Preparamos um presente para você! 🎁💛
-
-Durante o mês do seu aniversário, você terá direito a um *desconto especial na parcela da sua mensalidade*, como forma de carinho e agradecimento por fazer parte da família Educ.
-
-Aproveite esse benefício e celebre seu novo ciclo com ainda mais motivos para sorrir! 😊✨
-
-Desejamos a você um aniversário maravilhoso, repleto de alegrias, conquistas e realizações!
-
-*Com carinho,*
-*EDUC Centro de Ensino* 💛`
-    },
-    {
-      id: 'educ_negociacao_desc',
-      nome: 'Negociação c/ Desconto',
-      icone: 'fa-percent',
-      modo: 'cobranca',
-      mensagem: `Olá, *#primeiroNome*! Tudo bem?
-
-Identificamos *#atraso* pendência(s) referente à matrícula *#matricula* (*#aluno*), com vencimento em *#vencimento*.
-
-O valor atualizado está em R$ #valor.
-Pela nossa condição especial, liberamos *#desconto%* de desconto!
-
-✅ Valor à vista com desconto: *R$ #valor_final*
-💳 Ou em até *#parcelasx de R$ #valor_parcela*
-
-Vamos aproveitar para regularizar hoje?
-
-*Educ Centro de Ensino* 💛`
-    }
-  ];
-
   let faixasValor = [
     { min: 0,      max: 200,    desconto: 10 },
     { min: 200.01, max: 500,    desconto: 20 },
@@ -876,21 +747,15 @@ Vamos aproveitar para regularizar hoje?
     { min: 4, max: 99, desconto: 30 }
   ];
 
-  const SCRIPTS_MODO = {
-    cobranca: MODELOS_PADRAO_EDUC[3].mensagem,
-    lembrete: `Oi, *#primeiroNome*! Tudo bem? 😊\n\nPassando apenas para lembrar que a mensalidade de *#aluno* (Matrícula *#matricula*) vence *#prazo_texto* (dia *#vencimento*), no valor de R$ #valor_original.\n\nSe precisar da 2ª via ou chave PIX, é só responder por aqui!\n\n*Educ Centro de Ensino* 💛`,
-    promocao: MODELOS_PADRAO_EDUC[2].mensagem,
-    aviso: `Olá, *#primeiroNome*! Tudo bem?\n\nPassando para deixar um comunicado importante referente à matrícula *#matricula* (*#aluno*):\n📌 #assunto\n\nQualquer dúvida, nossa equipe está à disposição por aqui!\n\n*Educ Centro de Ensino* 💛`
-  };
+  let mensagensCache = [];
+  let editingMsgId = '';
+  let campanhasCache = [];
 
-  let modoAtual = 'cobranca';
-  let activeMsgId = 'educ_negociacao_desc';
   let rawRows = [];
   let processedRows = [];
   let filteredRows = [];
   let removedCount = 0;
   let previewIndex = 0;
-  let campanhasCache = [];
   let ultimoDiagnostico = { erros: [], avisos: [] };
   let sortState = { key: null, dir: 'asc' };
   let showAllRows = false;
@@ -904,23 +769,20 @@ Vamos aproveitar para regularizar hoje?
     if (apiSalva) localStorage.setItem('cgd_waseller_api', apiSalva);
 
     renderFaixas();
-    trocarModo('cobranca', true);
-    carregarCampanhas();
+    renderTagEditor();
+    validarEAtualizarPreview();
     setupDropzone();
+    sincronizarTudo();
   });
 
-  // Garante compatibilidade com modelos antigos salvos antes de "matricula" existir
   function migrarTagConfigs(savedList) {
     if (!Array.isArray(savedList) || !savedList.length) return JSON.parse(JSON.stringify(DEFAULT_TAG_CONFIGS));
     const list = JSON.parse(JSON.stringify(savedList));
-    const hasMat = list.some(t => t.key === 'matricula');
-    if (!hasMat) {
+    if (!list.some(t => t.key === 'matricula')) {
       const oldContrato = list.find(t => t.key === 'contrato');
       if (oldContrato) {
-        oldContrato.key = 'matricula';
-        oldContrato.tag = 'matricula';
-        oldContrato.label = 'Matrícula / Contrato CGD';
-        oldContrato.enabled = true;
+        oldContrato.key = 'matricula'; oldContrato.tag = 'matricula';
+        oldContrato.label = 'Matrícula / Contrato CGD'; oldContrato.enabled = true;
       } else {
         list.splice(1, 0, { key: 'matricula', label: 'Matrícula / Contrato CGD', tag: 'matricula', enabled: true, locked: false });
       }
@@ -944,121 +806,149 @@ Vamos aproveitar para regularizar hoje?
     setTimeout(() => el.classList.remove('show'), 3200);
   }
 
-  function trocarModo(modo, inicial = false) {
-    modoAtual = modo;
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('mode_' + modo).classList.add('active');
-
-    document.getElementById('cardFinanceiro').classList.toggle('hidden', modo !== 'cobranca');
-    document.getElementById('cardLembrete').classList.toggle('hidden', modo !== 'lembrete');
-    document.getElementById('cardResumoExtras').classList.toggle('hidden', modo === 'cobranca' || modo === 'lembrete');
-    document.getElementById('kpiCardOriginal').classList.toggle('hidden', modo === 'promocao' || modo === 'aviso');
-    document.getElementById('kpiCardFinal').classList.toggle('hidden', modo !== 'cobranca');
-
-    const presetsAtivos = {
-      cobranca: ['numero','matricula','nome','primeiroNome','aluno','atraso','vencimento','valor','desconto','valor_final','parcelas','valor_parcela'],
-      lembrete: ['numero','matricula','nome','primeiroNome','aluno','vencimento','dias_vencimento','prazo_texto','valor_original'],
-      promocao: ['numero','matricula','nome','primeiroNome','aluno'],
-      aviso:    ['numero','matricula','nome','primeiroNome','aluno']
-    };
-
-    if (modo === 'aviso') garantirCustomVar('assunto', 'Confirmação de presença na aula prática');
-
-    const ativosSet = new Set(presetsAtivos[modo]);
-    tagConfigs.forEach(tc => {
-      if (tc.locked) { tc.enabled = true; return; }
-      if (tc.isCustom) tc.enabled = (modo === 'aviso' && tc.key === 'assunto');
-      else tc.enabled = ativosSet.has(tc.key);
-    });
-
-    if (!inicial || !document.getElementById('msgTemplate').value.trim()) {
-      document.getElementById('msgTemplate').value = SCRIPTS_MODO[modo];
-      activeMsgId = modo === 'promocao' ? 'educ_aniversariante' : modo === 'cobranca' ? 'educ_negociacao_desc' : '';
+  // ==================== SINCRONIZAÇÃO COM GOOGLE APPS SCRIPT ====================
+  async function sincronizarTudo() {
+    const api = localStorage.getItem('cgd_waseller_api') || '';
+    if (api) {
+      try {
+        const res = await fetch(`${api}?action=init`);
+        const data = await res.json();
+        if (data.ok) {
+          mensagensCache = Array.isArray(data.mensagens) ? data.mensagens : [];
+          campanhasCache = Array.isArray(data.campanhas) ? data.campanhas : [];
+          localStorage.setItem('cgd_mensagens_v4', JSON.stringify(mensagensCache));
+          localStorage.setItem('cgd_campanhas_v4', JSON.stringify(campanhasCache));
+          renderMsgChips();
+          atualizarBadgeModelos();
+          renderListaModelos();
+          // Carrega a 1ª mensagem automaticamente só se o editor estiver vazio
+          if (!document.getElementById('msgTemplate').value.trim() && mensagensCache.length) {
+            selecionarMensagem(0, true);
+          }
+          return;
+        }
+      } catch (e) {
+        console.warn('Falha ao sincronizar com Apps Script, usando cache local:', e);
+      }
     }
-
-    const nomesPadrao = { cobranca: 'Cobrança Progressiva', lembrete: 'Lembrete de Vencimento', promocao: 'Aniversariantes / Promoção', aviso: 'Aviso Geral / Práticas' };
-    if (!inicial) {
-      document.getElementById('nomeCampanha').value = nomesPadrao[modo];
-      atualizarSubtituloHeader(nomesPadrao[modo]);
-    }
-
+    mensagensCache = JSON.parse(localStorage.getItem('cgd_mensagens_v4') || '[]');
+    campanhasCache = JSON.parse(localStorage.getItem('cgd_campanhas_v4') || '[]');
     renderMsgChips();
-    renderTagEditor();
-    reprocessar();
-  }
-
-  function atualizarSubtituloHeader(nome) {
-    document.getElementById('headerSubtitle').textContent = `Educ Centro de Ensino • Campanha ativa: ${nome}`;
-  }
-
-  function garantirCustomVar(nome, valorPadrao) {
-    const clean = sanitizarTagNome(nome);
-    if (!tagConfigs.some(t => t.key === clean)) {
-      tagConfigs.push({ key: clean, label: 'Variável fixa', tag: clean, enabled: true, locked: false, isCustom: true, fixedValue: valorPadrao });
+    atualizarBadgeModelos();
+    renderListaModelos();
+    if (!document.getElementById('msgTemplate').value.trim() && mensagensCache.length) {
+      selecionarMensagem(0, true);
     }
   }
 
-  // ==================== GALERIA DE MENSAGENS DA CAMPANHA ====================
+  // ==================== CRUD DE MENSAGENS (SEM ALTERAR O LAYOUT) ====================
   function renderMsgChips() {
     const cont = document.getElementById('msgChipsContainer');
-    const padroesHtml = MODELOS_PADRAO_EDUC.map((m, idx) => `
-      <button type="button" class="msg-chip ${activeMsgId === m.id ? 'active' : ''}" onclick="selecionarMensagemPadrao(${idx})">
-        <i class="fa-solid ${m.icone}"></i> ${m.nome}
-      </button>
-    `).join('');
-
-    const salvosHtml = campanhasCache.map((c, idx) => `
-      <button type="button" class="msg-chip ${activeMsgId === c.id ? 'active' : ''}" onclick="aplicarCampanha(${idx})">
-        <i class="fa-solid fa-star" style="color:var(--gold-bright);"></i> ${c.nome}
-        <span class="chip-del" onclick="event.stopPropagation(); excluirModelo(${idx});" title="Excluir mensagem">
-          <i class="fa-solid fa-xmark"></i>
-        </span>
-      </button>
-    `).join('');
-
-    cont.innerHTML = padroesHtml + salvosHtml;
-  }
-
-  function selecionarMensagemPadrao(idx) {
-    const m = MODELOS_PADRAO_EDUC[idx];
-    if (!m) return;
-    activeMsgId = m.id;
-    if (m.modo && m.modo !== modoAtual) trocarModo(m.modo, true);
-    document.getElementById('msgTemplate').value = m.mensagem;
-    document.getElementById('nomeCampanha').value = m.nome;
-    atualizarSubtituloHeader(m.nome);
-    renderMsgChips();
-    validarEAtualizarPreview();
-    showToast(`Mensagem "${m.nome}" aplicada!`);
-  }
-
-  function novaMensagemEmBranco() {
-    activeMsgId = '';
-    const ta = document.getElementById('msgTemplate');
-    ta.value = '';
-    ta.focus();
-    renderMsgChips();
-    validarEAtualizarPreview();
-    showToast('Campo livre pronto para escrever sua mensagem.');
-  }
-
-  function toggleSalvarInline(forceState) {
-    const bar = document.getElementById('saveInlineBar');
-    const show = typeof forceState === 'boolean' ? forceState : bar.classList.contains('hidden');
-    bar.classList.toggle('hidden', !show);
-    if (show) {
-      const inp = document.getElementById('inlineMsgNome');
-      inp.value = document.getElementById('nomeCampanha').value || '';
-      inp.focus();
+    if (!mensagensCache.length) {
+      cont.innerHTML = `<span style="font-size:0.78rem; color:var(--gray-muted);">Nenhuma mensagem salva ainda. Escreva abaixo, dê um título e clique em <strong>Salvar no Sheets</strong>.</span>`;
+      return;
     }
+    cont.innerHTML = mensagensCache.map((m, idx) => `
+      <button type="button" class="msg-chip ${String(editingMsgId) === String(m.id) ? 'active' : ''}" onclick="selecionarMensagem(${idx})">
+        <i class="fa-regular fa-comment-dots"></i> ${m.titulo}
+      </button>
+    `).join('');
   }
 
-  async function salvarMensagemRapida() {
-    const nome = document.getElementById('inlineMsgNome').value.trim();
-    if (!nome) return showToast('Digite um nome para salvar a mensagem.');
-    document.getElementById('nomeCampanha').value = nome;
-    await salvarCampanha();
-    toggleSalvarInline(false);
+  function selecionarMensagem(idx, silencioso = false) {
+    const m = mensagensCache[idx];
+    if (!m) return;
+    // Apenas preenche título e texto — NUNCA altera estrutura ou cards da página!
+    editingMsgId = m.id;
+    document.getElementById('msgTituloInput').value = m.titulo;
+    document.getElementById('msgTemplate').value = m.texto;
+    document.getElementById('btnSalvarMsg').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Atualizar no Sheets';
+    document.getElementById('btnExcluirMsg').classList.remove('hidden');
+    renderMsgChips();
+    validarEAtualizarPreview();
+    if (!silencioso) showToast(`Mensagem "${m.titulo}" carregada.`);
+  }
+
+  function novaMensagem() {
+    editingMsgId = '';
+    document.getElementById('msgTituloInput').value = '';
+    document.getElementById('msgTemplate').value = '';
+    document.getElementById('btnSalvarMsg').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar no Sheets';
+    document.getElementById('btnExcluirMsg').classList.add('hidden');
+    renderMsgChips();
+    validarEAtualizarPreview();
+    document.getElementById('msgTituloInput').focus();
+    showToast('Pronto para criar uma nova mensagem.');
+  }
+
+  async function salvarMensagemNoAppsScript() {
+    const titulo = document.getElementById('msgTituloInput').value.trim();
+    const texto = document.getElementById('msgTemplate').value;
+    if (!titulo) {
+      document.getElementById('msgTituloInput').focus();
+      return showToast('Informe um título para salvar a mensagem.');
+    }
+    if (!texto.trim()) return showToast('Escreva o texto da mensagem antes de salvar.');
+
+    const id = editingMsgId || ('msg_' + Date.now());
+    const obj = { id, titulo, texto, atualizado_em: new Date().toLocaleString('pt-BR') };
+
+    const idx = mensagensCache.findIndex(m => String(m.id) === String(id));
+    if (idx >= 0) mensagensCache[idx] = obj;
+    else mensagensCache.push(obj);
+
+    editingMsgId = id;
+    localStorage.setItem('cgd_mensagens_v4', JSON.stringify(mensagensCache));
+    document.getElementById('btnSalvarMsg').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Atualizar no Sheets';
+    document.getElementById('btnExcluirMsg').classList.remove('hidden');
+    renderMsgChips();
+
+    const api = localStorage.getItem('cgd_waseller_api') || '';
+    if (api) {
+      try {
+        const res = await fetch(api, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'saveMessage', id, titulo, texto })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          showToast(`Mensagem "${titulo}" salva no Google Sheets!`);
+          return;
+        }
+      } catch (e) {
+        showToast('Salva localmente (verifique se atualizou a versão do Apps Script).');
+        return;
+      }
+    }
+    showToast(`Mensagem "${titulo}" salva!`);
+  }
+
+  async function excluirMensagemAtual() {
+    if (!editingMsgId) return;
+    const idx = mensagensCache.findIndex(m => String(m.id) === String(editingMsgId));
+    if (idx < 0) return;
+    const m = mensagensCache[idx];
+    if (!confirm(`Excluir a mensagem "${m.titulo}" do Google Sheets?`)) return;
+
+    mensagensCache.splice(idx, 1);
+    localStorage.setItem('cgd_mensagens_v4', JSON.stringify(mensagensCache));
+    const deletedId = m.id;
+    novaMensagem();
+
+    const api = localStorage.getItem('cgd_waseller_api') || '';
+    if (api) {
+      try {
+        await fetch(api, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'deleteMessage', id: deletedId })
+        });
+        showToast(`Mensagem "${m.titulo}" excluída do Google Sheets.`);
+        return;
+      } catch (e) { console.warn(e); }
+    }
+    showToast(`Mensagem "${m.titulo}" excluída.`);
   }
 
   // ==================== FAIXAS ====================
@@ -1101,6 +991,12 @@ Vamos aproveitar para regularizar hoje?
     if (/[^a-zA-Z0-9_]/.test(nome)) p.push('contém ponto/símbolo');
     if (/[A-Z]/.test(nome) && !CAMEL_NATIVAS.has(nome)) p.push('contém maiúscula');
     return p;
+  }
+  function garantirCustomVar(nome, valorPadrao) {
+    const clean = sanitizarTagNome(nome);
+    if (!tagConfigs.some(t => t.key === clean)) {
+      tagConfigs.push({ key: clean, label: 'Variável fixa', tag: clean, enabled: true, locked: false, isCustom: true, fixedValue: valorPadrao });
+    }
   }
   function adicionarVariavelPersonalizada() {
     const nomeRaw = document.getElementById('novaVarNome').value.trim();
@@ -1377,7 +1273,6 @@ Vamos aproveitar para regularizar hoje?
     let somaOriginal = 0, somaFinal = 0;
 
     rawRows.forEach(row => {
-      // Puxa Contrato -> #matricula (com fallback para a 1ª coluna se for código numérico)
       let matricula = String(getField(row, ['contrato', 'contrat', 'matricula', 'codigo'])).trim();
       if (!matricula) {
         const firstVal = String(Object.values(row)[0] || '').trim();
@@ -1398,7 +1293,7 @@ Vamos aproveitar para regularizar hoje?
       const vencInfo = calcularDiasVencimento(vencimento);
       const valorOriginalNum = parseMoney(getField(row, ['valor', 'total', 'mensalidade', 'debito']));
 
-      if (modoAtual === 'lembrete' && vencInfo.diff !== null) {
+      if (vencInfo.diff !== null) {
         if (filtroLembrete === 'futuros' && vencInfo.diff < 0) { removedCount++; return; }
         if (filtroLembrete === 'ate5' && (vencInfo.diff < 0 || vencInfo.diff > 5)) { removedCount++; return; }
       }
@@ -1533,8 +1428,7 @@ Vamos aproveitar para regularizar hoje?
   }
 
   function formatWhatsAppPreview(rawText) {
-    const safe = String(rawText || '')
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const safe = String(rawText || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return safe.replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>');
   }
 
@@ -1568,7 +1462,8 @@ Vamos aproveitar para regularizar hoje?
     const base = getBaseExportacao();
     if (!base.length) return showToast('Nenhum contato para exportar.');
     if (ultimoDiagnostico.erros.length && !confirm(`Há ${ultimoDiagnostico.erros.length} erro(s) de tag. Baixar mesmo assim?`)) return;
-    const ativos = tagConfigs.filter(t => t.enabled), slug = (document.getElementById('nomeCampanha').value || modoAtual).replace(/\s+/g, '_');
+    const ativos = tagConfigs.filter(t => t.enabled);
+    const slug = (document.getElementById('msgTituloInput').value || 'campanha').replace(/\s+/g, '_');
     gerarXlsxTextoPuro(ativos.map(t => t.tag), base.map(r => ativos.map(t => String(r[t.key] ?? ''))), `WaSeller_${slug}.xlsx`);
     registrarHistoricoAPI(base.length); showToast(`Planilha WaSeller baixada (${base.length} contatos)!`);
   }
@@ -1577,113 +1472,92 @@ Vamos aproveitar para regularizar hoje?
     if (!base.length) return showToast('Nenhum contato para exportar.');
     const headers = ['Matrícula','Aluno','Responsável','Telefone','Tipo Contato','Qtd. Atraso','Vencimento','Prazo','Valor Original','Juros (R$)','Valor Atualizado','Regra Desconto','Desconto','Desconto (R$)','Valor Final','Parcelas','Valor Parcela'];
     const body = base.map(r => [r.matricula, r.aluno, r.responsavel, r.numero, r._rotulo, r.atraso, r.vencimento, r.prazo_texto, r.valor_original, r.juros_reais, r.valor, r._faixa, r.desconto, r.desconto_reais, r.valor_final, r.parcelas + 'x', r.valor_parcela]);
-    gerarXlsxTextoPuro(headers, body, `Controle_Interno_${(document.getElementById('nomeCampanha').value || modoAtual).replace(/\s+/g, '_')}.xlsx`);
+    const slug = (document.getElementById('msgTituloInput').value || 'controle').replace(/\s+/g, '_');
+    gerarXlsxTextoPuro(headers, body, `Controle_Interno_${slug}.xlsx`);
     showToast(`Controle Interno baixado (${base.length} registros)!`);
   }
 
-  // ==================== API & MODELOS ====================
+  // ==================== REGRAS SALVAS (CAMPANHAS) & API ====================
   function salvarApiUrl() {
     const url = document.getElementById('apiUrl').value.trim();
     localStorage.setItem('cgd_waseller_api', url);
-    showToast(url ? 'API salva! Sincronizando...' : 'Modo offline ativado.');
-    carregarCampanhas();
+    showToast(url ? 'API salva! Sincronizando com Google Sheets...' : 'Modo offline ativado.');
+    sincronizarTudo();
   }
   function getConfigAtual() {
-    return { modoAtual, jurosTipo: document.getElementById('jurosTipo').value, jurosValor: document.getElementById('jurosValor').value, politicaDesconto: document.getElementById('politicaDesconto').value, descontoTipo: document.getElementById('descontoTipo').value, descontoValor: document.getElementById('descontoValor').value, descontoBase: document.getElementById('descontoBase').value, formatoPercent: document.getElementById('formatoPercent').value, parcelasQtd: document.getElementById('parcelasQtd').value, parcelaBase: document.getElementById('parcelaBase').value, faixasValor, faixasAtraso, tagConfigs };
+    return { jurosTipo: document.getElementById('jurosTipo').value, jurosValor: document.getElementById('jurosValor').value, politicaDesconto: document.getElementById('politicaDesconto').value, descontoTipo: document.getElementById('descontoTipo').value, descontoValor: document.getElementById('descontoValor').value, descontoBase: document.getElementById('descontoBase').value, formatoPercent: document.getElementById('formatoPercent').value, parcelasQtd: document.getElementById('parcelasQtd').value, parcelaBase: document.getElementById('parcelaBase').value, faixasValor, faixasAtraso, tagConfigs };
   }
-  async function carregarCampanhas() {
-    const api = localStorage.getItem('cgd_waseller_api') || '';
-    if (api) {
-      try {
-        const data = await (await fetch(`${api}?action=listCampaigns`)).json();
-        if (data.ok) {
-          campanhasCache = data.campanhas || [];
-          localStorage.setItem('cgd_campanhas_v3', JSON.stringify(campanhasCache));
-          atualizarBadgeModelos(); renderMsgChips(); renderListaModelos(); return;
-        }
-      } catch (e) { console.warn('Fallback local:', e); }
-    }
-    campanhasCache = JSON.parse(localStorage.getItem('cgd_campanhas_v3') || '[]');
-    atualizarBadgeModelos(); renderMsgChips(); renderListaModelos();
-  }
-  function atualizarBadgeModelos() { document.getElementById('badgeModelos').textContent = campanhasCache.length + MODELOS_PADRAO_EDUC.length; }
+  function atualizarBadgeModelos() { document.getElementById('badgeModelos').textContent = campanhasCache.length; }
   function renderListaModelos() {
     const cont = document.getElementById('modelListContainer');
-    const salvosHtml = campanhasCache.map((c, idx) => `
+    if (!campanhasCache.length) {
+      cont.innerHTML = `<p style="font-size:0.82rem; color:var(--gray-muted); padding:10px 0;">Nenhum conjunto de regras salvo ainda.</p>`;
+      return;
+    }
+    cont.innerHTML = campanhasCache.map((c, idx) => `
       <div class="model-card">
-        <div><strong>⭐ ${c.nome} <span class="badge badge-gold">${(c.config && c.config.modoAtual) || 'cobranca'}</span></strong><small>${c.atualizado_em || 'Salvo'}</small></div>
+        <div><strong>⭐ ${c.nome}</strong><small>${c.atualizado_em || 'Salvo no Sheets'}</small></div>
         <div style="display:flex; gap:6px;">
           <button class="btn btn-primary btn-xs" onclick="aplicarCampanha(${idx})"><i class="fa-solid fa-play"></i> Aplicar</button>
           <button class="btn btn-outline btn-xs" onclick="prepararEdicaoModelo(${idx})"><i class="fa-solid fa-pen"></i> Editar</button>
           <button class="btn btn-danger-soft btn-xs" onclick="excluirModelo(${idx})"><i class="fa-solid fa-trash"></i></button>
         </div>
       </div>`).join('');
-    const padroesHtml = MODELOS_PADRAO_EDUC.map((m, idx) => `
-      <div class="model-card">
-        <div><strong>${m.nome} <span class="badge badge-gold">Padrão Educ</span></strong><small>Pronto para uso imediato</small></div>
-        <button class="btn btn-outline btn-xs" onclick="selecionarMensagemPadrao(${idx}); fecharModal('modalModelos');"><i class="fa-solid fa-play"></i> Usar</button>
-      </div>`).join('');
-    cont.innerHTML = salvosHtml + padroesHtml;
   }
   function aplicarCampanha(idx) {
     const c = campanhasCache[idx]; if (!c) return;
     const cfg = c.config || {};
-    activeMsgId = c.id;
     if (cfg.faixasValor) faixasValor = JSON.parse(JSON.stringify(cfg.faixasValor));
     if (cfg.faixasAtraso) faixasAtraso = JSON.parse(JSON.stringify(cfg.faixasAtraso));
     if (cfg.tagConfigs) tagConfigs = migrarTagConfigs(cfg.tagConfigs);
     document.getElementById('nomeCampanha').value = c.nome;
-    atualizarSubtituloHeader(c.nome);
-    if (cfg.modoAtual) trocarModo(cfg.modoAtual, true);
     ['jurosTipo','jurosValor','politicaDesconto','descontoTipo','descontoValor','descontoBase','formatoPercent','parcelasQtd','parcelaBase'].forEach(id => { if (cfg[id] !== undefined) document.getElementById(id).value = cfg[id]; });
-    if (c.mensagem) document.getElementById('msgTemplate').value = c.mensagem;
-    alternarPoliticaDesconto(); renderMsgChips(); renderTagEditor(); reprocessar(); fecharModal('modalModelos');
-    showToast(`Modelo "${c.nome}" aplicado!`);
+    alternarPoliticaDesconto(); renderTagEditor(); reprocessar(); fecharModal('modalModelos');
+    showToast(`Regras "${c.nome}" aplicadas!`);
   }
   function prepararEdicaoModelo(idx) {
     const c = campanhasCache[idx]; if (!c) return;
     aplicarCampanha(idx); abrirModal('modalModelos');
     document.getElementById('editingModelId').value = c.id;
     document.getElementById('nomeCampanha').value = c.nome;
-    document.getElementById('modeloFormTitle').textContent = `Editando modelo: "${c.nome}"`;
-    document.getElementById('btnSalvarModeloTxt').textContent = 'Atualizar Modelo';
+    document.getElementById('modeloFormTitle').textContent = `Editando regras: "${c.nome}"`;
+    document.getElementById('btnSalvarModeloTxt').textContent = 'Atualizar Regras';
     document.getElementById('btnCancelarEdicaoModelo').classList.remove('hidden');
   }
   function cancelarEdicaoModelo() {
     document.getElementById('editingModelId').value = '';
-    document.getElementById('modeloFormTitle').textContent = 'Salvar campanha completa (regras + tags + mensagem atual)';
-    document.getElementById('btnSalvarModeloTxt').textContent = 'Salvar Modelo';
+    document.getElementById('modeloFormTitle').textContent = 'Salvar regras atuais (juros, faixas, parcelas e tags ativas)';
+    document.getElementById('btnSalvarModeloTxt').textContent = 'Salvar Regras';
     document.getElementById('btnCancelarEdicaoModelo').classList.add('hidden');
   }
   async function salvarCampanha() {
     const nome = document.getElementById('nomeCampanha').value.trim();
-    if (!nome) return showToast('Dê um nome para o modelo.');
+    if (!nome) return showToast('Dê um nome para as regras.');
     const editId = document.getElementById('editingModelId').value;
-    const nova = { id: editId || ('camp_' + Date.now()), nome, config: getConfigAtual(), mensagem: document.getElementById('msgTemplate').value, atualizado_em: new Date().toLocaleString('pt-BR') };
+    const nova = { id: editId || ('camp_' + Date.now()), nome, config: getConfigAtual(), mensagem: '', atualizado_em: new Date().toLocaleString('pt-BR') };
     const idx = campanhasCache.findIndex(c => (editId && String(c.id) === String(editId)) || c.nome.toLowerCase() === nome.toLowerCase());
     if (idx >= 0) campanhasCache[idx] = nova; else campanhasCache.push(nova);
-    activeMsgId = nova.id;
-    localStorage.setItem('cgd_campanhas_v3', JSON.stringify(campanhasCache));
-    atualizarSubtituloHeader(nome); atualizarBadgeModelos(); renderMsgChips(); cancelarEdicaoModelo(); renderListaModelos();
+    localStorage.setItem('cgd_campanhas_v4', JSON.stringify(campanhasCache));
+    atualizarBadgeModelos(); cancelarEdicaoModelo(); renderListaModelos();
     const api = localStorage.getItem('cgd_waseller_api') || '';
     if (api) {
-      try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'saveCampaign', ...nova }) }); showToast(`"${nome}" salvo no Google Sheets!`); return; }
+      try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'saveCampaign', ...nova }) }); showToast(`Regras "${nome}" salvas no Google Sheets!`); return; }
       catch (e) { showToast('Salvo localmente (erro na API).'); return; }
     }
-    showToast(`"${nome}" salvo!`);
+    showToast(`Regras "${nome}" salvas!`);
   }
   async function excluirModelo(idx) {
     const c = campanhasCache[idx]; if (!c || !confirm(`Excluir "${c.nome}"?`)) return;
     campanhasCache.splice(idx, 1);
-    localStorage.setItem('cgd_campanhas_v3', JSON.stringify(campanhasCache));
-    atualizarBadgeModelos(); renderMsgChips(); renderListaModelos();
+    localStorage.setItem('cgd_campanhas_v4', JSON.stringify(campanhasCache));
+    atualizarBadgeModelos(); renderListaModelos();
     const api = localStorage.getItem('cgd_waseller_api') || '';
     if (api) { try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'deleteCampaign', id: c.id, nome: c.nome }) }); } catch (e) {} }
-    showToast(`"${c.nome}" excluído.`);
+    showToast(`Regras "${c.nome}" excluídas.`);
   }
   async function registrarHistoricoAPI(qtd) {
     const api = localStorage.getItem('cgd_waseller_api') || ''; if (!api) return;
-    try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'logExport', campanha: document.getElementById('nomeCampanha').value, qtd_contatos: qtd, duplicados_removidos: removedCount, total_original: document.getElementById('kpiOriginal').textContent, total_com_juros: '-', total_final: document.getElementById('kpiFinal').textContent }) }); } catch (e) {}
+    try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'logExport', campanha: document.getElementById('msgTituloInput').value || 'Avulsa', qtd_contatos: qtd, duplicados_removidos: removedCount, total_original: document.getElementById('kpiOriginal').textContent, total_com_juros: '-', total_final: document.getElementById('kpiFinal').textContent }) }); } catch (e) {}
   }
 </script>
 </body>
