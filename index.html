@@ -919,7 +919,7 @@
     { key: 'data_promocao',     label: 'Data Limite da Promoção',       tag: 'data_promocao',     enabled: true,  locked: false, promoHighlight: true },
     { key: 'valor_mensalidade', label: 'Valor de 1 Mensalidade (CGD)',  tag: 'valor_mensalidade', enabled: false, locked: false },
     { key: 'divida_base',       label: 'Dívida Base (Mensal. × Atraso)',tag: 'divida_base',       enabled: false, locked: false },
-    { key: 'valor',             label: 'Valor Atualizado (c/ Juros)',   tag: 'valor',             enabled: true,  locked: false },
+    { key: 'valor',             label: 'Valor Atualizado (c/ Juros)',   tag: 'valor_bruto',       enabled: true,  locked: false },
     { key: 'desconto',          label: 'Desconto (%)',                  tag: 'desconto',          enabled: true,  locked: false },
     { key: 'economia',          label: 'Economia / Desconto em R$',     tag: 'economia',          enabled: true,  locked: false, promoHighlight: true },
     { key: 'valor_final',       label: 'Valor Final (c/ Desconto)',     tag: 'valor_final',       enabled: true,  locked: false },
@@ -1479,6 +1479,27 @@
       }
     });
 
+    // Detecta colisão de prefixo que quebra o WaSeller (ex: #valor quebrando #valor_final)
+    ativos.forEach(tCurta => {
+      const conflitantes = ativos.filter(tLonga =>
+        tLonga.tag !== tCurta.tag && tLonga.tag.startsWith(tCurta.tag + '_')
+      );
+      if (conflitantes.length) {
+        const lista = conflitantes.map(c => '#' + c.tag).join(', ');
+        const sug = tCurta.tag + '_bruto';
+        erros.push({
+          texto: `Conflito no WaSeller: a coluna <strong>#${tCurta.tag}</strong> quebra ${lista} na hora do envio.`,
+          acaoLabel: `Renomear para #${sug}`,
+          acao: () => {
+            tCurta.tag = sug;
+            renderTagEditor();
+            renderTabela();
+            validarEAtualizarPreview();
+          }
+        });
+      }
+    });
+    
     if (/@nome\b/i.test(msg)) {
       erros.push({
         texto: `Você usou <strong>@nome</strong>, mas o WaSeller utiliza <strong>#</strong>.`,
