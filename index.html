@@ -3,27 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Central CGD → WaSeller v3.0 | Campanhas, Cobranças e Lembretes</title>
+  <title>Central CGD → WaSeller v3.2 | Educ Centro de Ensino</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
     :root {
-      /* Paleta da Escola: Laranja, Dourado, Marrom, Bege, Cinza, Amarelo Ouro */
       --orange: #e86a00;
       --orange-hover: #cc5c00;
       --gold: #c99a2e;
       --gold-bright: #f2b705;
       --brown-dark: #3b2416;
       --brown: #5c3a21;
-      --brown-soft: #7a5236;
       --beige-bg: #f9f4ea;
       --beige-soft: #f3ead8;
       --beige-border: #e2d5bc;
       --gray-text: #595550;
       --gray-muted: #7d7770;
-      --gray-light: #eceae6;
       --card: #ffffff;
       --success: #247a4d;
       --success-bg: #eaf6ef;
@@ -36,20 +32,13 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
     body { background: var(--beige-bg); color: var(--brown-dark); padding-bottom: 56px; }
 
-    /* HEADER */
     header {
       background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown) 100%);
       color: #fff;
       padding: 14px 24px;
       border-bottom: 4px solid var(--orange);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 12px; position: sticky; top: 0; z-index: 50;
       box-shadow: 0 3px 12px rgba(59, 36, 22, 0.18);
     }
 
@@ -60,23 +49,16 @@
       display: flex; align-items: center; justify-content: center;
       color: var(--brown-dark); font-size: 1.2rem;
     }
-    .brand h1 { font-size: 1.12rem; font-weight: 700; letter-spacing: .2px; }
+    .brand h1 { font-size: 1.12rem; font-weight: 700; }
     .brand small { color: #e8dcc8; font-size: 0.77rem; display: block; }
 
     .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .header-pill {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(242, 183, 5, 0.35);
-      color: #fff;
-      padding: 7px 12px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      transition: .18s;
+      color: #fff; padding: 7px 12px; border-radius: 8px;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px; transition: .18s;
     }
     .header-pill:hover { background: var(--orange); border-color: var(--gold-bright); }
     .header-pill i { color: var(--gold-bright); }
@@ -89,7 +71,6 @@
 
     .container { max-width: 1440px; margin: 18px auto; padding: 0 18px; }
 
-    /* MODOS DE CAMPANHA */
     .mode-bar {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 10px; margin-bottom: 16px;
@@ -109,7 +90,6 @@
     }
     .mode-btn.active i { color: var(--orange); }
 
-    /* KPIs */
     .stats-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
       gap: 12px; margin-bottom: 16px;
@@ -124,8 +104,7 @@
     .stat-card span { font-size: 0.71rem; color: var(--gray-muted); text-transform: uppercase; letter-spacing: .4px; font-weight: 600; }
     .stat-card strong { display: block; font-size: 1.22rem; margin-top: 2px; color: var(--brown-dark); }
 
-    /* GRID PRINCIPAL */
-    .workspace-grid { display: grid; grid-template-columns: 420px 1fr; gap: 18px; align-items: start; margin-bottom: 18px; }
+    .workspace-grid { display: grid; grid-template-columns: 410px 1fr; gap: 18px; align-items: start; margin-bottom: 18px; }
     @media (max-width: 1040px) { .workspace-grid { grid-template-columns: 1fr; } }
 
     .card {
@@ -161,13 +140,49 @@
     .field input:focus, .field select:focus, .field textarea:focus {
       outline: none; border-color: var(--orange); box-shadow: 0 0 0 2px rgba(232,106,0,0.14);
     }
-    .field textarea { min-height: 120px; resize: vertical; line-height: 1.48; }
+    .field textarea { min-height: 165px; resize: vertical; line-height: 1.48; }
+
+    /* GALERIA DE MENSAGENS PRONTAS */
+    .msg-gallery-box {
+      background: var(--beige-bg);
+      border: 1px solid var(--beige-border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      margin-bottom: 12px;
+    }
+    .msg-gallery-header {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 8px; margin-bottom: 8px;
+    }
+    .msg-gallery-header strong { font-size: 0.8rem; color: var(--brown); display: flex; align-items: center; gap: 6px; }
+    .msg-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .msg-chip {
+      background: #fff; border: 1.5px solid var(--beige-border); color: var(--brown-dark);
+      padding: 6px 10px; border-radius: 8px; font-size: 0.76rem; font-weight: 600;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: .15s;
+    }
+    .msg-chip:hover { border-color: var(--orange); background: #fff7ec; }
+    .msg-chip.active { background: var(--brown-dark); color: #fff; border-color: var(--brown-dark); }
+    .msg-chip.active i { color: var(--gold-bright); }
+    .msg-chip .chip-del {
+      margin-left: 3px; color: var(--danger); opacity: .75; font-size: 0.72rem;
+    }
+    .msg-chip.active .chip-del { color: #ff9c9c; }
+    .msg-chip .chip-del:hover { opacity: 1; }
+
+    .save-inline-bar {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; padding-top: 9px;
+      border-top: 1px dashed var(--beige-border); align-items: center;
+    }
+    .save-inline-bar input {
+      flex: 1; min-width: 190px; padding: 6px 9px; border: 1px solid #d7c9b0;
+      border-radius: 7px; font-size: 0.81rem; background: #fff;
+    }
 
     .check-group { display: flex; flex-direction: column; gap: 8px; margin: 8px 0; }
     .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.83rem; cursor: pointer; color: var(--brown-dark); }
     .check-item input { width: auto; accent-color: var(--orange); }
 
-    /* BOTÕES */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       padding: 8px 13px; border: none; border-radius: 8px; cursor: pointer;
@@ -184,12 +199,11 @@
     .btn-danger-soft { background: var(--danger-bg); color: var(--danger); border: 1px solid #f2bcbc; }
     .btn-danger-soft:hover { background: var(--danger); color: #fff; }
     .btn-sm { padding: 5px 10px; font-size: 0.77rem; }
-    .btn-xs { padding: 3px 7px; font-size: 0.72rem; border-radius: 6px; }
+    .btn-xs { padding: 4px 8px; font-size: 0.73rem; border-radius: 6px; }
     .btn-block { width: 100%; }
 
     .actions-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; align-items: center; }
 
-    /* FAIXAS PROGRESSIVAS */
     .tier-box {
       background: var(--beige-bg); border: 1px solid var(--beige-border); border-radius: 8px;
       padding: 10px; margin-top: 6px;
@@ -201,7 +215,6 @@
     .tier-row { margin-bottom: 6px; }
     .tier-row input { padding: 5px 7px; font-size: 0.8rem; border: 1px solid #d7c9b0; border-radius: 6px; width: 100%; }
 
-    /* TAGS E VALIDADOR */
     .tags-box { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 9px; }
     .tag-pill {
       background: #fff4e6; border: 1px solid #f5c38b; color: var(--brown);
@@ -224,7 +237,6 @@
     }
     .validator-item:first-of-type { border-top: none; padding-top: 2px; }
 
-    /* PRÉVIA WHATSAPP */
     .wa-preview {
       background: #ebe4d6; border-radius: 10px; padding: 12px; margin-top: 10px;
       border: 1px solid var(--beige-border);
@@ -234,12 +246,11 @@
       font-size: 0.76rem; color: var(--brown); margin-bottom: 8px; font-weight: 600;
     }
     .wa-bubble {
-      background: #e2f7cb; border-radius: 8px; padding: 11px 14px;
-      font-size: 0.86rem; white-space: pre-wrap; line-height: 1.45;
+      background: #e2f7cb; border-radius: 8px; padding: 12px 14px;
+      font-size: 0.86rem; white-space: pre-wrap; line-height: 1.48;
       box-shadow: 0 1px 2px rgba(0,0,0,0.1); color: #1f2c1f;
     }
 
-    /* BARRA DE FILTROS DA TABELA */
     .table-toolbar {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
       gap: 10px; padding: 10px 12px; background: var(--beige-bg);
@@ -258,7 +269,6 @@
       position: sticky; top: 0; background: var(--brown-dark); color: #fff;
       text-align: left; padding: 9px 11px; white-space: nowrap; z-index: 2;
       font-family: monospace; font-size: 0.78rem; cursor: pointer; user-select: none;
-      transition: background .15s;
     }
     th:hover { background: var(--brown); }
     th.sorted { background: var(--orange); color: #fff; }
@@ -272,7 +282,6 @@
       gap: 10px; margin-top: 10px; font-size: 0.79rem; color: var(--gray-muted);
     }
 
-    /* MODAIS */
     .modal-backdrop {
       position: fixed; inset: 0; background: rgba(43, 26, 15, 0.58);
       display: flex; align-items: center; justify-content: center;
@@ -284,9 +293,7 @@
       width: 100%; max-width: 680px; max-height: 88vh;
       display: flex; flex-direction: column;
       box-shadow: 0 18px 40px rgba(35, 20, 10, 0.28);
-      animation: popIn .16s ease-out;
     }
-    @keyframes popIn { from { transform: translateY(8px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
     .modal-header {
       padding: 14px 18px; border-bottom: 1px solid var(--beige-soft);
       display: flex; align-items: center; justify-content: space-between;
@@ -306,15 +313,13 @@
       border-radius: 0 0 14px 14px;
     }
 
-    /* LISTA DE TAGS NO MODAL */
     .tag-editor-list {
       border: 1px solid var(--beige-border); border-radius: 8px;
       padding: 6px; background: #fffdf9; max-height: 310px; overflow-y: auto;
     }
     .tag-editor-item {
       display: grid; grid-template-columns: 24px 1fr 1fr 30px; gap: 8px;
-      align-items: center; padding: 6px; border-bottom: 1px solid var(--beige-soft);
-      font-size: 0.8rem;
+      align-items: center; padding: 6px; border-bottom: 1px solid var(--beige-soft); font-size: 0.8rem;
     }
     .tag-editor-item:last-child { border-bottom: none; }
     .tag-editor-item input[type="text"] {
@@ -324,7 +329,6 @@
     .tag-editor-item input.invalid-tag { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
     .tag-origin { font-size: 0.75rem; color: var(--gray-muted); }
 
-    /* LISTA DE MODELOS NO MODAL */
     .model-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
     .model-card {
       border: 1px solid var(--beige-border); border-radius: 9px; padding: 10px 12px;
@@ -334,13 +338,8 @@
     .model-card strong { display: block; font-size: 0.88rem; color: var(--brown-dark); }
     .model-card small { color: var(--gray-muted); font-size: 0.74rem; }
 
-    .badge {
-      display: inline-block; padding: 2px 7px; border-radius: 99px;
-      font-size: 0.7rem; font-weight: 700;
-    }
+    .badge { display: inline-block; padding: 2px 7px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; }
     .badge-gold { background: #fdf0c2; color: var(--brown); }
-    .badge-ok { background: var(--success-bg); color: var(--success); }
-
     .hidden { display: none !important; }
 
     .toast {
@@ -358,8 +357,8 @@
   <div class="brand">
     <div class="brand-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
     <div>
-      <h1>Central CGD → WaSeller v3.0</h1>
-      <small id="headerSubtitle">Campanha ativa: Cobrança Progressiva</small>
+      <h1>Central CGD → WaSeller v3.2</h1>
+      <small id="headerSubtitle">Educ Centro de Ensino • Campanha ativa: Cobrança Progressiva</small>
     </div>
   </div>
 
@@ -379,7 +378,6 @@
 </header>
 
 <div class="container">
-  <!-- MODOS DE CAMPANHA -->
   <div class="mode-bar">
     <button class="mode-btn active" id="mode_cobranca" onclick="trocarModo('cobranca')">
       <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -391,7 +389,7 @@
     </button>
     <button class="mode-btn" id="mode_promocao" onclick="trocarModo('promocao')">
       <i class="fa-solid fa-gift"></i>
-      <div><strong>Promoção / Prêmio</strong><small>Tags extras (#premio, #cupom...)</small></div>
+      <div><strong>Promoção / Aniversário</strong><small>Mensagens prontas + tags extras</small></div>
     </button>
     <button class="mode-btn" id="mode_aviso" onclick="trocarModo('aviso')">
       <i class="fa-solid fa-bullhorn"></i>
@@ -399,45 +397,26 @@
     </button>
   </div>
 
-  <!-- KPIs -->
   <div class="stats-grid">
-    <div class="stat-card">
-      <span>Contatos Prontos</span>
-      <strong id="kpiContatos">0</strong>
-    </div>
-    <div class="stat-card gold">
-      <span>Duplicados / Inválidos</span>
-      <strong id="kpiRemovidos">0</strong>
-    </div>
-    <div class="stat-card brown" id="kpiCardOriginal">
-      <span>Total Original</span>
-      <strong id="kpiOriginal">R$ 0,00</strong>
-    </div>
-    <div class="stat-card green" id="kpiCardFinal">
-      <span>Total Final (Negociado)</span>
-      <strong id="kpiFinal">R$ 0,00</strong>
-    </div>
-    <div class="stat-card">
-      <span>Validação das Tags</span>
-      <strong id="kpiStatusTags" style="font-size:0.98rem;">Aguardando...</strong>
-    </div>
+    <div class="stat-card"><span>Contatos Prontos</span><strong id="kpiContatos">0</strong></div>
+    <div class="stat-card gold"><span>Duplicados / Inválidos</span><strong id="kpiRemovidos">0</strong></div>
+    <div class="stat-card brown" id="kpiCardOriginal"><span>Total Original</span><strong id="kpiOriginal">R$ 0,00</strong></div>
+    <div class="stat-card green" id="kpiCardFinal"><span>Total Final (Negociado)</span><strong id="kpiFinal">R$ 0,00</strong></div>
+    <div class="stat-card"><span>Validação das Tags</span><strong id="kpiStatusTags" style="font-size:0.98rem;">Aguardando...</strong></div>
   </div>
 
-  <!-- ÁREA PRINCIPAL (2 COLUNAS EQUILIBRADAS) -->
   <div class="workspace-grid">
-    <!-- ESQUERDA: IMPORTAÇÃO + REGRAS DO MODO ATUAL -->
+    <!-- ESQUERDA -->
     <div>
       <div class="card">
         <h2>
           <span class="title-left"><i class="fa-solid fa-file-arrow-up"></i> 1. Importar Dados do CGD</span>
-          <button class="btn btn-outline btn-xs" onclick="abrirModal('modalConfig')" title="Configurar limpeza de telefones">
-            <i class="fa-solid fa-broom"></i> Limpeza
-          </button>
+          <button class="btn btn-outline btn-xs" onclick="abrirModal('modalConfig')"><i class="fa-solid fa-broom"></i> Limpeza</button>
         </h2>
         <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
           <i class="fa-solid fa-cloud-arrow-up"></i>
           <p>Arraste ou clique (.xlsx, .csv ou .pdf)</p>
-          <small>Lê planilhas e relatórios PDF do CGD automaticamente</small>
+          <small>Lê Contrato (#matricula), Aluno, Responsável, Fone 1/2, Atraso, Vencimento e Valor</small>
           <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.pdf" hidden />
         </div>
         <div class="actions-row">
@@ -447,7 +426,6 @@
         </div>
       </div>
 
-      <!-- REGRAS DE COBRANÇA -->
       <div class="card" id="cardFinanceiro">
         <h2><span class="title-left"><i class="fa-solid fa-calculator"></i> 2. Política de Juros e Descontos</span></h2>
         <div class="row-2">
@@ -489,9 +467,7 @@
         </div>
 
         <div id="boxFaixas" class="tier-box">
-          <div class="tier-header" id="tierHeader">
-            <span>De (R$)</span><span>Até (R$)</span><span>Desc (%)</span><span></span>
-          </div>
+          <div class="tier-header" id="tierHeader"><span>De (R$)</span><span>Até (R$)</span><span>Desc (%)</span><span></span></div>
           <div id="tiersContainer"></div>
           <button class="btn btn-outline btn-xs" style="margin-top:4px;" onclick="adicionarFaixa()">
             <i class="fa-solid fa-plus"></i> Adicionar Faixa
@@ -531,7 +507,6 @@
         </div>
       </div>
 
-      <!-- REGRAS DE LEMBRETE -->
       <div class="card hidden" id="cardLembrete">
         <h2><span class="title-left"><i class="fa-solid fa-calendar-day"></i> 2. Regra de Lembrete</span></h2>
         <div class="row-2">
@@ -549,15 +524,14 @@
           </div>
         </div>
         <small style="color:var(--gray-muted); font-size:0.78rem;">
-          Gera automaticamente <strong>#dias_vencimento</strong> e <strong>#prazo_texto</strong> (ex.: <code>daqui a 5 dias</code>, <code>amanhã</code>, <code>hoje</code>).
+          Gera automaticamente <strong>#dias_vencimento</strong> e <strong>#prazo_texto</strong>.
         </small>
       </div>
 
-      <!-- RESUMO RÁPIDO PARA PROMOÇÃO / AVISO -->
       <div class="card hidden" id="cardResumoExtras">
         <h2><span class="title-left"><i class="fa-solid fa-sparkles"></i> 2. Variáveis da Campanha</span></h2>
         <p style="font-size:0.82rem; color:var(--gray-muted); margin-bottom:10px;">
-          Neste modo você pode criar e editar variáveis personalizadas como <code>#premio</code>, <code>#cupom</code> ou <code>#assunto</code>.
+          Crie e edite variáveis extras como <code>#premio</code>, <code>#cupom</code> ou <code>#assunto</code>.
         </p>
         <button class="btn btn-gold btn-sm btn-block" onclick="abrirModal('modalTags')">
           <i class="fa-solid fa-tags"></i> Abrir Editor de Tags & Variáveis
@@ -565,27 +539,46 @@
       </div>
     </div>
 
-    <!-- DIREITA: SCRIPT DA MENSAGEM & PRÉVIA -->
+    <!-- DIREITA: GALERIA DE MENSAGENS + EDITOR + VALIDADOR + PRÉVIA -->
     <div class="card">
       <h2>
-        <span class="title-left"><i class="fa-brands fa-whatsapp"></i> 3. Script da Mensagem & Validador</span>
-        <div style="display:flex; gap:6px;">
-          <button class="btn btn-outline btn-xs" onclick="abrirModal('modalTags')">
-            <i class="fa-solid fa-pen"></i> Editar Tags
-          </button>
-          <button class="btn btn-outline btn-xs" onclick="abrirModal('modalModelos')">
-            <i class="fa-solid fa-floppy-disk"></i> Salvar Modelo
-          </button>
-        </div>
+        <span class="title-left"><i class="fa-brands fa-whatsapp"></i> 3. Mensagens da Campanha & Validador</span>
+        <button class="btn btn-outline btn-xs" onclick="abrirModal('modalTags')"><i class="fa-solid fa-pen"></i> Editar Tags</button>
       </h2>
 
+      <!-- GALERIA VISUAL DE MENSAGENS SALVAS E PADRÕES EDUC -->
+      <div class="msg-gallery-box">
+        <div class="msg-gallery-header">
+          <strong><i class="fa-solid fa-book-open" style="color:var(--orange);"></i> Escolha uma mensagem salva ou escreva a sua:</strong>
+          <div style="display:flex; gap:6px;">
+            <button class="btn btn-outline btn-xs" onclick="novaMensagemEmBranco()">
+              <i class="fa-solid fa-file-pen"></i> Escrever do zero
+            </button>
+            <button class="btn btn-gold btn-xs" onclick="toggleSalvarInline()">
+              <i class="fa-solid fa-floppy-disk"></i> Salvar esta mensagem
+            </button>
+          </div>
+        </div>
+
+        <div class="msg-chips" id="msgChipsContainer"></div>
+
+        <!-- Barra rápida para salvar mensagem direto na nuvem -->
+        <div class="save-inline-bar hidden" id="saveInlineBar">
+          <input type="text" id="inlineMsgNome" placeholder="Nome para salvar esta mensagem (ex: Cobrança Maio)" />
+          <button class="btn btn-primary btn-xs" onclick="salvarMensagemRapida()">
+            <i class="fa-solid fa-check"></i> Confirmar e Salvar
+          </button>
+          <button class="btn btn-outline btn-xs" onclick="toggleSalvarInline(false)">Cancelar</button>
+        </div>
+      </div>
+
       <p style="font-size:0.76rem; color:var(--gray-muted); margin-bottom:7px;">
-        Clique em uma tag ativa para inserir no texto:
+        Clique em qualquer tag abaixo para inserir no ponto onde estiver o cursor:
       </p>
       <div class="tags-box" id="tagsBox"></div>
 
       <div class="field">
-        <textarea id="msgTemplate" oninput="validarEAtualizarPreview()"></textarea>
+        <textarea id="msgTemplate" oninput="validarEAtualizarPreview()" placeholder="Escreva sua mensagem aqui usando as #tags acima..."></textarea>
       </div>
 
       <div id="validatorPanel" class="validator-panel validator-ok"></div>
@@ -609,7 +602,7 @@
     </div>
   </div>
 
-  <!-- LARGURA TOTAL: PLANILHA PRONTA COM ORDENAÇÃO E FILTROS -->
+  <!-- TABELA FULL-WIDTH -->
   <div class="card">
     <h2>
       <span class="title-left"><i class="fa-solid fa-table"></i> 4. Planilha Pronta para o WaSeller (100% Texto Puro)</span>
@@ -623,24 +616,16 @@
       </div>
     </h2>
 
-    <!-- BARRA DE FILTROS POR COLUNA -->
     <div class="table-toolbar">
       <div class="filter-controls">
         <i class="fa-solid fa-filter" style="color:var(--orange);"></i>
-        <select id="filterCol" onchange="onFilterColChange()" title="Escolha a coluna para filtrar">
-          <option value="__all__">Todas as colunas</option>
-        </select>
-        <input type="text" id="filterText" placeholder="Digite para filtrar (nome, valor, atraso...)" oninput="aplicarFiltrosEOrdenacao()" />
-        <select id="filterQuickVal" class="hidden" onchange="aplicarFiltroRapido()" title="Filtrar por valor exato">
-          <option value="">-- Valor exato --</option>
-        </select>
-        <button class="btn btn-outline btn-xs" onclick="limparFiltrosTabela()">
-          <i class="fa-solid fa-eraser"></i> Limpar
-        </button>
+        <select id="filterCol" onchange="onFilterColChange()"><option value="__all__">Todas as colunas</option></select>
+        <input type="text" id="filterText" placeholder="Filtrar por matrícula, nome, atraso, valor..." oninput="aplicarFiltrosEOrdenacao()" />
+        <select id="filterQuickVal" class="hidden" onchange="aplicarFiltroRapido()"><option value="">-- Valor exato --</option></select>
+        <button class="btn btn-outline btn-xs" onclick="limparFiltrosTabela()"><i class="fa-solid fa-eraser"></i> Limpar</button>
       </div>
       <label class="check-item" style="font-size:0.78rem;">
-        <input type="checkbox" id="chkExportFiltered" checked />
-        Exportar apenas filtrados
+        <input type="checkbox" id="chkExportFiltered" checked /> Exportar apenas filtrados
       </label>
     </div>
 
@@ -655,46 +640,39 @@
 
     <div class="table-footer">
       <span id="tableCountInfo">Nenhum registro exibido. Clique nos títulos das colunas para ordenar.</span>
-      <button class="btn btn-outline btn-xs hidden" id="btnShowAllRows" onclick="alternarMostrarTodos()">
-        Mostrar todos os registros
-      </button>
+      <button class="btn btn-outline btn-xs hidden" id="btnShowAllRows" onclick="alternarMostrarTodos()">Mostrar todos</button>
     </div>
   </div>
 </div>
 
-<!-- ==================== MODAL 1: MODELOS DE CAMPANHA ==================== -->
+<!-- MODAL MODELOS -->
 <div class="modal-backdrop hidden" id="modalModelos" onclick="fecharModalBackdrop(event, 'modalModelos')">
   <div class="modal-box">
     <div class="modal-header">
-      <h3><i class="fa-solid fa-bookmark"></i> Modelos de Campanha</h3>
+      <h3><i class="fa-solid fa-bookmark"></i> Biblioteca de Modelos & Mensagens</h3>
       <button class="modal-close" onclick="fecharModal('modalModelos')">&times;</button>
     </div>
     <div class="modal-body">
       <div style="background:var(--beige-bg); border:1px solid var(--beige-border); border-radius:10px; padding:12px; margin-bottom:14px;">
-        <strong style="font-size:0.84rem; display:block; margin-bottom:8px; color:var(--brown-dark);" id="modeloFormTitle">
-          Salvar configuração atual como modelo
+        <strong style="font-size:0.84rem; display:block; margin-bottom:8px;" id="modeloFormTitle">
+          Salvar campanha completa (regras + tags + mensagem atual)
         </strong>
         <input type="hidden" id="editingModelId" value="" />
         <div class="row-2">
           <div class="field" style="margin-bottom:0;">
             <label>Nome do Modelo</label>
-            <input type="text" id="nomeCampanha" value="Cobrança Progressiva" placeholder="Ex: Black Friday 35%" />
+            <input type="text" id="nomeCampanha" value="Cobrança Progressiva" placeholder="Ex: Cobrança Mensalidade Aberta" />
           </div>
           <div style="display:flex; align-items:flex-end; gap:6px;">
             <button class="btn btn-primary btn-block" onclick="salvarCampanha()">
               <i class="fa-solid fa-floppy-disk"></i> <span id="btnSalvarModeloTxt">Salvar Modelo</span>
             </button>
-            <button class="btn btn-outline hidden" id="btnCancelarEdicaoModelo" onclick="cancelarEdicaoModelo()" title="Cancelar edição">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
+            <button class="btn btn-outline hidden" id="btnCancelarEdicaoModelo" onclick="cancelarEdicaoModelo()"><i class="fa-solid fa-xmark"></i></button>
           </div>
         </div>
-        <small style="display:block; margin-top:6px; color:var(--gray-muted); font-size:0.74rem;">
-          Salva automaticamente o modo, faixas de desconto, juros, tags ativas e o texto atual da mensagem.
-        </small>
       </div>
 
-      <strong style="font-size:0.83rem; color:var(--brown);">Modelos Salvos (clique para aplicar, editar ou excluir):</strong>
+      <strong style="font-size:0.83rem; color:var(--brown);">Modelos Salvos + Padrões da Educ:</strong>
       <div class="model-list" id="modelListContainer"></div>
     </div>
     <div class="modal-footer">
@@ -703,7 +681,7 @@
   </div>
 </div>
 
-<!-- ==================== MODAL 2: EDITOR DE TAGS & VARIÁVEIS ==================== -->
+<!-- MODAL TAGS -->
 <div class="modal-backdrop hidden" id="modalTags" onclick="fecharModalBackdrop(event, 'modalTags')">
   <div class="modal-box">
     <div class="modal-header">
@@ -713,27 +691,16 @@
     <div class="modal-body">
       <div style="background:var(--beige-bg); border:1px solid var(--beige-border); border-radius:10px; padding:12px; margin-bottom:12px;">
         <div class="row-2">
-          <div class="field">
-            <label>Nova Variável (ex: premio, cupom)</label>
-            <input type="text" id="novaVarNome" placeholder="Sem acento ou espaço" />
-          </div>
-          <div class="field">
-            <label>Valor Fixo para esta Campanha</label>
-            <input type="text" id="novaVarValor" placeholder="Ex: Kit Escolar" />
-          </div>
+          <div class="field"><label>Nova Variável (ex: premio, cupom)</label><input type="text" id="novaVarNome" placeholder="Sem acento ou espaço" /></div>
+          <div class="field"><label>Valor Fixo para esta Campanha</label><input type="text" id="novaVarValor" placeholder="Ex: Kit Escolar" /></div>
         </div>
         <button class="btn btn-gold btn-sm btn-block" onclick="adicionarVariavelPersonalizada()">
           <i class="fa-solid fa-plus"></i> Adicionar Variável na Planilha
         </button>
       </div>
-
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <span style="font-size:0.78rem; color:var(--gray-muted);">
-          Marque as colunas desejadas e edite os nomes (sem acento, espaço ou ponto):
-        </span>
-        <button class="btn btn-outline btn-xs" onclick="corrigirTodasAsTags()">
-          <i class="fa-solid fa-magic"></i> Padronizar Nomes
-        </button>
+        <span style="font-size:0.78rem; color:var(--gray-muted);">Marque as colunas e edite nomes (sem acento, espaço ou ponto):</span>
+        <button class="btn btn-outline btn-xs" onclick="corrigirTodasAsTags()"><i class="fa-solid fa-magic"></i> Padronizar Nomes</button>
       </div>
       <div class="tag-editor-list" id="tagEditorList"></div>
     </div>
@@ -743,7 +710,7 @@
   </div>
 </div>
 
-<!-- ==================== MODAL 3: LIMPEZA DE CONTATOS & API ==================== -->
+<!-- MODAL CONFIG -->
 <div class="modal-backdrop hidden" id="modalConfig" onclick="fecharModalBackdrop(event, 'modalConfig')">
   <div class="modal-box" style="max-width:560px;">
     <div class="modal-header">
@@ -767,22 +734,17 @@
           </select>
         </div>
       </div>
-
       <div class="check-group" style="margin-bottom:16px;">
-        <label class="check-item"><input type="checkbox" id="chkDDI" checked onchange="reprocessar()" /> Adicionar DDI 55 automaticamente (10 ou 11 dígitos)</label>
-        <label class="check-item"><input type="checkbox" id="chkDuplicados" checked onchange="reprocessar()" /> Remover telefones duplicados automaticamente</label>
+        <label class="check-item"><input type="checkbox" id="chkDDI" checked onchange="reprocessar()" /> Adicionar DDI 55 automaticamente</label>
+        <label class="check-item"><input type="checkbox" id="chkDuplicados" checked onchange="reprocessar()" /> Remover telefones duplicados</label>
         <label class="check-item"><input type="checkbox" id="chkCapitalizar" checked onchange="reprocessar()" /> Padronizar maiúsculas/minúsculas nos nomes</label>
       </div>
-
       <hr style="border:none; border-top:1px solid var(--beige-border); margin:14px 0;" />
-
       <div class="field">
         <label><i class="fa-solid fa-plug" style="color:var(--orange);"></i> URL da API Google Apps Script (/exec)</label>
         <input type="url" id="apiUrl" placeholder="https://script.google.com/macros/s/.../exec" />
       </div>
-      <button class="btn btn-brown btn-sm" onclick="salvarApiUrl()">
-        <i class="fa-solid fa-rotate"></i> Salvar e Sincronizar com Google Sheets
-      </button>
+      <button class="btn btn-brown btn-sm" onclick="salvarApiUrl()"><i class="fa-solid fa-rotate"></i> Salvar e Sincronizar</button>
     </div>
     <div class="modal-footer">
       <button class="btn btn-primary btn-sm" onclick="fecharModal('modalConfig')">Fechar</button>
@@ -793,29 +755,113 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  // URL da sua API já pré-configurada
   const API_URL_PADRAO = 'https://script.google.com/macros/s/AKfycbz3dLy5vhZNWfEEHHtuJvFRwobagQF5DfeuZQCltjPAMssCF67I8C2cRHqunQjFEzTn/exec';
 
   if (window.pdfjsLib) {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   }
 
-  let tagConfigs = [
-    { key: 'numero',         label: 'Telefone (Obrigatório)', tag: 'numero',         enabled: true,  locked: true },
-    { key: 'nome',           label: 'Nome Completo',          tag: 'nome',           enabled: true,  locked: false },
-    { key: 'primeiroNome',   label: 'Primeiro Nome (Nativa)', tag: 'primeiroNome',   enabled: true,  locked: false },
-    { key: 'aluno',          label: 'Nome do Aluno',          tag: 'aluno',          enabled: true,  locked: false },
-    { key: 'contrato',       label: 'Nº Contrato',            tag: 'contrato',       enabled: false, locked: false },
-    { key: 'atraso',         label: 'Qtd. em Atraso',         tag: 'atraso',         enabled: true,  locked: false },
-    { key: 'vencimento',     label: 'Data Vencimento',        tag: 'vencimento',     enabled: true,  locked: false },
-    { key: 'dias_vencimento',label: 'Dias p/ Vencer (Nº)',    tag: 'dias_vencimento',enabled: false, locked: false },
-    { key: 'prazo_texto',    label: 'Prazo por Extenso',      tag: 'prazo_texto',    enabled: false, locked: false },
-    { key: 'valor_original', label: 'Valor Original',         tag: 'valor_original', enabled: false, locked: false },
-    { key: 'valor',          label: 'Valor Atualizado',       tag: 'valor',          enabled: true,  locked: false },
-    { key: 'desconto',       label: 'Desconto Aplicado',      tag: 'desconto',       enabled: true,  locked: false },
-    { key: 'valor_final',    label: 'Valor Final',            tag: 'valor_final',    enabled: true,  locked: false },
-    { key: 'parcelas',       label: 'Qtd. Parcelas',          tag: 'parcelas',       enabled: true,  locked: false },
-    { key: 'valor_parcela',  label: 'Valor da Parcela',       tag: 'valor_parcela',  enabled: true,  locked: false }
+  const DEFAULT_TAG_CONFIGS = [
+    { key: 'numero',          label: 'Telefone (Obrigatório)',   tag: 'numero',          enabled: true,  locked: true },
+    { key: 'matricula',       label: 'Matrícula / Contrato CGD', tag: 'matricula',       enabled: true,  locked: false },
+    { key: 'nome',            label: 'Nome Completo',            tag: 'nome',            enabled: true,  locked: false },
+    { key: 'primeiroNome',    label: 'Primeiro Nome (Nativa)',   tag: 'primeiroNome',    enabled: true,  locked: false },
+    { key: 'aluno',           label: 'Nome do Aluno',            tag: 'aluno',           enabled: true,  locked: false },
+    { key: 'atraso',          label: 'Qtd. em Atraso',           tag: 'atraso',          enabled: true,  locked: false },
+    { key: 'vencimento',      label: 'Data Vencimento',          tag: 'vencimento',      enabled: true,  locked: false },
+    { key: 'dias_vencimento', label: 'Dias p/ Vencer (Nº)',      tag: 'dias_vencimento', enabled: false, locked: false },
+    { key: 'prazo_texto',     label: 'Prazo por Extenso',        tag: 'prazo_texto',     enabled: false, locked: false },
+    { key: 'valor_original',  label: 'Valor Original',           tag: 'valor_original',  enabled: false, locked: false },
+    { key: 'valor',           label: 'Valor Atualizado',         tag: 'valor',           enabled: true,  locked: false },
+    { key: 'desconto',        label: 'Desconto Aplicado',        tag: 'desconto',        enabled: true,  locked: false },
+    { key: 'valor_final',     label: 'Valor Final',              tag: 'valor_final',     enabled: true,  locked: false },
+    { key: 'parcelas',        label: 'Qtd. Parcelas',            tag: 'parcelas',        enabled: true,  locked: false },
+    { key: 'valor_parcela',   label: 'Valor da Parcela',         tag: 'valor_parcela',   enabled: true,  locked: false }
+  ];
+
+  let tagConfigs = JSON.parse(JSON.stringify(DEFAULT_TAG_CONFIGS));
+
+  // Os 3 modelos oficiais da Educ + Campanha com Desconto
+  const MODELOS_PADRAO_EDUC = [
+    {
+      id: 'educ_cobranca_formal',
+      nome: 'Cobrança Formal',
+      icone: 'fa-file-invoice',
+      modo: 'cobranca',
+      mensagem: `*Prezado(a) aluno(a),*
+
+Identificamos em nosso sistema uma pendência referente à mensalidade do seu curso (Matrícula *#matricula* - #aluno), com vencimento em *#vencimento*, que ainda consta em aberto.
+
+Reforçamos que a regularidade dos pagamentos é importante para a manutenção dos compromissos financeiros e administrativos junto à Educ Centro de Ensino.
+
+Dessa forma, solicitamos que entre em contato conosco ainda hoje para receber o link de pagamento e providenciar a regularização da pendência.
+
+Caso o pagamento já tenha sido realizado, pedimos a gentileza de desconsiderar esta mensagem e, se possível, encaminhar o comprovante para atualização em nosso sistema.
+
+Contamos com sua atenção e colaboração!
+
+*Atenciosamente,*
+*Educ Centro de Ensino* 💛`
+    },
+    {
+      id: 'educ_cobranca_suave',
+      nome: 'Cobrança Suave',
+      icone: 'fa-envelope-open-text',
+      modo: 'cobranca',
+      mensagem: `*Prezado(a) aluno(a),*
+
+Identificamos em nosso sistema que a mensalidade referente ao período letivo de *#aluno* (Matrícula *#matricula*), com vencimento em *#vencimento*, ainda consta em aberto.
+
+Pedimos, por gentileza, que verifique a pendência e, se possível, providencie a regularização o quanto antes.
+
+Para realizar o pagamento, basta entrar em contato conosco e solicitar o link. Estamos à disposição para esclarecer qualquer dúvida ou oferecer o suporte necessário.
+
+Caso o pagamento já tenha sido efetuado, pedimos que desconsidere esta mensagem.
+
+Agradecemos pela atenção, compreensão e parceria de sempre! 💛
+
+*Atenciosamente,*
+*Educ Centro de Ensino*`
+    },
+    {
+      id: 'educ_aniversariante',
+      nome: 'Aniversariantes do Mês',
+      icone: 'fa-cake-candles',
+      modo: 'promocao',
+      mensagem: `🎉✨ *#primeiroNome, este mês é todo seu!* ✨🎉
+
+Chegou o mês de comemorar a sua vida, e a Educ não poderia deixar essa data tão especial passar em branco! 🥳🎂
+
+Preparamos um presente para você! 🎁💛
+
+Durante o mês do seu aniversário, você terá direito a um *desconto especial na parcela da sua mensalidade*, como forma de carinho e agradecimento por fazer parte da família Educ.
+
+Aproveite esse benefício e celebre seu novo ciclo com ainda mais motivos para sorrir! 😊✨
+
+Desejamos a você um aniversário maravilhoso, repleto de alegrias, conquistas e realizações!
+
+*Com carinho,*
+*EDUC Centro de Ensino* 💛`
+    },
+    {
+      id: 'educ_negociacao_desc',
+      nome: 'Negociação c/ Desconto',
+      icone: 'fa-percent',
+      modo: 'cobranca',
+      mensagem: `Olá, *#primeiroNome*! Tudo bem?
+
+Identificamos *#atraso* pendência(s) referente à matrícula *#matricula* (*#aluno*), com vencimento em *#vencimento*.
+
+O valor atualizado está em R$ #valor.
+Pela nossa condição especial, liberamos *#desconto%* de desconto!
+
+✅ Valor à vista com desconto: *R$ #valor_final*
+💳 Ou em até *#parcelasx de R$ #valor_parcela*
+
+Vamos aproveitar para regularizar hoje?
+
+*Educ Centro de Ensino* 💛`
+    }
   ];
 
   let faixasValor = [
@@ -831,39 +877,14 @@
   ];
 
   const SCRIPTS_MODO = {
-    cobranca: `Olá, #primeiroNome! Tudo bem?
-
-Identificamos #atraso pendência(s) referente ao aluno(a) #aluno (vencimento #vencimento).
-
-O valor atualizado está em R$ #valor.
-Pela nossa condição especial, liberamos #desconto% de desconto!
-
-✅ Valor à vista com desconto: R$ #valor_final
-💳 Ou em até #parcelasx de R$ #valor_parcela
-
-Vamos aproveitar para regularizar hoje?`,
-    lembrete: `Oi, #primeiroNome! Tudo bem? 😊
-
-Passando apenas para lembrar que a mensalidade de #aluno vence #prazo_texto (dia #vencimento), no valor de R$ #valor_original.
-
-Se precisar da 2ª via ou chave PIX, é só responder por aqui!`,
-    promocao: `Parabéns, #primeiroNome! 🎉
-
-Temos uma ótima notícia para você e #aluno: você garantiu #premio na nossa campanha especial!
-
-🎁 Código / Regra: #cupom
-📅 Validade: até #validade
-
-Responda esta mensagem para confirmar o resgate!`,
-    aviso: `Olá, #primeiroNome! Tudo bem?
-
-Passando para deixar um comunicado importante referente a #aluno:
-📌 #assunto
-
-Qualquer dúvida, nossa equipe está à disposição por aqui!`
+    cobranca: MODELOS_PADRAO_EDUC[3].mensagem,
+    lembrete: `Oi, *#primeiroNome*! Tudo bem? 😊\n\nPassando apenas para lembrar que a mensalidade de *#aluno* (Matrícula *#matricula*) vence *#prazo_texto* (dia *#vencimento*), no valor de R$ #valor_original.\n\nSe precisar da 2ª via ou chave PIX, é só responder por aqui!\n\n*Educ Centro de Ensino* 💛`,
+    promocao: MODELOS_PADRAO_EDUC[2].mensagem,
+    aviso: `Olá, *#primeiroNome*! Tudo bem?\n\nPassando para deixar um comunicado importante referente à matrícula *#matricula* (*#aluno*):\n📌 #assunto\n\nQualquer dúvida, nossa equipe está à disposição por aqui!\n\n*Educ Centro de Ensino* 💛`
   };
 
   let modoAtual = 'cobranca';
+  let activeMsgId = 'educ_negociacao_desc';
   let rawRows = [];
   let processedRows = [];
   let filteredRows = [];
@@ -871,17 +892,13 @@ Qualquer dúvida, nossa equipe está à disposição por aqui!`
   let previewIndex = 0;
   let campanhasCache = [];
   let ultimoDiagnostico = { erros: [], avisos: [] };
-
-  // Estado de ordenação e exibição da tabela
   let sortState = { key: null, dir: 'asc' };
   let showAllRows = false;
 
   const CAMEL_NATIVAS = new Set(['primeiroNome']);
 
   window.addEventListener('DOMContentLoaded', () => {
-    const hojeISO = new Date().toISOString().split('T')[0];
-    document.getElementById('dataRefLembrete').value = hojeISO;
-
+    document.getElementById('dataRefLembrete').value = new Date().toISOString().split('T')[0];
     const apiSalva = localStorage.getItem('cgd_waseller_api') || API_URL_PADRAO;
     document.getElementById('apiUrl').value = apiSalva;
     if (apiSalva) localStorage.setItem('cgd_waseller_api', apiSalva);
@@ -892,23 +909,33 @@ Qualquer dúvida, nossa equipe está à disposição por aqui!`
     setupDropzone();
   });
 
-  // ==================== MODAIS ====================
+  // Garante compatibilidade com modelos antigos salvos antes de "matricula" existir
+  function migrarTagConfigs(savedList) {
+    if (!Array.isArray(savedList) || !savedList.length) return JSON.parse(JSON.stringify(DEFAULT_TAG_CONFIGS));
+    const list = JSON.parse(JSON.stringify(savedList));
+    const hasMat = list.some(t => t.key === 'matricula');
+    if (!hasMat) {
+      const oldContrato = list.find(t => t.key === 'contrato');
+      if (oldContrato) {
+        oldContrato.key = 'matricula';
+        oldContrato.tag = 'matricula';
+        oldContrato.label = 'Matrícula / Contrato CGD';
+        oldContrato.enabled = true;
+      } else {
+        list.splice(1, 0, { key: 'matricula', label: 'Matrícula / Contrato CGD', tag: 'matricula', enabled: true, locked: false });
+      }
+    }
+    return list;
+  }
+
   function abrirModal(id) {
     if (id === 'modalModelos') renderListaModelos();
     if (id === 'modalTags') renderTagEditor();
     document.getElementById(id).classList.remove('hidden');
   }
-  function fecharModal(id) {
-    document.getElementById(id).classList.add('hidden');
-  }
-  function fecharModalBackdrop(e, id) {
-    if (e.target.id === id) fecharModal(id);
-  }
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      ['modalModelos', 'modalTags', 'modalConfig'].forEach(fecharModal);
-    }
-  });
+  function fecharModal(id) { document.getElementById(id).classList.add('hidden'); }
+  function fecharModalBackdrop(e, id) { if (e.target.id === id) fecharModal(id); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') ['modalModelos','modalTags','modalConfig'].forEach(fecharModal); });
 
   function showToast(msg) {
     const el = document.getElementById('toast');
@@ -917,7 +944,6 @@ Qualquer dúvida, nossa equipe está à disposição por aqui!`
     setTimeout(() => el.classList.remove('show'), 3200);
   }
 
-  // ==================== MODOS DE CAMPANHA ====================
   function trocarModo(modo, inicial = false) {
     modoAtual = modo;
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -930,305 +956,226 @@ Qualquer dúvida, nossa equipe está à disposição por aqui!`
     document.getElementById('kpiCardFinal').classList.toggle('hidden', modo !== 'cobranca');
 
     const presetsAtivos = {
-      cobranca: ['numero','nome','primeiroNome','aluno','atraso','vencimento','valor','desconto','valor_final','parcelas','valor_parcela'],
-      lembrete: ['numero','nome','primeiroNome','aluno','vencimento','dias_vencimento','prazo_texto','valor_original'],
-      promocao: ['numero','nome','primeiroNome','aluno'],
-      aviso:    ['numero','nome','primeiroNome','aluno']
+      cobranca: ['numero','matricula','nome','primeiroNome','aluno','atraso','vencimento','valor','desconto','valor_final','parcelas','valor_parcela'],
+      lembrete: ['numero','matricula','nome','primeiroNome','aluno','vencimento','dias_vencimento','prazo_texto','valor_original'],
+      promocao: ['numero','matricula','nome','primeiroNome','aluno'],
+      aviso:    ['numero','matricula','nome','primeiroNome','aluno']
     };
 
-    if (modo === 'promocao') {
-      garantirCustomVar('premio', '1 mês de desconto especial');
-      garantirCustomVar('cupom', 'EDUCVIP');
-      garantirCustomVar('validade', '30/11/2026');
-    } else if (modo === 'aviso') {
-      garantirCustomVar('assunto', 'Confirmação de presença na aula prática');
-    }
+    if (modo === 'aviso') garantirCustomVar('assunto', 'Confirmação de presença na aula prática');
 
     const ativosSet = new Set(presetsAtivos[modo]);
     tagConfigs.forEach(tc => {
       if (tc.locked) { tc.enabled = true; return; }
-      if (tc.isCustom) {
-        if (modo === 'promocao') tc.enabled = ['premio','cupom','validade'].includes(tc.key);
-        else if (modo === 'aviso') tc.enabled = (tc.key === 'assunto');
-        else tc.enabled = false;
-      } else {
-        tc.enabled = ativosSet.has(tc.key);
-      }
+      if (tc.isCustom) tc.enabled = (modo === 'aviso' && tc.key === 'assunto');
+      else tc.enabled = ativosSet.has(tc.key);
     });
 
     if (!inicial || !document.getElementById('msgTemplate').value.trim()) {
       document.getElementById('msgTemplate').value = SCRIPTS_MODO[modo];
+      activeMsgId = modo === 'promocao' ? 'educ_aniversariante' : modo === 'cobranca' ? 'educ_negociacao_desc' : '';
     }
 
-    const nomesPadrao = {
-      cobranca: 'Cobrança Progressiva',
-      lembrete: 'Lembrete de Vencimento',
-      promocao: 'Campanha Premiada',
-      aviso: 'Aviso Geral / Práticas'
-    };
+    const nomesPadrao = { cobranca: 'Cobrança Progressiva', lembrete: 'Lembrete de Vencimento', promocao: 'Aniversariantes / Promoção', aviso: 'Aviso Geral / Práticas' };
     if (!inicial) {
       document.getElementById('nomeCampanha').value = nomesPadrao[modo];
       atualizarSubtituloHeader(nomesPadrao[modo]);
     }
 
+    renderMsgChips();
     renderTagEditor();
     reprocessar();
   }
 
   function atualizarSubtituloHeader(nome) {
-    document.getElementById('headerSubtitle').textContent = `Campanha ativa: ${nome}`;
+    document.getElementById('headerSubtitle').textContent = `Educ Centro de Ensino • Campanha ativa: ${nome}`;
   }
 
   function garantirCustomVar(nome, valorPadrao) {
     const clean = sanitizarTagNome(nome);
     if (!tagConfigs.some(t => t.key === clean)) {
-      tagConfigs.push({
-        key: clean, label: 'Variável fixa', tag: clean,
-        enabled: true, locked: false, isCustom: true, fixedValue: valorPadrao
-      });
+      tagConfigs.push({ key: clean, label: 'Variável fixa', tag: clean, enabled: true, locked: false, isCustom: true, fixedValue: valorPadrao });
     }
   }
 
-  // ==================== FAIXAS DE DESCONTO ====================
+  // ==================== GALERIA DE MENSAGENS DA CAMPANHA ====================
+  function renderMsgChips() {
+    const cont = document.getElementById('msgChipsContainer');
+    const padroesHtml = MODELOS_PADRAO_EDUC.map((m, idx) => `
+      <button type="button" class="msg-chip ${activeMsgId === m.id ? 'active' : ''}" onclick="selecionarMensagemPadrao(${idx})">
+        <i class="fa-solid ${m.icone}"></i> ${m.nome}
+      </button>
+    `).join('');
+
+    const salvosHtml = campanhasCache.map((c, idx) => `
+      <button type="button" class="msg-chip ${activeMsgId === c.id ? 'active' : ''}" onclick="aplicarCampanha(${idx})">
+        <i class="fa-solid fa-star" style="color:var(--gold-bright);"></i> ${c.nome}
+        <span class="chip-del" onclick="event.stopPropagation(); excluirModelo(${idx});" title="Excluir mensagem">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+      </button>
+    `).join('');
+
+    cont.innerHTML = padroesHtml + salvosHtml;
+  }
+
+  function selecionarMensagemPadrao(idx) {
+    const m = MODELOS_PADRAO_EDUC[idx];
+    if (!m) return;
+    activeMsgId = m.id;
+    if (m.modo && m.modo !== modoAtual) trocarModo(m.modo, true);
+    document.getElementById('msgTemplate').value = m.mensagem;
+    document.getElementById('nomeCampanha').value = m.nome;
+    atualizarSubtituloHeader(m.nome);
+    renderMsgChips();
+    validarEAtualizarPreview();
+    showToast(`Mensagem "${m.nome}" aplicada!`);
+  }
+
+  function novaMensagemEmBranco() {
+    activeMsgId = '';
+    const ta = document.getElementById('msgTemplate');
+    ta.value = '';
+    ta.focus();
+    renderMsgChips();
+    validarEAtualizarPreview();
+    showToast('Campo livre pronto para escrever sua mensagem.');
+  }
+
+  function toggleSalvarInline(forceState) {
+    const bar = document.getElementById('saveInlineBar');
+    const show = typeof forceState === 'boolean' ? forceState : bar.classList.contains('hidden');
+    bar.classList.toggle('hidden', !show);
+    if (show) {
+      const inp = document.getElementById('inlineMsgNome');
+      inp.value = document.getElementById('nomeCampanha').value || '';
+      inp.focus();
+    }
+  }
+
+  async function salvarMensagemRapida() {
+    const nome = document.getElementById('inlineMsgNome').value.trim();
+    if (!nome) return showToast('Digite um nome para salvar a mensagem.');
+    document.getElementById('nomeCampanha').value = nome;
+    await salvarCampanha();
+    toggleSalvarInline(false);
+  }
+
+  // ==================== FAIXAS ====================
   function alternarPoliticaDesconto() {
     const pol = document.getElementById('politicaDesconto').value;
     document.getElementById('boxDescontoUnico').classList.toggle('hidden', pol !== 'unico');
     document.getElementById('boxFaixas').classList.toggle('hidden', pol === 'unico');
-    renderFaixas();
-    reprocessar();
+    renderFaixas(); reprocessar();
   }
-
-  function getFaixasAtuais() {
-    return document.getElementById('politicaDesconto').value === 'faixa_atraso' ? faixasAtraso : faixasValor;
-  }
-
+  function getFaixasAtuais() { return document.getElementById('politicaDesconto').value === 'faixa_atraso' ? faixasAtraso : faixasValor; }
   function renderFaixas() {
     const isAtraso = document.getElementById('politicaDesconto').value === 'faixa_atraso';
-    document.getElementById('tierHeader').innerHTML = isAtraso
-      ? '<span>De (Parc.)</span><span>Até (Parc.)</span><span>Desc (%)</span><span></span>'
-      : '<span>De (R$)</span><span>Até (R$)</span><span>Desc (%)</span><span></span>';
-
-    const arr = getFaixasAtuais();
-    document.getElementById('tiersContainer').innerHTML = arr.map((f, i) => `
+    document.getElementById('tierHeader').innerHTML = isAtraso ? '<span>De (Parc.)</span><span>Até (Parc.)</span><span>Desc (%)</span><span></span>' : '<span>De (R$)</span><span>Até (R$)</span><span>Desc (%)</span><span></span>';
+    document.getElementById('tiersContainer').innerHTML = getFaixasAtuais().map((f, i) => `
       <div class="tier-row">
-        <input type="number" step="${isAtraso ? '1' : '0.01'}" value="${f.min}" onchange="editarFaixa(${i}, 'min', this.value)" />
-        <input type="number" step="${isAtraso ? '1' : '0.01'}" value="${f.max}" onchange="editarFaixa(${i}, 'max', this.value)" />
-        <input type="number" step="0.5" value="${f.desconto}" onchange="editarFaixa(${i}, 'desconto', this.value)" />
-        <button class="btn btn-danger-soft btn-xs" onclick="removerFaixa(${i})" title="Remover"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-    `).join('');
+        <input type="number" step="${isAtraso ? '1' : '0.01'}" value="${f.min}" onchange="editarFaixa(${i},'min',this.value)" />
+        <input type="number" step="${isAtraso ? '1' : '0.01'}" value="${f.max}" onchange="editarFaixa(${i},'max',this.value)" />
+        <input type="number" step="0.5" value="${f.desconto}" onchange="editarFaixa(${i},'desconto',this.value)" />
+        <button class="btn btn-danger-soft btn-xs" onclick="removerFaixa(${i})"><i class="fa-solid fa-xmark"></i></button>
+      </div>`).join('');
   }
-
-  function editarFaixa(idx, campo, val) {
-    getFaixasAtuais()[idx][campo] = parseFloat(val) || 0;
-    reprocessar();
-  }
-
+  function editarFaixa(i, c, v) { getFaixasAtuais()[i][c] = parseFloat(v) || 0; reprocessar(); }
   function adicionarFaixa() {
-    const arr = getFaixasAtuais();
-    const ultimo = arr[arr.length - 1];
-    const novoMin = ultimo ? Number((ultimo.max + 1).toFixed(2)) : 0;
-    arr.push({ min: novoMin, max: novoMin + 500, desconto: 25 });
-    renderFaixas();
-    reprocessar();
+    const arr = getFaixasAtuais(), u = arr[arr.length - 1], m = u ? Number((u.max + 1).toFixed(2)) : 0;
+    arr.push({ min: m, max: m + 500, desconto: 25 }); renderFaixas(); reprocessar();
   }
+  function removerFaixa(i) { const arr = getFaixasAtuais(); if (arr.length <= 1) return; arr.splice(i, 1); renderFaixas(); reprocessar(); }
 
-  function removerFaixa(idx) {
-    const arr = getFaixasAtuais();
-    if (arr.length <= 1) return showToast('Mantenha pelo menos uma faixa.');
-    arr.splice(idx, 1);
-    renderFaixas();
-    reprocessar();
-  }
-
-  // ==================== EDITOR DE TAGS & VARIÁVEIS ====================
+  // ==================== TAGS ====================
   function sanitizarTagNome(str) {
     const raw = String(str || '').trim().replace(/^#/, '');
     if (CAMEL_NATIVAS.has(raw)) return raw;
-    return raw
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
-      .replace(/[\s.\-\/]+/g, '_')
-      .replace(/[^a-z0-9_]/g, '')
-      .replace(/_+/g, '_')
-      .replace(/^_|_$/g, '') || 'tag_personalizada';
+    return raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[\s.\-\/]+/g, '_').replace(/[^a-z0-9_]/g, '').replace(/_+/g, '_').replace(/^_|_$/g, '') || 'tag_personalizada';
   }
-
   function validarNomeIndividualTag(nome) {
-    const problemas = [];
-    if (!nome) problemas.push('Nome vazio');
-    if (/\s/.test(nome)) problemas.push('contém espaço (use _)');
-    if (/[À-ÿ]/.test(nome)) problemas.push('contém acento/cedilha');
-    if (/[^a-zA-Z0-9_]/.test(nome)) problemas.push('contém ponto ou símbolo proibido');
-    if (/[A-Z]/.test(nome) && !CAMEL_NATIVAS.has(nome)) problemas.push('contém maiúscula');
-    return problemas;
+    const p = [];
+    if (!nome) p.push('Nome vazio');
+    if (/\s/.test(nome)) p.push('contém espaço');
+    if (/[À-ÿ]/.test(nome)) p.push('contém acento');
+    if (/[^a-zA-Z0-9_]/.test(nome)) p.push('contém ponto/símbolo');
+    if (/[A-Z]/.test(nome) && !CAMEL_NATIVAS.has(nome)) p.push('contém maiúscula');
+    return p;
   }
-
   function adicionarVariavelPersonalizada() {
     const nomeRaw = document.getElementById('novaVarNome').value.trim();
     const valor = document.getElementById('novaVarValor').value.trim();
     if (!nomeRaw) return showToast('Digite o nome da nova variável.');
-
     const nomeLimpo = sanitizarTagNome(nomeRaw);
-    const existente = tagConfigs.find(t => t.key === nomeLimpo);
-    if (existente && existente.isCustom) {
-      existente.fixedValue = valor;
-      existente.enabled = true;
-    } else if (!existente) {
-      tagConfigs.push({
-        key: nomeLimpo, label: 'Variável fixa', tag: nomeLimpo,
-        enabled: true, locked: false, isCustom: true, fixedValue: valor
-      });
-    } else {
-      return showToast('Já existe uma coluna nativa com esse nome.');
-    }
-
+    const ex = tagConfigs.find(t => t.key === nomeLimpo);
+    if (ex && ex.isCustom) { ex.fixedValue = valor; ex.enabled = true; }
+    else if (!ex) tagConfigs.push({ key: nomeLimpo, label: 'Variável fixa', tag: nomeLimpo, enabled: true, locked: false, isCustom: true, fixedValue: valor });
+    else return showToast('Já existe uma coluna nativa com esse nome.');
     document.getElementById('novaVarNome').value = '';
     document.getElementById('novaVarValor').value = '';
-    renderTagEditor();
-    reprocessar();
-    showToast(`Variável #${nomeLimpo} adicionada!`);
+    renderTagEditor(); reprocessar(); showToast(`Variável #${nomeLimpo} adicionada!`);
   }
-
   function renderTagEditor() {
-    const ativosCount = tagConfigs.filter(t => t.enabled).length;
-    document.getElementById('badgeTags').textContent = ativosCount;
-
-    const list = document.getElementById('tagEditorList');
-    list.innerHTML = tagConfigs.map((tc, idx) => {
+    document.getElementById('badgeTags').textContent = tagConfigs.filter(t => t.enabled).length;
+    document.getElementById('tagEditorList').innerHTML = tagConfigs.map((tc, idx) => {
       const probs = tc.enabled ? validarNomeIndividualTag(tc.tag) : [];
-      const invalidClass = probs.length ? 'invalid-tag' : '';
       return `
         <div class="tag-editor-item">
           <input type="checkbox" ${tc.enabled ? 'checked' : ''} ${tc.locked ? 'disabled' : ''} onchange="toggleTag(${idx}, this.checked)" />
-          <input type="text" class="${invalidClass}" value="${tc.tag}" ${tc.locked ? 'readonly' : ''}
-                 title="${probs.length ? probs.join(', ') : 'Tag válida'}"
-                 oninput="renomearTag(${idx}, this.value)" />
-          ${tc.isCustom
-            ? `<input type="text" value="${tc.fixedValue || ''}" placeholder="Valor fixo" oninput="editarValorCustom(${idx}, this.value)" />`
-            : `<span class="tag-origin">${tc.label}</span>`}
-          ${tc.isCustom
-            ? `<button class="btn btn-danger-soft btn-xs" onclick="removerCustomTag(${idx})" title="Excluir"><i class="fa-solid fa-trash"></i></button>`
-            : `<span style="text-align:center; color:${probs.length ? 'var(--danger)' : 'var(--success)'};">
-                 <i class="fa-solid ${probs.length ? 'fa-triangle-exclamation' : 'fa-check'}"></i>
-               </span>`}
-        </div>
-      `;
+          <input type="text" class="${probs.length ? 'invalid-tag' : ''}" value="${tc.tag}" ${tc.locked ? 'readonly' : ''} oninput="renomearTag(${idx}, this.value)" />
+          ${tc.isCustom ? `<input type="text" value="${tc.fixedValue || ''}" oninput="editarValorCustom(${idx}, this.value)" />` : `<span class="tag-origin">${tc.label}</span>`}
+          ${tc.isCustom ? `<button class="btn btn-danger-soft btn-xs" onclick="removerCustomTag(${idx})"><i class="fa-solid fa-trash"></i></button>` : `<span style="text-align:center; color:${probs.length ? 'var(--danger)' : 'var(--success)'};"><i class="fa-solid ${probs.length ? 'fa-triangle-exclamation' : 'fa-check'}"></i></span>`}
+        </div>`;
     }).join('');
-    renderTagsClicaveis();
-    popularSelectFiltroColunas();
+    renderTagsClicaveis(); popularSelectFiltroColunas();
   }
-
-  function toggleTag(idx, checked) {
-    tagConfigs[idx].enabled = checked;
-    renderTagEditor();
-    aplicarFiltrosEOrdenacao();
-    validarEAtualizarPreview();
-  }
-
-  function renomearTag(idx, novoNome) {
-    tagConfigs[idx].tag = novoNome;
-    renderTagsClicaveis();
-    popularSelectFiltroColunas();
-    renderTabela();
-    validarEAtualizarPreview();
-    const inputs = document.querySelectorAll('#tagEditorList .tag-editor-item');
-    if (inputs[idx]) {
-      const inp = inputs[idx].querySelector('input[type="text"]');
-      const probs = tagConfigs[idx].enabled ? validarNomeIndividualTag(novoNome) : [];
-      inp.classList.toggle('invalid-tag', probs.length > 0);
-    }
-  }
-
-  function editarValorCustom(idx, novoVal) {
-    tagConfigs[idx].fixedValue = novoVal;
-    processedRows.forEach(r => r[tagConfigs[idx].key] = novoVal);
-    aplicarFiltrosEOrdenacao();
-    atualizarPreview();
-  }
-
-  function removerCustomTag(idx) {
-    tagConfigs.splice(idx, 1);
-    renderTagEditor();
-    reprocessar();
-  }
-
+  function toggleTag(i, c) { tagConfigs[i].enabled = c; renderTagEditor(); aplicarFiltrosEOrdenacao(); validarEAtualizarPreview(); }
+  function renomearTag(i, n) { tagConfigs[i].tag = n; renderTagsClicaveis(); popularSelectFiltroColunas(); renderTabela(); validarEAtualizarPreview(); }
+  function editarValorCustom(i, v) { tagConfigs[i].fixedValue = v; processedRows.forEach(r => r[tagConfigs[i].key] = v); aplicarFiltrosEOrdenacao(); atualizarPreview(); }
+  function removerCustomTag(i) { tagConfigs.splice(i, 1); renderTagEditor(); reprocessar(); }
   function corrigirTodasAsTags() {
-    let corrigidas = 0;
-    tagConfigs.forEach(tc => {
-      if (tc.locked) return;
-      const limpo = sanitizarTagNome(tc.tag);
-      if (tc.tag !== limpo) { tc.tag = limpo; corrigidas++; }
-    });
-    renderTagEditor();
-    renderTabela();
-    validarEAtualizarPreview();
-    showToast(corrigidas ? `${corrigidas} tag(s) padronizadas!` : 'Todas as tags já estão corretas.');
+    tagConfigs.forEach(tc => { if (!tc.locked) tc.tag = sanitizarTagNome(tc.tag); });
+    renderTagEditor(); renderTabela(); validarEAtualizarPreview(); showToast('Tags padronizadas!');
   }
-
   function renderTagsClicaveis() {
-    document.getElementById('tagsBox').innerHTML = tagConfigs
-      .filter(t => t.enabled)
-      .map(t => `<span class="tag-pill ${t.isCustom ? 'custom-pill' : ''}" onclick="inserirTag('#${t.tag}')">#${t.tag}</span>`)
-      .join('');
+    document.getElementById('tagsBox').innerHTML = tagConfigs.filter(t => t.enabled)
+      .map(t => `<span class="tag-pill ${t.isCustom ? 'custom-pill' : ''}" onclick="inserirTag('#${t.tag}')">#${t.tag}</span>`).join('');
   }
-
   function inserirTag(tag) {
-    const ta = document.getElementById('msgTemplate');
-    const start = ta.selectionStart, end = ta.selectionEnd;
-    ta.value = ta.value.substring(0, start) + tag + ta.value.substring(end);
-    ta.focus();
-    ta.selectionStart = ta.selectionEnd = start + tag.length;
+    const ta = document.getElementById('msgTemplate'), s = ta.selectionStart, e = ta.selectionEnd;
+    ta.value = ta.value.substring(0, s) + tag + ta.value.substring(e);
+    ta.focus(); ta.selectionStart = ta.selectionEnd = s + tag.length;
     validarEAtualizarPreview();
   }
 
-  // ==================== VALIDADOR DE TAGS ====================
+  // ==================== VALIDADOR ====================
   function validarEAtualizarPreview() {
     const msg = document.getElementById('msgTemplate').value;
     const ativos = tagConfigs.filter(t => t.enabled);
     const mapaAtivos = new Map(ativos.map(t => [t.tag, t]));
     const erros = [], avisos = [];
 
-    const contagemNomes = {};
     ativos.forEach(tc => {
-      contagemNomes[tc.tag] = (contagemNomes[tc.tag] || 0) + 1;
       const probs = validarNomeIndividualTag(tc.tag);
       if (probs.length) {
-        const sugestao = sanitizarTagNome(tc.tag);
-        erros.push({
-          texto: `Coluna <strong>"${tc.tag}"</strong> fora do padrão: ${probs.join(', ')}.`,
-          acaoLabel: `Corrigir para "${sugestao}"`,
-          acao: () => { tc.tag = sugestao; renderTagEditor(); renderTabela(); validarEAtualizarPreview(); }
-        });
+        const sug = sanitizarTagNome(tc.tag);
+        erros.push({ texto: `Coluna <strong>"${tc.tag}"</strong> fora do padrão: ${probs.join(', ')}.`, acaoLabel: `Corrigir para "${sug}"`, acao: () => { tc.tag = sug; renderTagEditor(); renderTabela(); validarEAtualizarPreview(); } });
       }
     });
 
-    Object.entries(contagemNomes).forEach(([nome, qtd]) => {
-      if (qtd > 1) erros.push({ texto: `Coluna duplicada: existem ${qtd} colunas chamadas <strong>"${nome}"</strong>.` });
-    });
-
-    ativos.forEach(tc => {
-      if (tc.tag.includes('_')) {
-        const comEspaco = '#' + tc.tag.replace(/_/g, ' ');
-        if (msg.toLowerCase().includes(comEspaco.toLowerCase())) {
-          erros.push({
-            texto: `Você escreveu <strong>"${comEspaco}"</strong> com espaço. A coluna é <strong>#${tc.tag}</strong>.`,
-            acaoLabel: `Trocar para #${tc.tag}`,
-            acao: () => {
-              const regex = new RegExp(comEspaco.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-              document.getElementById('msgTemplate').value = msg.replace(regex, '#' + tc.tag);
-              validarEAtualizarPreview();
-            }
-          });
-        }
-      }
-    });
+    if (/@nome\b/i.test(msg)) {
+      erros.push({
+        texto: `Você usou <strong>@nome</strong>, mas o WaSeller utiliza <strong>#</strong>.`,
+        acaoLabel: `Trocar para #primeiroNome`,
+        acao: () => { document.getElementById('msgTemplate').value = msg.replace(/@nome\b/gi, '#primeiroNome'); validarEAtualizarPreview(); }
+      });
+    }
 
     const encontradas = new Set();
-    const regexTags = /#([^\s,;!?:()\[\]"]+)/g;
+    const regexTags = /#([^\s,;!?:()\[\]"*]+)/g;
     let match;
     while ((match = regexTags.exec(msg)) !== null) {
-      let tok = match[1].replace(/[.!?,;:]+$/, '');
+      let tok = match[1].replace(/[.!?,;:*]+$/, '');
       if (tok.endsWith('%')) tok = tok.slice(0, -1);
       if (!mapaAtivos.has(tok) && tok.endsWith('x') && mapaAtivos.has(tok.slice(0, -1))) tok = tok.slice(0, -1);
       if (tok) encontradas.add(tok);
@@ -1237,127 +1184,79 @@ Qualquer dúvida, nossa equipe está à disposição por aqui!`
     encontradas.forEach(tagUsada => {
       if (mapaAtivos.has(tagUsada)) return;
       const normUsada = sanitizarTagNome(tagUsada);
+
+      if (normUsada === 'contrato' && mapaAtivos.has('matricula')) {
+        erros.push({
+          texto: `Você escreveu <strong>#${tagUsada}</strong>, mas a coluna na planilha se chama <strong>#matricula</strong>.`,
+          acaoLabel: `Trocar para #matricula`,
+          acao: () => { document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#matricula'); validarEAtualizarPreview(); }
+        });
+        return;
+      }
+
       const matchAtivo = ativos.find(t => sanitizarTagNome(t.tag) === normUsada);
       if (matchAtivo) {
-        erros.push({
-          texto: `Tag <strong>#${tagUsada}</strong> diverge da coluna <strong>#${matchAtivo.tag}</strong>.`,
-          acaoLabel: `Corrigir para #${matchAtivo.tag}`,
-          acao: () => {
-            document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + matchAtivo.tag);
-            validarEAtualizarPreview();
-          }
-        });
+        erros.push({ texto: `Tag <strong>#${tagUsada}</strong> diverge da coluna <strong>#${matchAtivo.tag}</strong>.`, acaoLabel: `Corrigir`, acao: () => { document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + matchAtivo.tag); validarEAtualizarPreview(); } });
         return;
       }
-      const matchDesativado = tagConfigs.find(t => t.tag === tagUsada || sanitizarTagNome(t.tag) === normUsada);
-      if (matchDesativado) {
-        erros.push({
-          texto: `Tag <strong>#${tagUsada}</strong> está desmarcada no Editor de Tags.`,
-          acaoLabel: `Ativar #${matchDesativado.tag}`,
-          acao: () => {
-            matchDesativado.enabled = true;
-            if (tagUsada !== matchDesativado.tag) {
-              document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + matchDesativado.tag);
-            }
-            renderTagEditor(); aplicarFiltrosEOrdenacao(); validarEAtualizarPreview();
-          }
-        });
+      const matchDes = tagConfigs.find(t => t.tag === tagUsada || sanitizarTagNome(t.tag) === normUsada);
+      if (matchDes) {
+        erros.push({ texto: `Tag <strong>#${tagUsada}</strong> está desmarcada no Editor de Tags.`, acaoLabel: `Ativar #${matchDes.tag}`, acao: () => { matchDes.enabled = true; renderTagEditor(); aplicarFiltrosEOrdenacao(); validarEAtualizarPreview(); } });
         return;
       }
-      const sugerido = sanitizarTagNome(tagUsada);
-      erros.push({
-        texto: `Tag <strong>#${tagUsada}</strong> não existe na planilha.`,
-        acaoLabel: `Criar #${sugerido}`,
-        acao: () => {
-          const val = prompt(`Valor fixo para a coluna "${sugerido}":`, '');
-          if (val === null) return;
-          garantirCustomVar(sugerido, val);
-          if (tagUsada !== sugerido) document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + sugerido);
-          renderTagEditor(); reprocessar();
-        }
-      });
+      const sug = sanitizarTagNome(tagUsada);
+      erros.push({ texto: `Tag <strong>#${tagUsada}</strong> não existe na planilha.`, acaoLabel: `Criar #${sug}`, acao: () => { const v = prompt(`Valor fixo para "${sug}":`, ''); if (v === null) return; garantirCustomVar(sug, v); renderTagEditor(); reprocessar(); } });
     });
 
-    if (modoAtual === 'cobranca' && document.getElementById('formatoPercent').value === 'symbol' && msg.includes('#desconto%')) {
-      avisos.push('A coluna já tem "%" e o texto também tem "#desconto%". Vai sair "25%%".');
-    }
-
     ultimoDiagnostico = { erros, avisos };
-    renderValidadorUI(erros, avisos);
-    atualizarPreview();
-  }
-
-  function renderValidadorUI(erros, avisos) {
     const panel = document.getElementById('validatorPanel');
     const kpi = document.getElementById('kpiStatusTags');
     const badge = document.getElementById('badgeTags');
     window._acoesCorrecao = [];
 
-    if (erros.length > 0) {
+    if (erros.length) {
       panel.className = 'validator-panel validator-err';
       kpi.innerHTML = `<span style="color:var(--danger)">${erros.length} erro(s)</span>`;
       badge.classList.add('err');
       panel.innerHTML = `<strong style="display:block; margin-bottom:4px;">⚠️ Corrija antes de exportar:</strong>` +
-        erros.map((e, i) => {
-          let btn = '';
-          if (e.acao) {
-            window._acoesCorrecao[i] = e.acao;
-            btn = `<button class="btn btn-brown btn-xs" onclick="window._acoesCorrecao[${i}]()">${e.acaoLabel}</button>`;
-          }
-          return `<div class="validator-item"><span><i class="fa-solid fa-circle-xmark"></i> ${e.texto}</span>${btn}</div>`;
-        }).join('');
-    } else if (avisos.length > 0) {
-      panel.className = 'validator-panel validator-warn';
-      kpi.innerHTML = `<span style="color:var(--warn)">${avisos.length} aviso(s)</span>`;
-      badge.classList.remove('err');
-      panel.innerHTML = avisos.map(a => `<div class="validator-item"><span><i class="fa-solid fa-triangle-exclamation"></i> ${a}</span></div>`).join('');
+        erros.map((e, i) => { window._acoesCorrecao[i] = e.acao; return `<div class="validator-item"><span><i class="fa-solid fa-circle-xmark"></i> ${e.texto}</span>${e.acao ? `<button class="btn btn-brown btn-xs" onclick="window._acoesCorrecao[${i}]()">${e.acaoLabel}</button>` : ''}</div>`; }).join('');
     } else {
       panel.className = 'validator-panel validator-ok';
       kpi.innerHTML = `<span style="color:var(--success)">100% Validado</span>`;
       badge.classList.remove('err');
       panel.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>Tudo certo!</strong> Todas as tags do texto batem exatamente com as colunas da planilha.`;
     }
+    atualizarPreview();
   }
 
   function copiarMensagem() {
     navigator.clipboard.writeText(document.getElementById('msgTemplate').value);
-    showToast(ultimoDiagnostico.erros.length ? 'Copiado (atenção: há erros de tag!).' : 'Script validado copiado!');
+    showToast('Script copiado para colar no WaSeller!');
   }
 
-  // ==================== UPLOAD (EXCEL, CSV, PDF) ====================
+  // ==================== UPLOAD ====================
   function setupDropzone() {
-    const dz = document.getElementById('dropzone');
-    const input = document.getElementById('fileInput');
+    const dz = document.getElementById('dropzone'), input = document.getElementById('fileInput');
     input.addEventListener('change', e => { if (e.target.files[0]) lerArquivo(e.target.files[0]); });
     dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
     dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
-    dz.addEventListener('drop', e => {
-      e.preventDefault(); dz.classList.remove('dragover');
-      if (e.dataTransfer.files[0]) lerArquivo(e.dataTransfer.files[0]);
-    });
+    dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); if (e.dataTransfer.files[0]) lerArquivo(e.dataTransfer.files[0]); });
   }
-
   function lerArquivo(file) {
-    const ext = file.name.split('.').pop().toLowerCase();
-    if (ext === 'pdf') return lerPDF(file);
+    if (file.name.toLowerCase().endsWith('.pdf')) return lerPDF(file);
     const reader = new FileReader();
     reader.onload = e => {
       try {
         const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array', cellDates: false });
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const json = XLSX.utils.sheet_to_json(ws, { defval: '' });
-        if (!json.length) return showToast('A planilha está vazia.');
-        rawRows = json;
+        rawRows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
         reprocessar();
-        showToast(`"${file.name}" carregado (${json.length} registros).`);
-      } catch (err) { showToast('Erro ao ler arquivo: ' + err.message); }
+        showToast(`"${file.name}" carregado (${rawRows.length} registros).`);
+      } catch (err) { showToast('Erro: ' + err.message); }
     };
     reader.readAsArrayBuffer(file);
   }
-
   async function lerPDF(file) {
-    if (!window.pdfjsLib) return showToast('Biblioteca PDF.js indisponível.');
-    showToast('Lendo PDF do CGD...');
+    if (!window.pdfjsLib) return showToast('PDF.js indisponível.');
     try {
       const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
       const linhasTexto = [];
@@ -1365,128 +1264,95 @@ Qualquer dúvida, nossa equipe está à disposição por aqui!`
         const content = await (await pdf.getPage(p)).getTextContent();
         const mapa = [];
         content.items.forEach(it => {
-          const str = it.str.trim();
-          if (!str) return;
+          const str = it.str.trim(); if (!str) return;
           const y = Math.round(it.transform[5]), x = it.transform[4];
-          let linha = mapa.find(l => Math.abs(l.y - y) <= 4);
-          if (!linha) { linha = { y, items: [] }; mapa.push(linha); }
-          linha.items.push({ x, str });
+          let l = mapa.find(k => Math.abs(k.y - y) <= 4);
+          if (!l) { l = { y, items: [] }; mapa.push(l); }
+          l.items.push({ x, str });
         });
-        mapa.sort((a, b) => b.y - a.y).forEach(l => {
-          l.items.sort((a, b) => a.x - b.x);
-          linhasTexto.push(l.items.map(i => i.str).join(' '));
-        });
+        mapa.sort((a, b) => b.y - a.y).forEach(l => { l.items.sort((a, b) => a.x - b.x); linhasTexto.push(l.items.map(i => i.str).join(' ')); });
       }
-
-      const extraidos = [];
-      const phoneRegex = /\(?\d{2}\)?\s*9?\d{4}[-.\s]?\d{4}(?:\s*\([^)]+\))?/g;
-      const dateRegex = /\b(\d{2}\/\d{2}\/\d{4})\b/;
-      const moneyRegex = /(?:R\$\s*)?(\d{1,3}(?:\.\d{3})*,\d{2})\b/g;
-
+      const extraidos = [], phoneRegex = /\(?\d{2}\)?\s*9?\d{4}[-.\s]?\d{4}(?:\s*[\[(][^\])]+[\])])?/g;
       linhasTexto.forEach(linha => {
-        const phones = linha.match(phoneRegex);
-        if (!phones || !phones.length) return;
-        const dateMatch = linha.match(dateRegex);
-        const moneys = [...linha.matchAll(moneyRegex)].map(m => m[1]);
-        const contratoMatch = linha.match(/^\s*(\d{2,8})\b/);
+        const phones = linha.match(phoneRegex); if (!phones) return;
+        const dm = linha.match(/\b(\d{2}\/\d{2}\/\d{4})\b/), ms = [...linha.matchAll(/(?:R\$\s*)?(\d{1,3}(?:\.\d{3})*,\d{2})\b/g)].map(m => m[1]);
+        const cm = linha.match(/^\s*(\d{2,8})\b/);
         let resto = linha;
-        if (contratoMatch) resto = resto.replace(contratoMatch[0], '');
+        if (cm) resto = resto.replace(cm[0], '');
         phones.forEach(ph => resto = resto.replace(ph, ''));
-        if (dateMatch) resto = resto.replace(dateMatch[0], '');
-        moneys.forEach(m => resto = resto.replace('R$', '').replace(m, ''));
-        let atraso = 1;
-        const qtdMatch = resto.match(/\b(\d{1,2})\s*$/);
-        if (qtdMatch) { atraso = parseInt(qtdMatch[1], 10); resto = resto.replace(/\b\d{1,2}\s*$/, ''); }
+        if (dm) resto = resto.replace(dm[0], '');
+        ms.forEach(m => resto = resto.replace('R$', '').replace(m, ''));
+        let atraso = 0; const qm = resto.match(/\b(\d{1,2})\s*$/);
+        if (qm) { atraso = parseInt(qm[1], 10); resto = resto.replace(/\b\d{1,2}\s*$/, ''); }
         const nomeLimpo = resto.replace(/\s{2,}/g, ' ').trim();
-        extraidos.push({
-          'Contrato': contratoMatch ? contratoMatch[1] : '',
-          'Aluno': nomeLimpo || 'Aluno',
-          'Responsável': nomeLimpo || 'Responsável',
-          'Fone 1': phones[0] || '', 'Fone 2': phones[1] || '',
-          'Qtd. em Atraso': atraso,
-          'Vencimento': dateMatch ? dateMatch[1] : '',
-          'Valor': moneys.length ? moneys[moneys.length - 1] : '0,00'
-        });
+        extraidos.push({ 'Contrato': cm ? cm[1] : '', 'Aluno': nomeLimpo || 'Aluno', 'Responsável': nomeLimpo || 'Responsável', 'Fone 1': phones[0] || '', 'Fone 2': phones[1] || '', 'Qtd. em Atraso': atraso, 'Vencimento': dm ? dm[1] : '', 'Valor': ms.length ? ms[ms.length - 1] : '0,00' });
       });
-
       if (!extraidos.length) return showToast('Nenhum telefone encontrado no PDF.');
-      rawRows = extraidos;
-      reprocessar();
-      showToast(`PDF lido! ${extraidos.length} registro(s) extraído(s).`);
-    } catch (err) { showToast('Erro ao ler PDF: ' + err.message); }
+      rawRows = extraidos; reprocessar(); showToast(`PDF lido (${extraidos.length} registros).`);
+    } catch (err) { showToast('Erro PDF: ' + err.message); }
   }
 
   function carregarExemploCGD() {
-    const hoje = new Date();
-    const addDias = d => {
-      const dt = new Date(hoje.getTime() + d * 86400000);
-      return `${String(dt.getDate()).padStart(2,'0')}/${String(dt.getMonth()+1).padStart(2,'0')}/${dt.getFullYear()}`;
-    };
     rawRows = [
-      { 'Contrato': '2872', 'Aluno': 'MARIA LUIZA LOPES LIMA', 'Responsável': 'MARIA LUIZA LOPES LIMA', 'Fone 1': '(82) 98790-7830 (Aluno)', 'Fone 2': '', 'Qtd. em Atraso': 1, 'Vencimento': addDias(5), 'Valor': '109,90' },
-      { 'Contrato': '3104', 'Aluno': 'JOÃO PEDRO SANTOS SILVA', 'Responsável': 'CARLA REGINA SANTOS', 'Fone 1': '(79) 99912-3456 (Mãe)', 'Fone 2': '(79) 98844-5566 (Pai)', 'Qtd. em Atraso': 3, 'Vencimento': addDias(2), 'Valor': '420,00' },
-      { 'Contrato': '3190', 'Aluno': 'PEDRO HENRIQUE COSTA', 'Responsável': 'ROBERTO CARLOS COSTA', 'Fone 1': '(79) 99811-2233 (Pai)', 'Fone 2': '', 'Qtd. em Atraso': 5, 'Vencimento': addDias(-15), 'Valor': '780,50' }
+      { 'Contrato': '1069', 'Aluno': 'Filipe Messias Sales Vieira', 'Responsável': 'José Vieira Dos Santos Filho', 'Fone 1': '(79) 98131-5431 [Darci (mãe)]', 'Fone 2': '', 'Qtd. em Atraso': 6, 'Vencimento': '30/11/2026', 'Valor': '169,90' },
+      { 'Contrato': '1382', 'Aluno': 'João Clebson Dos Santos', 'Responsável': 'Adenizia dos Santos Barbosa', 'Fone 1': '(79) 99138-7132 [Aluno]', 'Fone 2': '(79) 9936-5188 [Mãe]', 'Qtd. em Atraso': 14, 'Vencimento': '30/11/2026', 'Valor': '189,90' },
+      { 'Contrato': '1733', 'Aluno': 'Tacila Mireli Santos Da Cruz', 'Responsável': 'Tacila Mireli Santos Da Cruz', 'Fone 1': '(79) 99838-4817 [Tacila]', 'Fone 2': '(79) 9931-6631 [Neuzeni (mãe)]', 'Qtd. em Atraso': 0, 'Vencimento': '30/11/2026', 'Valor': '149,90' }
     ];
-    reprocessar();
-    showToast('Exemplo CGD carregado!');
+    reprocessar(); showToast('Exemplo no padrão real do CGD carregado!');
   }
 
-  // ==================== MOTOR DE PROCESSAMENTO ====================
-  function normKey(str) { return String(str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim(); }
-  function getField(row, candidates) {
+  // ==================== MOTOR ====================
+  function normKey(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim(); }
+  function getField(row, cands) {
     const keys = Object.keys(row);
-    for (const c of candidates) {
-      const found = keys.find(k => normKey(k) === c || normKey(k).includes(c));
-      if (found && row[found] !== '') return row[found];
+    for (const c of cands) {
+      const f = keys.find(k => normKey(k) === c || normKey(k).includes(c));
+      if (f !== undefined && row[f] !== '') return row[f];
     }
     return '';
   }
-  function capitalizarNome(str) {
-    const preps = new Set(['de', 'da', 'do', 'das', 'dos', 'e']);
-    return String(str || '').trim().toLowerCase().split(/\s+/).map((w, i) => (i > 0 && preps.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  function capitalizarNome(s) {
+    const p = new Set(['de','da','do','das','dos','e']);
+    return String(s || '').trim().toLowerCase().split(/\s+/).map((w, i) => (i > 0 && p.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   }
-  function parseMoney(val) {
-    if (typeof val === 'number') return val;
-    let s = String(val || '0').replace(/[^\d.,-]/g, '').trim();
+  function parseMoney(v) {
+    if (typeof v === 'number') return v;
+    let s = String(v || '0').replace(/[^\d.,-]/g, '').trim();
     if (!s) return 0;
     if (s.includes('.') && s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
     else if (s.includes(',')) s = s.replace(',', '.');
     return parseFloat(s) || 0;
   }
-  function formatBRL(num) { return (isNaN(num) ? 0 : num).toFixed(2).replace('.', ','); }
-  function formatDateBR(val) {
-    if (typeof val === 'number' && val > 20000) {
-      const d = XLSX.SSF.parse_date_code(val);
+  function formatBRL(n) { return (isNaN(n) ? 0 : n).toFixed(2).replace('.', ','); }
+  function formatDateBR(v) {
+    if (typeof v === 'number' && v > 20000) {
+      const d = XLSX.SSF.parse_date_code(v);
       if (d) return `${String(d.d).padStart(2,'0')}/${String(d.m).padStart(2,'0')}/${d.y}`;
     }
-    const s = String(val || '').trim();
-    const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    const s = String(v || '').trim(), iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
     return iso ? `${iso[3]}/${iso[2]}/${iso[1]}` : s;
   }
   function calcularDiasVencimento(dataBR) {
     const m = String(dataBR || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
     if (!m) return { diff: null, dias: '', texto: '' };
-    const dtVenc = new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
-    const refStr = document.getElementById('dataRefLembrete').value;
-    const p = refStr ? refStr.split('-') : [];
-    const dtRef = p.length === 3 ? new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])) : new Date(new Date().setHours(0,0,0,0));
-    const diff = Math.round((dtVenc - dtRef) / 86400000);
-    let texto = diff === 0 ? 'hoje' : diff === 1 ? 'amanhã' : diff > 1 ? `daqui a ${diff} dias` : diff === -1 ? 'ontem' : `há ${Math.abs(diff)} dias`;
-    return { diff, dias: String(Math.abs(diff)), texto };
+    const dtV = new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+    const p = (document.getElementById('dataRefLembrete').value || '').split('-');
+    const dtR = p.length === 3 ? new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])) : new Date(new Date().setHours(0,0,0,0));
+    const diff = Math.round((dtV - dtR) / 86400000);
+    return { diff, dias: String(Math.abs(diff)), texto: diff === 0 ? 'hoje' : diff === 1 ? 'amanhã' : diff > 1 ? `daqui a ${diff} dias` : diff === -1 ? 'ontem' : `há ${Math.abs(diff)} dias` };
   }
   function parsePhone(raw, addDDI) {
     const str = String(raw || '').trim();
     if (!str) return null;
-    const roleMatch = str.match(/\(([A-Za-zÀ-ÿ\s]+)\)\s*$/);
+    const bracketMatch = str.match(/\[([^\]]+)\]\s*$/);
+    const parenMatch = str.match(/\(([A-Za-zÀ-ÿ\s]+)\)\s*$/);
+    const rotulo = bracketMatch ? bracketMatch[1].trim() : parenMatch ? parenMatch[1].trim() : 'Principal';
     let digits = str.replace(/\D/g, '').replace(/^0+/, '');
     if (addDDI && (digits.length === 10 || digits.length === 11)) digits = '55' + digits;
     if (digits.length < 10) return null;
-    return { numero: digits, rotulo: roleMatch ? roleMatch[1].trim() : 'Principal' };
+    return { numero: digits, rotulo };
   }
-  function buscarDescontoFaixa(val, faixas) {
-    for (const f of faixas) if (val >= f.min && val <= f.max) return f.desconto;
-    return 0;
-  }
+  function buscarDescontoFaixa(v, f) { for (const x of f) if (v >= x.min && v <= x.max) return x.desconto; return 0; }
 
   function reprocessar() {
     const jurosTipo = document.getElementById('jurosTipo').value;
@@ -1506,20 +1372,28 @@ Qualquer dúvida, nossa equipe está à disposição por aqui!`
     const dedup = document.getElementById('chkDuplicados').checked;
     const cap = document.getElementById('chkCapitalizar').checked;
 
-    processedRows = [];
-    removedCount = 0;
+    processedRows = []; removedCount = 0;
     const seenPhones = new Set();
     let somaOriginal = 0, somaFinal = 0;
 
     rawRows.forEach(row => {
-      const contrato = String(getField(row, ['contrato', 'matricula', 'codigo'])).trim();
+      // Puxa Contrato -> #matricula (com fallback para a 1ª coluna se for código numérico)
+      let matricula = String(getField(row, ['contrato', 'contrat', 'matricula', 'codigo'])).trim();
+      if (!matricula) {
+        const firstVal = String(Object.values(row)[0] || '').trim();
+        if (/^\d{2,10}$/.test(firstVal)) matricula = firstVal;
+      }
+
       let aluno = String(getField(row, ['aluno', 'estudante'])).trim();
       let responsavel = String(getField(row, ['responsavel', 'nome', 'cliente'])).trim() || aluno;
       if (cap) { aluno = capitalizarNome(aluno); responsavel = capitalizarNome(responsavel); }
 
       const nomeUsado = (campoNome === 'aluno' && aluno) ? aluno : (responsavel || aluno);
       const primeiroNome = nomeUsado.split(' ')[0] || '';
-      const atraso = parseInt(getField(row, ['qtd. em atraso', 'qtd', 'atraso', 'parcelas'])) || 1;
+      const rawAtraso = getField(row, ['qtd. em atraso', 'qtd', 'atraso', 'parcelas']);
+      const parsedAtraso = parseInt(rawAtraso, 10);
+      const atraso = isNaN(parsedAtraso) ? 0 : parsedAtraso;
+
       const vencimento = formatDateBR(getField(row, ['vencimento', 'data']));
       const vencInfo = calcularDiasVencimento(vencimento);
       const valorOriginalNum = parseMoney(getField(row, ['valor', 'total', 'mensalidade', 'debito']));
@@ -1567,7 +1441,8 @@ Qualquer dúvida, nossa equipe está à disposição por aqui!`
 
         const item = {
           numero: tel.numero, _rotulo: tel.rotulo, _faixa: faixaInfo,
-          nome: nomeUsado, primeiroNome, aluno, responsavel, contrato,
+          matricula, contrato: matricula,
+          nome: nomeUsado, primeiroNome, aluno, responsavel,
           atraso: String(atraso), vencimento, dias_vencimento: vencInfo.dias, prazo_texto: vencInfo.texto,
           valor_original: formatBRL(valorOriginalNum), juros_reais: formatBRL(valorJurosNum),
           valor: formatBRL(valorComJurosNum), desconto: textoDesconto,
@@ -1590,412 +1465,225 @@ Qualquer dúvida, nossa equipe está à disposição por aqui!`
     validarEAtualizarPreview();
   }
 
-  // ==================== FILTROS E ORDENAÇÃO CLICÁVEL DA TABELA ====================
+  // ==================== TABELA, FILTROS E ORDENAÇÃO ====================
   function popularSelectFiltroColunas() {
-    const sel = document.getElementById('filterCol');
-    const prev = sel.value;
-    const ativos = tagConfigs.filter(t => t.enabled);
-    sel.innerHTML = '<option value="__all__">Todas as colunas</option>' +
-      ativos.map(t => `<option value="${t.key}">${t.tag}</option>`).join('');
+    const sel = document.getElementById('filterCol'), prev = sel.value;
+    sel.innerHTML = '<option value="__all__">Todas as colunas</option>' + tagConfigs.filter(t => t.enabled).map(t => `<option value="${t.key}">${t.tag}</option>`).join('');
     if ([...sel.options].some(o => o.value === prev)) sel.value = prev;
     atualizarValoresRapidos();
   }
-
-  function onFilterColChange() {
-    atualizarValoresRapidos();
-    aplicarFiltrosEOrdenacao();
-  }
-
+  function onFilterColChange() { atualizarValoresRapidos(); aplicarFiltrosEOrdenacao(); }
   function atualizarValoresRapidos() {
-    const colKey = document.getElementById('filterCol').value;
-    const selQuick = document.getElementById('filterQuickVal');
-    if (colKey === '__all__' || !processedRows.length) {
-      selQuick.classList.add('hidden');
-      selQuick.value = '';
-      return;
-    }
+    const colKey = document.getElementById('filterCol').value, selQuick = document.getElementById('filterQuickVal');
+    if (colKey === '__all__' || !processedRows.length) { selQuick.classList.add('hidden'); selQuick.value = ''; return; }
     const unicos = [...new Set(processedRows.map(r => String(r[colKey] ?? '').trim()).filter(Boolean))];
-    if (unicos.length > 0 && unicos.length <= 30) {
+    if (unicos.length > 0 && unicos.length <= 35) {
       unicos.sort((a, b) => compararValores(a, b));
-      selQuick.innerHTML = '<option value="">-- Todos os valores --</option>' +
-        unicos.map(u => `<option value="${u.replace(/"/g, '&quot;')}">${u}</option>`).join('');
+      selQuick.innerHTML = '<option value="">-- Todos os valores --</option>' + unicos.map(u => `<option value="${u.replace(/"/g, '&quot;')}">${u}</option>`).join('');
       selQuick.classList.remove('hidden');
-    } else {
-      selQuick.classList.add('hidden');
-      selQuick.value = '';
-    }
+    } else { selQuick.classList.add('hidden'); selQuick.value = ''; }
   }
-
-  function aplicarFiltroRapido() {
-    const val = document.getElementById('filterQuickVal').value;
-    document.getElementById('filterText').value = val;
-    aplicarFiltrosEOrdenacao();
-  }
-
+  function aplicarFiltroRapido() { document.getElementById('filterText').value = document.getElementById('filterQuickVal').value; aplicarFiltrosEOrdenacao(); }
   function limparFiltrosTabela() {
     document.getElementById('filterCol').value = '__all__';
     document.getElementById('filterText').value = '';
     document.getElementById('filterQuickVal').classList.add('hidden');
-    document.getElementById('filterQuickVal').value = '';
     sortState = { key: null, dir: 'asc' };
     aplicarFiltrosEOrdenacao();
   }
-
   function ordenarPorColuna(key) {
-    if (sortState.key === key) {
-      sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
-    } else {
-      sortState.key = key;
-      sortState.dir = 'asc';
-    }
+    sortState = sortState.key === key ? { key, dir: sortState.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'asc' };
     aplicarFiltrosEOrdenacao();
   }
-
   function compararValores(a, b) {
-    const sa = String(a ?? '').trim();
-    const sb = String(b ?? '').trim();
-    // Datas DD/MM/AAAA
-    const da = sa.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-    const db = sb.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-    if (da && db) {
-      return new Date(da[3], da[2]-1, da[1]) - new Date(db[3], db[2]-1, db[1]);
-    }
-    // Números / Moeda BR / Percentuais
+    const sa = String(a ?? '').trim(), sb = String(b ?? '').trim();
+    const da = sa.match(/^(\d{2})\/(\d{2})\/(\d{4})$/), db = sb.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (da && db) return new Date(da[3], da[2]-1, da[1]) - new Date(db[3], db[2]-1, db[1]);
     const na = parseFloat(sa.replace(/[^\d,.-]/g, '').replace(/\.(?=\d{3})/g, '').replace(',', '.'));
     const nb = parseFloat(sb.replace(/[^\d,.-]/g, '').replace(/\.(?=\d{3})/g, '').replace(',', '.'));
-    const isNumA = !isNaN(na) && /^[\dR$\s.,%-]+$/.test(sa);
-    const isNumB = !isNaN(nb) && /^[\dR$\s.,%-]+$/.test(sb);
-    if (isNumA && isNumB) return na - nb;
+    if (!isNaN(na) && !isNaN(nb) && /^[\dR$\s.,%-]+$/.test(sa) && /^[\dR$\s.,%-]+$/.test(sb)) return na - nb;
     return sa.localeCompare(sb, 'pt-BR', { numeric: true, sensitivity: 'base' });
   }
-
   function aplicarFiltrosEOrdenacao() {
-    const colKey = document.getElementById('filterCol').value;
-    const termo = normKey(document.getElementById('filterText').value);
+    const colKey = document.getElementById('filterCol').value, termo = normKey(document.getElementById('filterText').value);
     const ativos = tagConfigs.filter(t => t.enabled);
-
-    filteredRows = processedRows.filter(row => {
-      if (!termo) return true;
-      if (colKey === '__all__') {
-        return ativos.some(t => normKey(row[t.key]).includes(termo));
-      }
-      return normKey(row[colKey]).includes(termo);
-    });
-
-    if (sortState.key) {
-      const k = sortState.key;
-      const mult = sortState.dir === 'asc' ? 1 : -1;
-      filteredRows.sort((a, b) => compararValores(a[k], b[k]) * mult);
-    }
-
-    previewIndex = 0;
-    renderTabela();
-    atualizarPreview();
+    filteredRows = processedRows.filter(row => !termo ? true : colKey === '__all__' ? ativos.some(t => normKey(row[t.key]).includes(termo)) : normKey(row[colKey]).includes(termo));
+    if (sortState.key) { const k = sortState.key, m = sortState.dir === 'asc' ? 1 : -1; filteredRows.sort((a, b) => compararValores(a[k], b[k]) * m); }
+    previewIndex = 0; renderTabela(); atualizarPreview();
   }
-
-  function alternarMostrarTodos() {
-    showAllRows = !showAllRows;
-    renderTabela();
-  }
-
+  function alternarMostrarTodos() { showAllRows = !showAllRows; renderTabela(); }
   function renderTabela() {
     const ativos = tagConfigs.filter(t => t.enabled);
-    const thead = document.getElementById('tabelaHead');
-    const tbody = document.getElementById('tabelaBody');
-    const info = document.getElementById('tableCountInfo');
-    const btnAll = document.getElementById('btnShowAllRows');
-
-    thead.innerHTML = '<tr>' + ativos.map(t => {
-      const isSorted = sortState.key === t.key;
-      const arrow = isSorted ? (sortState.dir === 'asc' ? '▲' : '▼') : '⇅';
-      return `<th class="${isSorted ? 'sorted' : ''}" onclick="ordenarPorColuna('${t.key}')" title="Clique para ordenar por ${t.tag}">
-        ${t.tag} <span class="sort-ind">${arrow}</span>
-      </th>`;
+    document.getElementById('tabelaHead').innerHTML = '<tr>' + ativos.map(t => {
+      const s = sortState.key === t.key;
+      return `<th class="${s ? 'sorted' : ''}" onclick="ordenarPorColuna('${t.key}')">${t.tag} <span class="sort-ind">${s ? (sortState.dir === 'asc' ? '▲' : '▼') : '⇅'}</span></th>`;
     }).join('') + '</tr>';
 
+    const tbody = document.getElementById('tabelaBody'), info = document.getElementById('tableCountInfo'), btnAll = document.getElementById('btnShowAllRows');
     if (!filteredRows.length) {
-      tbody.innerHTML = `<tr><td colspan="${ativos.length}" style="text-align:center; padding:26px; color:#888;">
-        ${processedRows.length ? 'Nenhum contato corresponde ao filtro aplicado.' : 'Aguardando planilha ou PDF do CGD...'}
-      </td></tr>`;
-      info.textContent = processedRows.length ? `0 de ${processedRows.length} contatos (filtro ativo)` : 'Nenhum registro carregado.';
-      btnAll.classList.add('hidden');
-      return;
+      tbody.innerHTML = `<tr><td colspan="${ativos.length}" style="text-align:center; padding:26px; color:#888;">${processedRows.length ? 'Nenhum contato corresponde ao filtro.' : 'Aguardando planilha ou PDF do CGD...'}</td></tr>`;
+      info.textContent = processedRows.length ? `0 de ${processedRows.length} contatos` : 'Nenhum registro carregado.';
+      btnAll.classList.add('hidden'); return;
     }
-
-    const limite = showAllRows ? filteredRows.length : 100;
-    const exibidos = filteredRows.slice(0, limite);
-
-    tbody.innerHTML = exibidos.map(r =>
-      '<tr>' + ativos.map(t => `<td>${r[t.key] ?? ''}</td>`).join('') + '</tr>'
-    ).join('');
-
-    info.textContent = `Exibindo ${exibidos.length} de ${filteredRows.length} contato(s) filtrados (${processedRows.length} no total) • Clique nos cabeçalhos para ordenar.`;
-
-    if (filteredRows.length > 100) {
-      btnAll.classList.remove('hidden');
-      btnAll.textContent = showAllRows ? 'Mostrar apenas 100' : `Mostrar todos (${filteredRows.length})`;
-    } else {
-      btnAll.classList.add('hidden');
-    }
+    const exibidos = filteredRows.slice(0, showAllRows ? filteredRows.length : 100);
+    tbody.innerHTML = exibidos.map(r => '<tr>' + ativos.map(t => `<td>${r[t.key] ?? ''}</td>`).join('') + '</tr>').join('');
+    info.textContent = `Exibindo ${exibidos.length} de ${filteredRows.length} contato(s) (${processedRows.length} no total) • Clique nos títulos para ordenar.`;
+    btnAll.classList.toggle('hidden', filteredRows.length <= 100);
+    btnAll.textContent = showAllRows ? 'Mostrar apenas 100' : `Mostrar todos (${filteredRows.length})`;
   }
 
-  // ==================== PRÉVIA WHATSAPP ====================
-  function mudarPreview(delta) {
-    const base = filteredRows.length ? filteredRows : processedRows;
-    if (!base.length) return;
-    previewIndex = (previewIndex + delta + base.length) % base.length;
-    atualizarPreview();
+  function formatWhatsAppPreview(rawText) {
+    const safe = String(rawText || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return safe.replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>');
   }
 
+  function mudarPreview(d) { const b = filteredRows.length ? filteredRows : processedRows; if (!b.length) return; previewIndex = (previewIndex + d + b.length) % b.length; atualizarPreview(); }
   function atualizarPreview() {
-    const bubble = document.getElementById('previewBubble');
-    const info = document.getElementById('previewInfo');
-    const base = filteredRows.length ? filteredRows : processedRows;
-    if (!base.length) {
-      info.textContent = 'Prévia da mensagem (aguardando dados)';
-      bubble.textContent = 'Carregue uma planilha/PDF do CGD ou clique em "Carregar Exemplo CGD".';
-      return;
-    }
-    const row = base[previewIndex] || base[0];
-    info.textContent = `Contato ${previewIndex + 1} de ${base.length} • ${row.numero} (${row._rotulo}) ${modoAtual === 'cobranca' ? '• ' + row._faixa : ''}`;
+    const bubble = document.getElementById('previewBubble'), info = document.getElementById('previewInfo');
+    const b = filteredRows.length ? filteredRows : processedRows;
+    if (!b.length) { info.textContent = 'Prévia da mensagem (aguardando dados)'; bubble.textContent = 'Carregue uma planilha/PDF do CGD ou clique em "Carregar Exemplo CGD".'; return; }
+    const row = b[previewIndex] || b[0];
+    info.textContent = `Contato ${previewIndex + 1} de ${b.length} • ${row.numero} (${row._rotulo}) • Matrícula ${row.matricula}`;
     let txt = document.getElementById('msgTemplate').value;
-    tagConfigs.filter(t => t.enabled).sort((a, b) => b.tag.length - a.tag.length).forEach(tc => {
-      txt = txt.split('#' + tc.tag).join(row[tc.key] ?? '');
-    });
-    bubble.textContent = txt;
+    tagConfigs.filter(t => t.enabled).sort((a, b) => b.tag.length - a.tag.length).forEach(tc => { txt = txt.split('#' + tc.tag).join(row[tc.key] ?? ''); });
+    bubble.innerHTML = formatWhatsAppPreview(txt);
   }
 
-  // ==================== EXPORTAÇÃO XLSX (TEXTO PURO) ====================
+  // ==================== EXPORTAÇÃO ====================
   function gerarXlsxTextoPuro(headers, rowsArray, filename) {
     const ws = XLSX.utils.aoa_to_sheet([headers, ...rowsArray]);
     const range = XLSX.utils.decode_range(ws['!ref']);
-    for (let R = range.s.r; R <= range.e.r; ++R) {
+    for (let R = range.s.r; R <= range.e.r; ++R)
       for (let C = range.s.c; C <= range.e.c; ++C) {
-        const addr = XLSX.utils.encode_cell({ r: R, c: C });
-        if (ws[addr]) { ws[addr].v = String(ws[addr].v ?? ''); ws[addr].t = 's'; ws[addr].z = '@'; delete ws[addr].w; }
+        const a = XLSX.utils.encode_cell({ r: R, c: C });
+        if (ws[a]) { ws[a].v = String(ws[a].v ?? ''); ws[a].t = 's'; ws[a].z = '@'; delete ws[a].w; }
       }
-    }
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Envio_WaSeller');
     XLSX.writeFile(wb, filename);
   }
-
-  function getBaseExportacao() {
-    return document.getElementById('chkExportFiltered').checked ? filteredRows : processedRows;
-  }
-
+  function getBaseExportacao() { return document.getElementById('chkExportFiltered').checked ? filteredRows : processedRows; }
   function exportarWaSeller() {
     const base = getBaseExportacao();
-    if (!base.length) return showToast('Nenhum contato disponível para exportar.');
-    if (ultimoDiagnostico.erros.length > 0 && !confirm(`Há ${ultimoDiagnostico.erros.length} erro(s) de tag no Validador. Baixar mesmo assim?`)) return;
-
-    const ativos = tagConfigs.filter(t => t.enabled);
-    const slug = (document.getElementById('nomeCampanha').value || modoAtual).replace(/\s+/g, '_');
+    if (!base.length) return showToast('Nenhum contato para exportar.');
+    if (ultimoDiagnostico.erros.length && !confirm(`Há ${ultimoDiagnostico.erros.length} erro(s) de tag. Baixar mesmo assim?`)) return;
+    const ativos = tagConfigs.filter(t => t.enabled), slug = (document.getElementById('nomeCampanha').value || modoAtual).replace(/\s+/g, '_');
     gerarXlsxTextoPuro(ativos.map(t => t.tag), base.map(r => ativos.map(t => String(r[t.key] ?? ''))), `WaSeller_${slug}.xlsx`);
-    registrarHistoricoAPI(base.length);
-    showToast(`Planilha WaSeller baixada (${base.length} contatos em texto puro)!`);
+    registrarHistoricoAPI(base.length); showToast(`Planilha WaSeller baixada (${base.length} contatos)!`);
   }
-
   function exportarControle() {
     const base = getBaseExportacao();
-    if (!base.length) return showToast('Nenhum contato disponível para exportar.');
-    const headers = ['Contrato','Aluno','Responsável','Telefone','Tipo Contato','Qtd. Atraso','Vencimento','Prazo','Valor Original','Juros (R$)','Valor Atualizado','Regra Desconto','Desconto','Desconto (R$)','Valor Final','Parcelas','Valor Parcela'];
-    const body = base.map(r => [r.contrato, r.aluno, r.responsavel, r.numero, r._rotulo, r.atraso, r.vencimento, r.prazo_texto, r.valor_original, r.juros_reais, r.valor, r._faixa, r.desconto, r.desconto_reais, r.valor_final, r.parcelas + 'x', r.valor_parcela]);
-    const slug = (document.getElementById('nomeCampanha').value || modoAtual).replace(/\s+/g, '_');
-    gerarXlsxTextoPuro(headers, body, `Controle_Interno_${slug}.xlsx`);
+    if (!base.length) return showToast('Nenhum contato para exportar.');
+    const headers = ['Matrícula','Aluno','Responsável','Telefone','Tipo Contato','Qtd. Atraso','Vencimento','Prazo','Valor Original','Juros (R$)','Valor Atualizado','Regra Desconto','Desconto','Desconto (R$)','Valor Final','Parcelas','Valor Parcela'];
+    const body = base.map(r => [r.matricula, r.aluno, r.responsavel, r.numero, r._rotulo, r.atraso, r.vencimento, r.prazo_texto, r.valor_original, r.juros_reais, r.valor, r._faixa, r.desconto, r.desconto_reais, r.valor_final, r.parcelas + 'x', r.valor_parcela]);
+    gerarXlsxTextoPuro(headers, body, `Controle_Interno_${(document.getElementById('nomeCampanha').value || modoAtual).replace(/\s+/g, '_')}.xlsx`);
     showToast(`Controle Interno baixado (${base.length} registros)!`);
   }
 
-  // ==================== MODELOS DE CAMPANHA (CRUD) & API ====================
+  // ==================== API & MODELOS ====================
   function salvarApiUrl() {
     const url = document.getElementById('apiUrl').value.trim();
     localStorage.setItem('cgd_waseller_api', url);
-    showToast(url ? 'API salva! Sincronizando modelos...' : 'Modo offline ativado.');
+    showToast(url ? 'API salva! Sincronizando...' : 'Modo offline ativado.');
     carregarCampanhas();
   }
-
   function getConfigAtual() {
-    return {
-      modoAtual,
-      jurosTipo: document.getElementById('jurosTipo').value,
-      jurosValor: document.getElementById('jurosValor').value,
-      politicaDesconto: document.getElementById('politicaDesconto').value,
-      descontoTipo: document.getElementById('descontoTipo').value,
-      descontoValor: document.getElementById('descontoValor').value,
-      descontoBase: document.getElementById('descontoBase').value,
-      formatoPercent: document.getElementById('formatoPercent').value,
-      parcelasQtd: document.getElementById('parcelasQtd').value,
-      parcelaBase: document.getElementById('parcelaBase').value,
-      faixasValor, faixasAtraso, tagConfigs
-    };
+    return { modoAtual, jurosTipo: document.getElementById('jurosTipo').value, jurosValor: document.getElementById('jurosValor').value, politicaDesconto: document.getElementById('politicaDesconto').value, descontoTipo: document.getElementById('descontoTipo').value, descontoValor: document.getElementById('descontoValor').value, descontoBase: document.getElementById('descontoBase').value, formatoPercent: document.getElementById('formatoPercent').value, parcelasQtd: document.getElementById('parcelasQtd').value, parcelaBase: document.getElementById('parcelaBase').value, faixasValor, faixasAtraso, tagConfigs };
   }
-
   async function carregarCampanhas() {
     const api = localStorage.getItem('cgd_waseller_api') || '';
     if (api) {
       try {
-        const res = await fetch(`${api}?action=listCampaigns`);
-        const data = await res.json();
+        const data = await (await fetch(`${api}?action=listCampaigns`)).json();
         if (data.ok) {
           campanhasCache = data.campanhas || [];
           localStorage.setItem('cgd_campanhas_v3', JSON.stringify(campanhasCache));
-          atualizarBadgeModelos();
-          renderListaModelos();
-          return;
+          atualizarBadgeModelos(); renderMsgChips(); renderListaModelos(); return;
         }
       } catch (e) { console.warn('Fallback local:', e); }
     }
     campanhasCache = JSON.parse(localStorage.getItem('cgd_campanhas_v3') || '[]');
-    atualizarBadgeModelos();
-    renderListaModelos();
+    atualizarBadgeModelos(); renderMsgChips(); renderListaModelos();
   }
-
-  function atualizarBadgeModelos() {
-    document.getElementById('badgeModelos').textContent = campanhasCache.length;
-  }
-
+  function atualizarBadgeModelos() { document.getElementById('badgeModelos').textContent = campanhasCache.length + MODELOS_PADRAO_EDUC.length; }
   function renderListaModelos() {
     const cont = document.getElementById('modelListContainer');
-    if (!campanhasCache.length) {
-      cont.innerHTML = `<p style="font-size:0.82rem; color:var(--gray-muted); padding:10px 0;">Nenhum modelo salvo ainda. Preencha o nome acima e clique em "Salvar Modelo".</p>`;
-      return;
-    }
-    cont.innerHTML = campanhasCache.map((c, idx) => `
+    const salvosHtml = campanhasCache.map((c, idx) => `
       <div class="model-card">
-        <div>
-          <strong>${c.nome} <span class="badge badge-gold">${(c.config && c.config.modoAtual) || 'cobranca'}</span></strong>
-          <small>${c.atualizado_em ? 'Atualizado em ' + c.atualizado_em : 'Salvo localmente'}</small>
-        </div>
+        <div><strong>⭐ ${c.nome} <span class="badge badge-gold">${(c.config && c.config.modoAtual) || 'cobranca'}</span></strong><small>${c.atualizado_em || 'Salvo'}</small></div>
         <div style="display:flex; gap:6px;">
           <button class="btn btn-primary btn-xs" onclick="aplicarCampanha(${idx})"><i class="fa-solid fa-play"></i> Aplicar</button>
           <button class="btn btn-outline btn-xs" onclick="prepararEdicaoModelo(${idx})"><i class="fa-solid fa-pen"></i> Editar</button>
-          <button class="btn btn-danger-soft btn-xs" onclick="excluirModelo(${idx})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+          <button class="btn btn-danger-soft btn-xs" onclick="excluirModelo(${idx})"><i class="fa-solid fa-trash"></i></button>
         </div>
-      </div>
-    `).join('');
+      </div>`).join('');
+    const padroesHtml = MODELOS_PADRAO_EDUC.map((m, idx) => `
+      <div class="model-card">
+        <div><strong>${m.nome} <span class="badge badge-gold">Padrão Educ</span></strong><small>Pronto para uso imediato</small></div>
+        <button class="btn btn-outline btn-xs" onclick="selecionarMensagemPadrao(${idx}); fecharModal('modalModelos');"><i class="fa-solid fa-play"></i> Usar</button>
+      </div>`).join('');
+    cont.innerHTML = salvosHtml + padroesHtml;
   }
-
   function aplicarCampanha(idx) {
-    const c = campanhasCache[idx];
-    if (!c) return;
+    const c = campanhasCache[idx]; if (!c) return;
     const cfg = c.config || {};
+    activeMsgId = c.id;
     if (cfg.faixasValor) faixasValor = JSON.parse(JSON.stringify(cfg.faixasValor));
     if (cfg.faixasAtraso) faixasAtraso = JSON.parse(JSON.stringify(cfg.faixasAtraso));
-    if (cfg.tagConfigs) tagConfigs = JSON.parse(JSON.stringify(cfg.tagConfigs));
-
+    if (cfg.tagConfigs) tagConfigs = migrarTagConfigs(cfg.tagConfigs);
     document.getElementById('nomeCampanha').value = c.nome;
     atualizarSubtituloHeader(c.nome);
     if (cfg.modoAtual) trocarModo(cfg.modoAtual, true);
-    ['jurosTipo','jurosValor','politicaDesconto','descontoTipo','descontoValor','descontoBase','formatoPercent','parcelasQtd','parcelaBase'].forEach(id => {
-      if (cfg[id] !== undefined) document.getElementById(id).value = cfg[id];
-    });
+    ['jurosTipo','jurosValor','politicaDesconto','descontoTipo','descontoValor','descontoBase','formatoPercent','parcelasQtd','parcelaBase'].forEach(id => { if (cfg[id] !== undefined) document.getElementById(id).value = cfg[id]; });
     if (c.mensagem) document.getElementById('msgTemplate').value = c.mensagem;
-
-    alternarPoliticaDesconto();
-    renderTagEditor();
-    reprocessar();
-    fecharModal('modalModelos');
+    alternarPoliticaDesconto(); renderMsgChips(); renderTagEditor(); reprocessar(); fecharModal('modalModelos');
     showToast(`Modelo "${c.nome}" aplicado!`);
   }
-
   function prepararEdicaoModelo(idx) {
-    const c = campanhasCache[idx];
-    if (!c) return;
-    // Aplica os dados na tela para editar e deixa o formulário em modo de atualização
-    aplicarCampanha(idx);
-    abrirModal('modalModelos');
+    const c = campanhasCache[idx]; if (!c) return;
+    aplicarCampanha(idx); abrirModal('modalModelos');
     document.getElementById('editingModelId').value = c.id;
     document.getElementById('nomeCampanha').value = c.nome;
     document.getElementById('modeloFormTitle').textContent = `Editando modelo: "${c.nome}"`;
     document.getElementById('btnSalvarModeloTxt').textContent = 'Atualizar Modelo';
     document.getElementById('btnCancelarEdicaoModelo').classList.remove('hidden');
   }
-
   function cancelarEdicaoModelo() {
     document.getElementById('editingModelId').value = '';
-    document.getElementById('modeloFormTitle').textContent = 'Salvar configuração atual como modelo';
+    document.getElementById('modeloFormTitle').textContent = 'Salvar campanha completa (regras + tags + mensagem atual)';
     document.getElementById('btnSalvarModeloTxt').textContent = 'Salvar Modelo';
     document.getElementById('btnCancelarEdicaoModelo').classList.add('hidden');
   }
-
   async function salvarCampanha() {
     const nome = document.getElementById('nomeCampanha').value.trim();
     if (!nome) return showToast('Dê um nome para o modelo.');
     const editId = document.getElementById('editingModelId').value;
-
-    const nova = {
-      id: editId || ('camp_' + Date.now()),
-      nome,
-      config: getConfigAtual(),
-      mensagem: document.getElementById('msgTemplate').value,
-      atualizado_em: new Date().toLocaleString('pt-BR')
-    };
-
-    const idxExist = campanhasCache.findIndex(c => (editId && String(c.id) === String(editId)) || c.nome.toLowerCase() === nome.toLowerCase());
-    if (idxExist >= 0) campanhasCache[idxExist] = nova;
-    else campanhasCache.push(nova);
-
+    const nova = { id: editId || ('camp_' + Date.now()), nome, config: getConfigAtual(), mensagem: document.getElementById('msgTemplate').value, atualizado_em: new Date().toLocaleString('pt-BR') };
+    const idx = campanhasCache.findIndex(c => (editId && String(c.id) === String(editId)) || c.nome.toLowerCase() === nome.toLowerCase());
+    if (idx >= 0) campanhasCache[idx] = nova; else campanhasCache.push(nova);
+    activeMsgId = nova.id;
     localStorage.setItem('cgd_campanhas_v3', JSON.stringify(campanhasCache));
-    atualizarSubtituloHeader(nome);
-    atualizarBadgeModelos();
-    cancelarEdicaoModelo();
-    renderListaModelos();
-
+    atualizarSubtituloHeader(nome); atualizarBadgeModelos(); renderMsgChips(); cancelarEdicaoModelo(); renderListaModelos();
     const api = localStorage.getItem('cgd_waseller_api') || '';
     if (api) {
-      try {
-        await fetch(api, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'saveCampaign', ...nova })
-        });
-        showToast(`Modelo "${nome}" salvo no Google Sheets!`);
-        return;
-      } catch (e) { showToast('Salvo localmente (erro na API).'); return; }
+      try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'saveCampaign', ...nova }) }); showToast(`"${nome}" salvo no Google Sheets!`); return; }
+      catch (e) { showToast('Salvo localmente (erro na API).'); return; }
     }
-    showToast(`Modelo "${nome}" salvo!`);
+    showToast(`"${nome}" salvo!`);
   }
-
   async function excluirModelo(idx) {
-    const c = campanhasCache[idx];
-    if (!c || !confirm(`Excluir o modelo "${c.nome}"?`)) return;
-
+    const c = campanhasCache[idx]; if (!c || !confirm(`Excluir "${c.nome}"?`)) return;
     campanhasCache.splice(idx, 1);
     localStorage.setItem('cgd_campanhas_v3', JSON.stringify(campanhasCache));
-    atualizarBadgeModelos();
-    renderListaModelos();
-
+    atualizarBadgeModelos(); renderMsgChips(); renderListaModelos();
     const api = localStorage.getItem('cgd_waseller_api') || '';
-    if (api) {
-      try {
-        await fetch(api, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'deleteCampaign', id: c.id, nome: c.nome })
-        });
-      } catch (e) { console.warn('Erro ao excluir na API:', e); }
-    }
-    showToast(`Modelo "${c.nome}" excluído.`);
+    if (api) { try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'deleteCampaign', id: c.id, nome: c.nome }) }); } catch (e) {} }
+    showToast(`"${c.nome}" excluído.`);
   }
-
   async function registrarHistoricoAPI(qtd) {
-    const api = localStorage.getItem('cgd_waseller_api') || '';
-    if (!api) return;
-    try {
-      await fetch(api, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          action: 'logExport',
-          campanha: document.getElementById('nomeCampanha').value,
-          qtd_contatos: qtd,
-          duplicados_removidos: removedCount,
-          total_original: document.getElementById('kpiOriginal').textContent,
-          total_com_juros: '-',
-          total_final: document.getElementById('kpiFinal').textContent
-        })
-      });
-    } catch (e) { console.warn('Erro ao registrar histórico:', e); }
+    const api = localStorage.getItem('cgd_waseller_api') || ''; if (!api) return;
+    try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'logExport', campanha: document.getElementById('nomeCampanha').value, qtd_contatos: qtd, duplicados_removidos: removedCount, total_original: document.getElementById('kpiOriginal').textContent, total_com_juros: '-', total_final: document.getElementById('kpiFinal').textContent }) }); } catch (e) {}
   }
 </script>
 </body>
