@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Central CGD → WaSeller v5.0 | Régua por Faixa de Atraso</title>
+  <title>Central CGD → WaSeller v5.1 | Educ Centro de Ensino</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -126,10 +126,10 @@
 
     .highlight-box {
       background: #fff8eb; border: 1px solid #f0d49c; border-radius: 9px;
-      padding: 9px 11px; margin-bottom: 11px;
+      padding: 10px 11px; margin-bottom: 11px;
     }
 
-    /* CARDS DE ESTRATÉGIA POR FAIXA DE ATRASO */
+    /* ESTRATÉGIAS POR FAIXA DE ATRASO */
     .strategy-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
     .strategy-item {
       background: var(--beige-bg); border: 1.5px solid var(--beige-border);
@@ -143,7 +143,7 @@
     }
     .strategy-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
     .strategy-grid label {
-      display: block; font-size: 0.67rem; font-weight: 700; color: var(--gray-muted);
+      display: block; font-size: 0.66rem; font-weight: 700; color: var(--gray-muted);
       margin-bottom: 2px; text-transform: uppercase;
     }
     .strategy-grid input {
@@ -151,7 +151,7 @@
       font-size: 0.8rem; background: #fff; color: var(--brown-dark); text-align: center;
     }
 
-    /* SEGMENTO / PILLS DE PÚBLICO ACIMA DA TABELA */
+    /* SEGMENTOS */
     .segment-bar {
       background: var(--beige-bg); border: 1px solid var(--beige-border);
       border-radius: 10px; padding: 10px 12px; margin-bottom: 12px;
@@ -177,7 +177,7 @@
     .seg-pill.active .seg-count { background: rgba(255,255,255,0.22); color: #fff; }
     .seg-meta { font-size: 0.71rem; font-weight: 600; opacity: .82; }
 
-    /* BANCO DE MENSAGENS DO APPS SCRIPT */
+    /* MENSAGENS */
     .msg-bank-box {
       background: var(--beige-bg); border: 1px solid var(--beige-border);
       border-radius: 10px; padding: 11px 12px; margin-bottom: 12px;
@@ -236,6 +236,7 @@
     }
     .tag-pill:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
     .tag-pill.custom-pill { background: #fdf3d0; border-color: var(--gold); color: var(--brown-dark); }
+    .tag-pill.promo-pill { background: #eef9f2; border-color: #9ad4b4; color: var(--success); }
 
     .validator-panel {
       border-radius: 9px; padding: 10px 12px; margin: 8px 0;
@@ -245,8 +246,8 @@
     .validator-warn { background: var(--warn-bg); border-color: #f3d28c; color: var(--warn); }
     .validator-err { background: var(--danger-bg); border-color: #f2bcbc; color: var(--danger); }
     .validator-item {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 8px; padding: 5px 0; border-top: 1px dashed rgba(0,0,0,0.1);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+      gap: 8px; padding: 6px 0; border-top: 1px dashed rgba(0,0,0,0.1);
     }
     .validator-item:first-of-type { border-top: none; padding-top: 2px; }
 
@@ -263,7 +264,13 @@
       font-size: 0.86rem; white-space: pre-wrap; line-height: 1.48;
       box-shadow: 0 1px 2px rgba(0,0,0,0.1); color: #1f2c1f;
     }
+    .unresolved-tag {
+      background: #fde2e2; color: #b82525; padding: 1px 5px;
+      border-radius: 4px; font-weight: 700; border: 1px dashed #d65a5a;
+      cursor: pointer;
+    }
 
+    /* TABELA */
     .table-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
     .tab-btn {
       padding: 7px 13px; border-radius: 8px; border: 1.5px solid var(--beige-border);
@@ -309,18 +316,21 @@
       gap: 10px; margin-top: 10px; font-size: 0.79rem; color: var(--gray-muted);
     }
 
+    /* MODAIS ELEGANTES */
     .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(43, 26, 15, 0.58);
+      position: fixed; inset: 0; background: rgba(43, 26, 15, 0.62);
       display: flex; align-items: center; justify-content: center;
-      padding: 16px; z-index: 200; backdrop-filter: blur(2px);
+      padding: 16px; z-index: 250; backdrop-filter: blur(3px);
     }
     .modal-box {
       background: var(--card); border: 1px solid var(--beige-border);
-      border-top: 4px solid var(--orange); border-radius: 14px;
-      width: 100%; max-width: 680px; max-height: 88vh;
+      border-top: 5px solid var(--orange); border-radius: 14px;
+      width: 100%; max-width: 700px; max-height: 90vh;
       display: flex; flex-direction: column;
-      box-shadow: 0 18px 40px rgba(35, 20, 10, 0.28);
+      box-shadow: 0 20px 44px rgba(35, 20, 10, 0.32);
+      animation: modalPop .16s ease-out;
     }
+    @keyframes modalPop { from { transform: translateY(10px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
     .modal-header {
       padding: 14px 18px; border-bottom: 1px solid var(--beige-soft);
       display: flex; align-items: center; justify-content: space-between;
@@ -329,7 +339,7 @@
     .modal-header h3 { font-size: 1rem; color: var(--brown-dark); display: flex; align-items: center; gap: 8px; }
     .modal-header h3 i { color: var(--orange); }
     .modal-close {
-      background: transparent; border: none; font-size: 1.2rem; color: var(--gray-muted);
+      background: transparent; border: none; font-size: 1.25rem; color: var(--gray-muted);
       cursor: pointer; padding: 4px 8px; border-radius: 6px;
     }
     .modal-close:hover { background: var(--beige-soft); color: var(--brown-dark); }
@@ -339,6 +349,43 @@
       display: flex; justify-content: flex-end; gap: 8px; background: var(--beige-bg);
       border-radius: 0 0 14px 14px;
     }
+
+    /* OPÇÕES VISUAIS NO MODAL DE RESOLUÇÃO DE TAG */
+    .resolver-banner {
+      background: linear-gradient(135deg, #fff6e5, #fdf0cc);
+      border: 1px solid var(--gold); border-radius: 10px;
+      padding: 12px 14px; margin-bottom: 14px;
+    }
+    .resolver-banner strong { color: var(--brown-dark); font-size: 0.92rem; }
+    .resolver-banner p { font-size: 0.8rem; color: var(--brown); margin-top: 3px; line-height: 1.4; }
+
+    .resolver-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .resolver-tab {
+      border: 2px solid var(--beige-border); background: var(--beige-bg);
+      border-radius: 10px; padding: 10px 12px; cursor: pointer; text-align: left; transition: .15s;
+    }
+    .resolver-tab strong { display: block; font-size: 0.84rem; color: var(--brown-dark); }
+    .resolver-tab small { display: block; font-size: 0.73rem; color: var(--gray-muted); margin-top: 2px; }
+    .resolver-tab.active { border-color: var(--orange); background: #fff7ea; box-shadow: 0 2px 8px rgba(232,106,0,0.14); }
+
+    .dynamic-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 8px; max-height: 290px; overflow-y: auto; padding-right: 4px;
+    }
+    .dyn-card {
+      border: 1.5px solid var(--beige-border); border-radius: 9px; padding: 9px 11px;
+      background: #fff; cursor: pointer; transition: .15s;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .dyn-card:hover { border-color: var(--orange); background: #fffaf0; }
+    .dyn-card.selected { border-color: var(--orange); background: #fff3de; box-shadow: 0 0 0 2px rgba(232,106,0,0.15); }
+    .dyn-card strong { display: block; font-size: 0.81rem; color: var(--brown-dark); }
+    .dyn-card small { display: block; font-size: 0.72rem; color: var(--gray-muted); font-family: monospace; }
+    .dyn-preview-val {
+      background: var(--beige-soft); color: var(--brown-dark); font-weight: 700;
+      padding: 4px 8px; border-radius: 6px; font-size: 0.78rem; white-space: nowrap;
+    }
+    .dyn-card.selected .dyn-preview-val { background: var(--orange); color: #fff; }
 
     .tag-editor-list {
       border: 1px solid var(--beige-border); border-radius: 8px;
@@ -387,8 +434,8 @@
   <div class="brand">
     <div class="brand-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
     <div>
-      <h1>Central CGD → WaSeller v5.0</h1>
-      <small>1 único upload do CGD → múltiplos públicos com juros, descontos e parcelamentos independentes</small>
+      <h1>Central CGD → WaSeller v5.1</h1>
+      <small>Educ Centro de Ensino • Conector inteligente de tags + régua por faixa de atraso</small>
     </div>
   </div>
 
@@ -408,7 +455,7 @@
 </header>
 
 <div class="container">
-  <!-- KPIs DINÂMICOS (REFLETEM O PÚBLICO SELECIONADO) -->
+  <!-- KPIs DINÂMICOS -->
   <div class="stats-grid">
     <div class="stat-card">
       <span id="kpiPublicoLabel">Contatos (Todos)</span>
@@ -433,7 +480,7 @@
     <div class="stat-card green">
       <span>Total Final (Negociado)</span>
       <strong id="kpiFinal">R$ 0,00</strong>
-      <small>após descontos da faixa</small>
+      <small id="kpiEconomiaSub">R$ 0,00 em descontos</small>
     </div>
     <div class="stat-card">
       <span>Validação das Tags</span>
@@ -444,9 +491,9 @@
 
   <!-- WORKSPACE FIXO -->
   <div class="workspace-grid">
-    <!-- COLUNA ESQUERDA -->
+    <!-- ESQUERDA -->
     <div>
-      <!-- 1. UPLOAD ÚNICO DO CGD -->
+      <!-- 1. UPLOAD -->
       <div class="card">
         <h2>
           <span class="title-left"><i class="fa-solid fa-file-arrow-up"></i> 1. Importar Planilha Única do CGD</span>
@@ -455,17 +502,17 @@
         <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
           <i class="fa-solid fa-cloud-arrow-up"></i>
           <p>Arraste ou clique (.xlsx, .csv ou .pdf)</p>
-          <small>Suba uma única vez — o sistema separa os públicos abaixo automaticamente</small>
+          <small>Suba uma única vez — o sistema separa todos os públicos abaixo</small>
           <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.pdf" hidden />
         </div>
         <div class="actions-row">
           <button class="btn btn-outline btn-sm btn-block" onclick="carregarExemploCGD()">
-            <i class="fa-solid fa-flask"></i> Carregar Exemplo Real do CGD (4 Públicos)
+            <i class="fa-solid fa-flask"></i> Carregar Exemplo Real do CGD (Testar Agora)
           </button>
         </div>
       </div>
 
-      <!-- 2. RÉGUA DE ESTRATÉGIAS POR FAIXA DE ATRASO -->
+      <!-- 2. ESTRATÉGIAS POR FAIXA -->
       <div class="card">
         <h2>
           <span class="title-left"><i class="fa-solid fa-layer-group"></i> 2. Estratégias por Faixa de Atraso</span>
@@ -474,8 +521,13 @@
           </button>
         </h2>
 
+        <!-- DATA LIMITE DA PROMOÇÃO + MODO DE LEITURA -->
         <div class="highlight-box">
-          <div class="row-2">
+          <div class="row-2" style="margin-bottom:8px;">
+            <div class="field" style="margin-bottom:0;">
+              <label><i class="fa-solid fa-calendar-check" style="color:var(--orange);"></i> Data da Promoção (#data_promocao)</label>
+              <input type="date" id="dataPromocao" onchange="reprocessar()" />
+            </div>
             <div class="field" style="margin-bottom:0;">
               <label>Coluna "Valor" do CGD</label>
               <select id="modoValorCGD" onchange="reprocessar()">
@@ -483,20 +535,22 @@
                 <option value="total">Já totalizado</option>
               </select>
             </div>
-            <div class="field" style="margin-bottom:0;">
-              <label>Modo de Juros</label>
-              <select id="jurosTipo" onchange="reprocessar()">
-                <option value="percent_total" selected>% Fixo na Dívida Base</option>
-                <option value="percent_atraso">% × Qtd. em Atraso</option>
-              </select>
-            </div>
           </div>
+          <small style="color:var(--brown); font-size:0.73rem;">
+            💡 Em <strong>Parc. (x)</strong>, coloque <strong>0</strong> quando quiser pagamento <strong>à vista (sem parcelar)</strong>.
+          </small>
         </div>
 
-        <!-- LISTA DE FAIXAS COM JUROS, DESCONTO E PARCELAMENTO PRÓPRIOS -->
         <div class="strategy-list" id="strategiesContainer"></div>
 
         <div class="row-2">
+          <div class="field">
+            <label>Modo de Juros</label>
+            <select id="jurosTipo" onchange="reprocessar()">
+              <option value="percent_total" selected>% Fixo na Dívida Base</option>
+              <option value="percent_atraso">% × Qtd. em Atraso</option>
+            </select>
+          </div>
           <div class="field">
             <label>Aplicar Desconto Sobre</label>
             <select id="descontoBase" onchange="reprocessar()">
@@ -504,17 +558,17 @@
               <option value="original">Dívida Base (sem juros)</option>
             </select>
           </div>
-          <div class="field">
-            <label>Formato da Tag #desconto</label>
-            <select id="formatoPercent" onchange="reprocessar()">
-              <option value="number" selected>Só número (ex: 25)</option>
-              <option value="symbol">Texto com % (ex: 25%)</option>
-              <option value="extenso">Por extenso (25 por cento)</option>
-            </select>
-          </div>
         </div>
 
         <div class="row-2">
+          <div class="field" style="margin-bottom:0;">
+            <label>Formato da Tag #desconto</label>
+            <select id="formatoPercent" onchange="reprocessar()">
+              <option value="number" selected>Só número (ex: 10)</option>
+              <option value="symbol">Texto com % (ex: 10%)</option>
+              <option value="extenso">Por extenso (10 por cento)</option>
+            </select>
+          </div>
           <div class="field" style="margin-bottom:0;">
             <label>Base do Parcelamento</label>
             <select id="parcelaBase" onchange="reprocessar()">
@@ -522,15 +576,11 @@
               <option value="atualizado">Dívida c/ Juros</option>
             </select>
           </div>
-          <div class="field" style="margin-bottom:0;">
-            <label>Data Base (#prazo_texto)</label>
-            <input type="date" id="dataRefLembrete" onchange="reprocessar()" />
-          </div>
         </div>
       </div>
     </div>
 
-    <!-- COLUNA DIREITA: MENSAGENS DO GOOGLE SHEETS -->
+    <!-- DIREITA: MENSAGENS DO GOOGLE SHEETS -->
     <div class="card">
       <h2>
         <span class="title-left"><i class="fa-brands fa-whatsapp"></i> 3. Mensagens da Campanha (Google Sheets)</span>
@@ -541,10 +591,10 @@
         <div class="msg-bank-top">
           <strong>
             <i class="fa-solid fa-database" style="color:var(--orange);"></i>
-            Clique na mensagem do público atual (salvas no Google Sheets):
+            Clique na mensagem que deseja usar (salvas no Google Sheets):
           </strong>
           <div style="display:flex; gap:6px;">
-            <button class="btn btn-outline btn-xs" onclick="sincronizarTudo()" title="Recarregar do Google Sheets">
+            <button class="btn btn-outline btn-xs" onclick="sincronizarTudo()">
               <i class="fa-solid fa-rotate"></i> Atualizar Lista
             </button>
             <button class="btn btn-gold btn-xs" onclick="limparEditorMensagem(true)">
@@ -558,7 +608,7 @@
       </div>
 
       <div class="msg-editor-bar">
-        <input type="text" id="msgTituloInput" placeholder="Título da mensagem (ex: Recuperação 11 a 20 parcelas)" />
+        <input type="text" id="msgTituloInput" placeholder="Título da mensagem (ex: Black Friday Antecipação)" />
         <button class="btn btn-primary btn-sm" id="btnSalvarMsg" onclick="salvarMensagemNoAppsScript()">
           <i class="fa-solid fa-floppy-disk"></i> Salvar no Sheets
         </button>
@@ -568,7 +618,7 @@
       </div>
 
       <p style="font-size:0.76rem; color:var(--gray-muted); margin-bottom:7px;">
-        Clique em qualquer tag abaixo para inserir no texto:
+        Clique em qualquer tag abaixo para inserir no texto (tags verdes = economia e data da promoção):
       </p>
       <div class="tags-box" id="tagsBox"></div>
 
@@ -597,7 +647,7 @@
     </div>
   </div>
 
-  <!-- TABELA FULL-WIDTH COM SELETOR DE PÚBLICO POR FAIXA DE ATRASO -->
+  <!-- TABELA FULL-WIDTH -->
   <div class="card">
     <h2>
       <span class="title-left"><i class="fa-solid fa-table"></i> 4. Separar por Público, Conferir & Baixar Planilhas</span>
@@ -611,7 +661,6 @@
       </div>
     </h2>
 
-    <!-- BOTÕES DE PÚBLICO (CLIQUE PARA SEPARAR E BAIXAR CADA CAMPANHA) -->
     <div class="segment-bar">
       <div class="segment-bar-title">
         <span><i class="fa-solid fa-users-viewfinder" style="color:var(--orange);"></i> Escolha o público para visualizar, testar a mensagem e baixar a planilha separada:</span>
@@ -622,7 +671,6 @@
       </div>
     </div>
 
-    <!-- ABAS: CONFERÊNCIA AMPLA vs WASELLER -->
     <div class="table-tabs">
       <button type="button" class="tab-btn active" id="tabBtn_conferencia" onclick="trocarAbaTabela('conferencia')">
         <i class="fa-solid fa-magnifying-glass-dollar"></i> Conferência Financeira (Visão Ampla)
@@ -632,7 +680,6 @@
       </button>
     </div>
 
-    <!-- FILTRO ADICIONAL POR COLUNA (AGORA COM MATCH EXATO NA LISTA RÁPIDA) -->
     <div class="table-toolbar">
       <div class="filter-controls">
         <i class="fa-solid fa-filter" style="color:var(--orange);"></i>
@@ -663,6 +710,82 @@
   </div>
 </div>
 
+<!-- ==================== MODAL INTELIGENTE DE CONEXÃO DE TAG ==================== -->
+<div class="modal-backdrop hidden" id="modalResolverTag" onclick="fecharModalBackdrop(event, 'modalResolverTag')">
+  <div class="modal-box" style="max-width:740px;">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Configurar Tag <code id="resTagTitle" style="background:#fff; padding:2px 8px; border-radius:6px; color:var(--orange); border:1px solid var(--beige-border);">#tag</code></h3>
+      <button class="modal-close" onclick="fecharModal('modalResolverTag')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="resolver-banner">
+        <strong id="resTagSubtitle">Como o sistema deve preencher esta tag para cada cliente?</strong>
+        <p>Você pode <strong>conectar a um dado automático da planilha</strong> (ex.: valor final, economia em R$, vencimento ou data da promoção) ou definir uma <strong>data/texto fixo</strong> para toda a campanha.</p>
+      </div>
+
+      <div class="resolver-tabs">
+        <button type="button" class="resolver-tab active" id="resTabDyn" onclick="trocarAbaResolver('dinamico')">
+          <strong><i class="fa-solid fa-table-columns" style="color:var(--orange);"></i> 1. Puxar da Planilha / Cálculo</strong>
+          <small>Cada cliente recebe seu próprio valor calculado</small>
+        </button>
+        <button type="button" class="resolver-tab" id="resTabFix" onclick="trocarAbaResolver('fixo')">
+          <strong><i class="fa-solid fa-calendar-day" style="color:var(--gold);"></i> 2. Data ou Texto Fixo da Campanha</strong>
+          <small>Mesmo prazo, cupom ou informação para todos</small>
+        </button>
+      </div>
+
+      <!-- PAINEL 1: DADOS DINÂMICOS -->
+      <div id="resPanelDinamico">
+        <p style="font-size:0.78rem; color:var(--gray-muted); margin-bottom:8px;">
+          Clique no campo abaixo que corresponde ao que você quer mostrar em <strong id="resTagRef1">#tag</strong> (os exemplos mostram o valor real da 1ª cliente da lista):
+        </p>
+        <div class="dynamic-grid" id="resDynamicGrid"></div>
+
+        <div style="margin-top:12px; padding:10px 12px; background:var(--beige-bg); border:1px solid var(--beige-border); border-radius:8px;">
+          <label class="check-item">
+            <input type="checkbox" id="chkSubstituirNoTexto" checked />
+            <span>Substituir <strong id="resTagRef2">#tag</strong> no texto pelo nome oficial da coluna (recomendado para manter o Excel limpo)</span>
+          </label>
+          <small style="display:block; margin-left:24px; color:var(--gray-muted); font-size:0.73rem; margin-top:2px;">
+            Se desmarcar, o sistema mantém o nome da sua tag (padronizado sem maiúsculas/acentos) e cria uma coluna espelho no Excel com os valores de cada aluno.
+          </small>
+        </div>
+      </div>
+
+      <!-- PAINEL 2: VALOR OU DATA FIXA -->
+      <div id="resPanelFixo" class="hidden">
+        <div class="row-2">
+          <div class="field">
+            <label>Tipo de Informação Fixa</label>
+            <select id="resFixTipo" onchange="alternarTipoFixoResolver()">
+              <option value="data">Escolher uma Data (ex: 28/11/2026)</option>
+              <option value="texto">Texto Livre (ex: Sábado 28/11, Cupom, PIX)</option>
+            </select>
+          </div>
+          <div class="field" id="resFixDataBox">
+            <label>Selecione a Data</label>
+            <input type="date" id="resFixDataInput" />
+          </div>
+          <div class="field hidden" id="resFixTextoBox">
+            <label>Digite o Valor Fixo</label>
+            <input type="text" id="resFixTextoInput" placeholder="Ex: sábado, dia 28/11" />
+          </div>
+        </div>
+        <div style="padding:10px 12px; background:var(--beige-bg); border:1px solid var(--beige-border); border-radius:8px; font-size:0.78rem; color:var(--brown);">
+          <i class="fa-solid fa-circle-info" style="color:var(--orange);"></i>
+          O sistema criará a coluna <strong id="resFixColName">tag</strong> no Excel preenchida com esse valor em todas as linhas e ajustará o texto automaticamente.
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="fecharModal('modalResolverTag')">Cancelar</button>
+      <button class="btn btn-primary btn-sm" onclick="confirmarResolucaoTag()">
+        <i class="fa-solid fa-check"></i> Aplicar Conexão Agora
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL REGRAS SALVAS -->
 <div class="modal-backdrop hidden" id="modalModelos" onclick="fecharModalBackdrop(event, 'modalModelos')">
   <div class="modal-box">
@@ -689,7 +812,6 @@
           </div>
         </div>
       </div>
-
       <strong style="font-size:0.83rem; color:var(--brown);">Réguas salvas no Google Sheets:</strong>
       <div class="model-list" id="modelListContainer"></div>
     </div>
@@ -710,7 +832,7 @@
       <div style="background:var(--beige-bg); border:1px solid var(--beige-border); border-radius:10px; padding:12px; margin-bottom:12px;">
         <div class="row-2">
           <div class="field"><label>Nova Variável (ex: premio, chave_pix)</label><input type="text" id="novaVarNome" placeholder="Sem acento ou espaço" /></div>
-          <div class="field"><label>Valor Fixo para esta Campanha</label><input type="text" id="novaVarValor" placeholder="Ex: CNPJ 00.000.000/0001-00" /></div>
+          <div class="field"><label>Valor Fixo para esta Campanha</label><input type="text" id="novaVarValor" placeholder="Ex: Sábado, 28/11" /></div>
         </div>
         <button class="btn btn-gold btn-sm btn-block" onclick="adicionarVariavelPersonalizada()">
           <i class="fa-solid fa-plus"></i> Criar Nova Coluna na Planilha
@@ -773,37 +895,37 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const API_URL_PADRAO = 'https://script.google.com/macros/s/AKfycbyFsmwjgMWaIwpT-b773C84-_0cuUHW2poDNYSq-cPJNF9C2wkapB1rtVelKdWWs9aX/exec';
+  const API_URL_PADRAO = 'https://script.google.com/macros/s/AKfycbwpRgGn91-Em4C9S7I8lR9-Xg78QCbXeQ9Wo_xjjBDjyfiRZNO22kw9PnUzKFAKVsjZ/exec';
 
   if (window.pdfjsLib) {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   }
 
-  // ESTRATÉGIAS PADRÃO POR FAIXA DE PARCELAS EM ATRASO (TOTALMENTE EDITÁVEIS)
   let estrategias = [
-    { id: 'est_0', nome: 'Em Dia (0 atraso)',   min: 0,  max: 0,  juros: 0,  desconto: 0,  parcelas: 1  },
-    { id: 'est_1', nome: 'Atraso Leve (1 a 5)', min: 1,  max: 5,  juros: 5,  desconto: 10, parcelas: 3  },
-    { id: 'est_2', nome: 'Atraso Médio (6 a 10)', min: 6, max: 10, juros: 10, desconto: 20, parcelas: 6  },
-    { id: 'est_3', nome: 'Recuperação (11 a 99)', min: 11, max: 99, juros: 15, desconto: 35, parcelas: 10 }
+    { id: 'est_0', nome: 'Antecipação / Em Dia (0 a 1)', min: 0,  max: 1,  juros: 0,  desconto: 10, parcelas: 0  },
+    { id: 'est_1', nome: 'Atraso Leve (2 a 5)',          min: 2,  max: 5,  juros: 5,  desconto: 15, parcelas: 3  },
+    { id: 'est_2', nome: 'Atraso Médio (6 a 10)',        min: 6,  max: 10, juros: 10, desconto: 25, parcelas: 6  },
+    { id: 'est_3', nome: 'Recuperação (11 a 99)',        min: 11, max: 99, juros: 15, desconto: 35, parcelas: 10 }
   ];
 
   const DEFAULT_TAG_CONFIGS = [
-    { key: 'numero',            label: 'Telefone (Obrigatório)',       tag: 'numero',            enabled: true,  locked: true },
-    { key: 'matricula',         label: 'Matrícula / Contrato CGD',     tag: 'matricula',         enabled: true,  locked: false },
-    { key: 'nome',              label: 'Nome Completo',                tag: 'nome',              enabled: true,  locked: false },
-    { key: 'primeiroNome',      label: 'Primeiro Nome (Nativa)',       tag: 'primeiroNome',      enabled: true,  locked: false },
-    { key: 'aluno',             label: 'Nome do Aluno',                tag: 'aluno',             enabled: true,  locked: false },
-    { key: 'atraso',            label: 'Qtd. Parcelas em Atraso',      tag: 'atraso',            enabled: true,  locked: false },
-    { key: 'vencimento',        label: 'Data de Vencimento (CGD)',     tag: 'vencimento',        enabled: true,  locked: false },
-    { key: 'valor_mensalidade', label: 'Valor de 1 Mensalidade (CGD)', tag: 'valor_mensalidade', enabled: false, locked: false },
-    { key: 'divida_base',       label: 'Dívida Base (Mensal. × Atraso)',tag: 'divida_base',      enabled: false, locked: false },
-    { key: 'valor',             label: 'Dívida Atualizada (c/ Juros)', tag: 'valor',             enabled: true,  locked: false },
-    { key: 'desconto',          label: 'Desconto Aplicado',            tag: 'desconto',          enabled: true,  locked: false },
-    { key: 'valor_final',       label: 'Valor Final (c/ Desconto)',    tag: 'valor_final',       enabled: true,  locked: false },
-    { key: 'parcelas',          label: 'Qtd. Parcelas (da Faixa)',     tag: 'parcelas',          enabled: true,  locked: false },
-    { key: 'valor_parcela',     label: 'Valor da Parcela (da Faixa)',  tag: 'valor_parcela',     enabled: true,  locked: false },
-    { key: 'dias_vencimento',   label: 'Dias p/ Vencer (Nº)',          tag: 'dias_vencimento',   enabled: false, locked: false },
-    { key: 'prazo_texto',       label: 'Prazo por Extenso',            tag: 'prazo_texto',       enabled: false, locked: false }
+    { key: 'numero',            label: 'Telefone (Obrigatório)',        tag: 'numero',            enabled: true,  locked: true },
+    { key: 'matricula',         label: 'Matrícula / Contrato CGD',      tag: 'matricula',         enabled: true,  locked: false },
+    { key: 'nome',              label: 'Nome Completo',                 tag: 'nome',              enabled: true,  locked: false },
+    { key: 'primeiroNome',      label: 'Primeiro Nome (Nativa)',        tag: 'primeiroNome',      enabled: true,  locked: false },
+    { key: 'aluno',             label: 'Nome do Aluno',                 tag: 'aluno',             enabled: true,  locked: false },
+    { key: 'atraso',            label: 'Qtd. Parcelas em Atraso',       tag: 'atraso',            enabled: true,  locked: false },
+    { key: 'vencimento',        label: 'Data de Vencimento (CGD)',      tag: 'vencimento',        enabled: true,  locked: false },
+    { key: 'data_promocao',     label: 'Data Limite da Promoção',       tag: 'data_promocao',     enabled: true,  locked: false, promoHighlight: true },
+    { key: 'valor_mensalidade', label: 'Valor de 1 Mensalidade (CGD)',  tag: 'valor_mensalidade', enabled: false, locked: false },
+    { key: 'divida_base',       label: 'Dívida Base (Mensal. × Atraso)',tag: 'divida_base',       enabled: false, locked: false },
+    { key: 'valor',             label: 'Valor Atualizado (c/ Juros)',   tag: 'valor',             enabled: true,  locked: false },
+    { key: 'desconto',          label: 'Desconto (%)',                  tag: 'desconto',          enabled: true,  locked: false },
+    { key: 'economia',          label: 'Economia / Desconto em R$',     tag: 'economia',          enabled: true,  locked: false, promoHighlight: true },
+    { key: 'valor_final',       label: 'Valor Final (c/ Desconto)',     tag: 'valor_final',       enabled: true,  locked: false },
+    { key: 'parcelas',          label: 'Qtd. Parcelas (0 = À vista)',   tag: 'parcelas',          enabled: true,  locked: false },
+    { key: 'valor_parcela',     label: 'Valor da Parcela',              tag: 'valor_parcela',     enabled: true,  locked: false },
+    { key: 'prazo_texto',       label: 'Prazo até Vencimento (Texto)',  tag: 'prazo_texto',       enabled: false, locked: false }
   ];
 
   const COLS_CONFERENCIA = [
@@ -813,36 +935,19 @@
     { key: 'responsavel',       label: 'Responsável' },
     { key: 'numero',            label: 'Telefone' },
     { key: '_rotulo',           label: 'Contato' },
-    { key: 'atraso',            label: 'Atraso (Qtd)', cls: 'num-strong' },
-    { key: 'vencimento',        label: 'Vencimento' },
+    { key: 'atraso',            label: 'Atraso', cls: 'num-strong' },
+    { key: 'vencimento',        label: 'Vencimento CGD' },
+    { key: 'data_promocao',     label: 'Data Promoção' },
     { key: 'valor_mensalidade', label: '1 Mensalidade' },
-    { key: 'divida_base',       label: 'Dívida Base (× Atraso)', cls: 'num-strong' },
+    { key: 'divida_base',       label: 'Dívida Base', cls: 'num-strong' },
     { key: 'juros_percent',     label: 'Juros (%)' },
     { key: 'juros_reais',       label: 'Juros (R$)', cls: 'num-warn' },
-    { key: 'valor',             label: 'Dívida c/ Juros', cls: 'num-strong' },
-    { key: 'desconto',          label: 'Desconto' },
+    { key: 'valor',             label: 'Valor Atualizado', cls: 'num-strong' },
+    { key: 'desconto',          label: 'Desc (%)' },
+    { key: 'economia',          label: 'Economia (R$)', cls: 'num-green' },
     { key: 'valor_final',       label: 'Valor Final', cls: 'num-green' },
-    { key: '_parcelamento',     label: 'Parcelamento (Faixa)', cls: 'num-strong' }
+    { key: '_parcelamento',     label: 'Condição', cls: 'num-strong' }
   ];
-
-  const SINONIMOS_TAGS = {
-    'contrato': 'matricula',
-    'data_vencimento': 'vencimento',
-    'data_de_vencimento': 'vencimento',
-    'dt_vencimento': 'vencimento',
-    'data': 'vencimento',
-    'mensalidade': 'valor_mensalidade',
-    'valor_unitario': 'valor_mensalidade',
-    'valor_original': 'divida_base',
-    'divida': 'divida_base',
-    'divida_total': 'valor',
-    'valor_total': 'valor',
-    'qtd_atraso': 'atraso',
-    'parcelas_atraso': 'atraso',
-    'telefone': 'numero',
-    'celular': 'numero',
-    'whatsapp': 'numero'
-  };
 
   let tagConfigs = JSON.parse(JSON.stringify(DEFAULT_TAG_CONFIGS));
   let mensagensCache = [];
@@ -860,10 +965,16 @@
   let sortState = { key: null, dir: 'asc' };
   let showAllRows = false;
 
+  // Estado do Modal Inteligente de Conexão de Tag
+  let resolverState = { tagBruta: '', modo: 'dinamico', selectedKey: null };
+
   const CAMEL_NATIVAS = new Set(['primeiroNome']);
 
   window.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('dataRefLembrete').value = new Date().toISOString().split('T')[0];
+    // Define Data da Promoção padrão para 2 dias à frente (editável a qualquer momento)
+    const dPromo = new Date(Date.now() + 2 * 86400000);
+    document.getElementById('dataPromocao').value = dPromo.toISOString().split('T')[0];
+
     const apiSalva = localStorage.getItem('cgd_waseller_api') || API_URL_PADRAO;
     document.getElementById('apiUrl').value = apiSalva;
     if (apiSalva) localStorage.setItem('cgd_waseller_api', apiSalva);
@@ -884,6 +995,14 @@
     return list;
   }
 
+  function escapeRegex(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+  // Substituição segura de #tag (NUNCA corrompe #valor1 ao substituir #valor!)
+  function replaceExactTag(text, tagWithoutHash, replacement) {
+    const rx = new RegExp('#' + escapeRegex(tagWithoutHash) + '(?![a-zA-Z0-9_À-ÿ])', 'g');
+    return text.replace(rx, () => String(replacement));
+  }
+
   function abrirModal(id) {
     if (id === 'modalModelos') renderListaModelos();
     if (id === 'modalTags') renderTagEditor();
@@ -891,16 +1010,165 @@
   }
   function fecharModal(id) { document.getElementById(id).classList.add('hidden'); }
   function fecharModalBackdrop(e, id) { if (e.target.id === id) fecharModal(id); }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') ['modalModelos','modalTags','modalConfig'].forEach(fecharModal); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') ['modalResolverTag','modalModelos','modalTags','modalConfig'].forEach(fecharModal);
+  });
 
   function showToast(msg) {
     const el = document.getElementById('toast');
     el.textContent = msg;
     el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 3400);
+    setTimeout(() => el.classList.remove('show'), 3500);
   }
 
-  // ==================== RÉGUA DE ESTRATÉGIAS POR ATRASO ====================
+  // ==================== MODAL INTELIGENTE DE CONEXÃO DE TAG ====================
+  function abrirResolverTag(tagBruta) {
+    resolverState = { tagBruta, modo: 'dinamico', selectedKey: null };
+    const norm = sanitizarTagNome(tagBruta);
+
+    document.getElementById('resTagTitle').textContent = '#' + tagBruta;
+    document.getElementById('resTagRef1').textContent = '#' + tagBruta;
+    document.getElementById('resTagRef2').textContent = '#' + tagBruta;
+    document.getElementById('resFixColName').textContent = norm;
+
+    // Pré-seleciona a sugestão mais inteligente conforme o nome digitado
+    if (norm.includes('data')) resolverState.selectedKey = 'data_promocao';
+    else if (norm.includes('econ') || norm === 'valor1') resolverState.selectedKey = 'economia';
+    else if (norm === 'valor2' || norm.includes('final')) resolverState.selectedKey = 'valor_final';
+    else if (norm.includes('contrato') || norm.includes('mat')) resolverState.selectedKey = 'matricula';
+    else if (norm.includes('mensal')) resolverState.selectedKey = 'valor_mensalidade';
+    else if (norm.includes('divida')) resolverState.selectedKey = 'divida_base';
+    else resolverState.selectedKey = 'valor_final';
+
+    document.getElementById('resFixDataInput').value = document.getElementById('dataPromocao').value || new Date().toISOString().split('T')[0];
+    document.getElementById('resFixTextoInput').value = '';
+    document.getElementById('resFixTipo').value = norm.includes('data') ? 'data' : 'texto';
+    alternarTipoFixoResolver();
+
+    document.getElementById('chkSubstituirNoTexto').checked = true;
+    renderOpcoesDinamicasResolver();
+    trocarAbaResolver('dinamico');
+    abrirModal('modalResolverTag');
+  }
+
+  function trocarAbaResolver(modo) {
+    resolverState.modo = modo;
+    document.getElementById('resTabDyn').classList.toggle('active', modo === 'dinamico');
+    document.getElementById('resTabFix').classList.toggle('active', modo === 'fixo');
+    document.getElementById('resPanelDinamico').classList.toggle('hidden', modo !== 'dinamico');
+    document.getElementById('resPanelFixo').classList.toggle('hidden', modo !== 'fixo');
+  }
+
+  function alternarTipoFixoResolver() {
+    const tipo = document.getElementById('resFixTipo').value;
+    document.getElementById('resFixDataBox').classList.toggle('hidden', tipo !== 'data');
+    document.getElementById('resFixTextoBox').classList.toggle('hidden', tipo !== 'texto');
+  }
+
+  function renderOpcoesDinamicasResolver() {
+    const sample = filteredRows[0] || processedRows[0] || null;
+    const nativas = tagConfigs.filter(t => !t.isCustom && !t.sourceKey && t.key !== 'numero');
+    const grid = document.getElementById('resDynamicGrid');
+
+    grid.innerHTML = nativas.map(tc => {
+      const exemplo = sample ? (sample[tc.key] || '—') : 'Ex: automático';
+      const isSel = resolverState.selectedKey === tc.key;
+      return `
+        <div class="dyn-card ${isSel ? 'selected' : ''}" onclick="selecionarOpcaoDinamica('${tc.key}')">
+          <div>
+            <strong>${tc.label}</strong>
+            <small>#${tc.tag}</small>
+          </div>
+          <span class="dyn-preview-val">${exemplo}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function selecionarOpcaoDinamica(key) {
+    resolverState.selectedKey = key;
+    renderOpcoesDinamicasResolver();
+  }
+
+  function confirmarResolucaoTag() {
+    const tagBruta = resolverState.tagBruta;
+    const ta = document.getElementById('msgTemplate');
+
+    if (resolverState.modo === 'dinamico') {
+      if (!resolverState.selectedKey) return showToast('Selecione um campo da planilha.');
+      const tcAlvo = tagConfigs.find(t => t.key === resolverState.selectedKey);
+      if (!tcAlvo) return;
+
+      const substituir = document.getElementById('chkSubstituirNoTexto').checked;
+      if (substituir) {
+        tcAlvo.enabled = true;
+        ta.value = replaceExactTag(ta.value, tagBruta, '#' + tcAlvo.tag);
+        showToast(`#${tagBruta} conectada e atualizada para #${tcAlvo.tag} (${tcAlvo.label})!`);
+      } else {
+        const novoNome = sanitizarTagNome(tagBruta);
+        const ex = tagConfigs.find(t => t.key === novoNome);
+        if (ex) {
+          ex.enabled = true;
+          ex.sourceKey = tcAlvo.key;
+        } else {
+          tagConfigs.push({
+            key: novoNome,
+            label: `Espelho de: ${tcAlvo.label}`,
+            tag: novoNome,
+            enabled: true,
+            locked: false,
+            isCustom: true,
+            sourceKey: tcAlvo.key,
+            fixedValue: ''
+          });
+        }
+        if (tagBruta !== novoNome) {
+          ta.value = replaceExactTag(ta.value, tagBruta, '#' + novoNome);
+        }
+        showToast(`Coluna #${novoNome} vinculada automaticamente a "${tcAlvo.label}"!`);
+      }
+    } else {
+      const tipo = document.getElementById('resFixTipo').value;
+      let valFinal = '';
+      if (tipo === 'data') {
+        const iso = document.getElementById('resFixDataInput').value;
+        if (!iso) return showToast('Escolha uma data.');
+        const [y, m, d] = iso.split('-');
+        valFinal = `${d}/${m}/${y}`;
+      } else {
+        valFinal = document.getElementById('resFixTextoInput').value.trim();
+        if (!valFinal) return showToast('Digite o valor fixo.');
+      }
+
+      const novoNome = sanitizarTagNome(tagBruta);
+      const ex = tagConfigs.find(t => t.key === novoNome);
+      if (ex && ex.isCustom) {
+        ex.fixedValue = valFinal;
+        ex.sourceKey = null;
+        ex.enabled = true;
+      } else if (!ex) {
+        tagConfigs.push({
+          key: novoNome,
+          label: 'Valor fixo da campanha',
+          tag: novoNome,
+          enabled: true,
+          locked: false,
+          isCustom: true,
+          fixedValue: valFinal
+        });
+      }
+      if (tagBruta !== novoNome) {
+        ta.value = replaceExactTag(ta.value, tagBruta, '#' + novoNome);
+      }
+      showToast(`Coluna #${novoNome} criada com valor "${valFinal}"!`);
+    }
+
+    fecharModal('modalResolverTag');
+    renderTagEditor();
+    reprocessar();
+  }
+
+  // ==================== ESTRATÉGIAS POR FAIXA ====================
   function renderEstrategias() {
     const cont = document.getElementById('strategiesContainer');
     cont.innerHTML = estrategias.map((e, idx) => `
@@ -929,8 +1197,8 @@
             <input type="number" min="0" step="0.5" value="${e.desconto}" onchange="editarEstrategia(${idx}, 'desconto', this.value)" />
           </div>
           <div>
-            <label>Parc. (x)</label>
-            <input type="number" min="1" max="36" value="${e.parcelas}" onchange="editarEstrategia(${idx}, 'parcelas', this.value)" />
+            <label>Parc. (0=À vista)</label>
+            <input type="number" min="0" max="36" value="${e.parcelas}" onchange="editarEstrategia(${idx}, 'parcelas', this.value)" />
           </div>
         </div>
       </div>
@@ -941,7 +1209,8 @@
     if (campo === 'nome') {
       estrategias[idx].nome = val;
     } else if (campo === 'parcelas') {
-      estrategias[idx].parcelas = Math.max(1, parseInt(val, 10) || 1);
+      const n = parseInt(val, 10);
+      estrategias[idx].parcelas = isNaN(n) ? 0 : Math.max(0, n);
     } else {
       estrategias[idx][campo] = Math.max(0, parseFloat(val) || 0);
     }
@@ -954,19 +1223,14 @@
     estrategias.push({
       id: 'est_' + Date.now(),
       nome: `Faixa ${novoMin} a ${novoMin + 5}`,
-      min: novoMin,
-      max: novoMin + 5,
-      juros: 10,
-      desconto: 20,
-      parcelas: 6
+      min: novoMin, max: novoMin + 5, juros: 10, desconto: 20, parcelas: 6
     });
     renderEstrategias();
     reprocessar();
-    showToast('Nova faixa adicionada! Ajuste os intervalos e regras.');
   }
 
   function removerEstrategia(idx) {
-    if (estrategias.length <= 1) return showToast('Mantenha pelo menos uma faixa de estratégia.');
+    if (estrategias.length <= 1) return showToast('Mantenha pelo menos uma faixa.');
     const removida = estrategias[idx];
     estrategias.splice(idx, 1);
     if (ativoPublicoId === removida.id) ativoPublicoId = '__all__';
@@ -977,36 +1241,33 @@
   function buscarEstrategiaPorAtraso(atraso) {
     const encontrada = estrategias.find(e => atraso >= e.min && atraso <= e.max);
     if (encontrada) return encontrada;
-    return { id: '__sem_faixa__', nome: 'Fora das Faixas', min: atraso, max: atraso, juros: 0, desconto: 0, parcelas: 1, semFaixa: true };
+    return { id: '__sem_faixa__', nome: 'Fora das Faixas', min: atraso, max: atraso, juros: 0, desconto: 0, parcelas: 0, semFaixa: true };
   }
 
-  // ==================== PILLS DE PÚBLICO (SEPARAÇÃO EM 1 CLIQUE) ====================
+  // ==================== PILLS DE PÚBLICO ====================
   function renderSegmentPills() {
     const cont = document.getElementById('segmentPills');
     if (!processedRows.length) {
       cont.innerHTML = `<span style="font-size:0.78rem; color:var(--gray-muted);">Importe a planilha do CGD para ver a divisão automática dos públicos.</span>`;
       return;
     }
-
-    const totalGeral = processedRows.length;
     let html = `
       <button type="button" class="seg-pill ${ativoPublicoId === '__all__' ? 'active' : ''}" onclick="selecionarPublico('__all__')">
         <i class="fa-solid fa-layer-group"></i> Todos os Públicos
-        <span class="seg-count">${totalGeral}</span>
+        <span class="seg-count">${processedRows.length}</span>
       </button>
     `;
-
     estrategias.forEach(e => {
       const qtd = processedRows.filter(r => r._estrategiaId === e.id).length;
+      const parcLabel = e.parcelas === 0 ? 'À vista' : `${e.parcelas}x`;
       html += `
         <button type="button" class="seg-pill ${ativoPublicoId === e.id ? 'active' : ''}" onclick="selecionarPublico('${e.id}')">
           <span>${e.nome}</span>
-          <span class="seg-meta">(${e.desconto}% • ${e.parcelas}x)</span>
+          <span class="seg-meta">(${e.desconto}% • ${parcLabel})</span>
           <span class="seg-count">${qtd}</span>
         </button>
       `;
     });
-
     const semFaixaQtd = processedRows.filter(r => r._estrategiaId === '__sem_faixa__').length;
     if (semFaixaQtd > 0) {
       html += `
@@ -1016,7 +1277,6 @@
         </button>
       `;
     }
-
     cont.innerHTML = html;
   }
 
@@ -1035,7 +1295,7 @@
     return e ? e.nome : 'Todos';
   }
 
-  // ==================== SINCRONIZAÇÃO COM GOOGLE APPS SCRIPT ====================
+  // ==================== GOOGLE APPS SCRIPT ====================
   async function sincronizarTudo() {
     const api = localStorage.getItem('cgd_waseller_api') || '';
     if (api) {
@@ -1047,25 +1307,20 @@
           campanhasCache = Array.isArray(data.campanhas) ? data.campanhas : [];
           localStorage.setItem('cgd_mensagens_v4', JSON.stringify(mensagensCache));
           localStorage.setItem('cgd_campanhas_v4', JSON.stringify(campanhasCache));
-          renderMsgChips();
-          atualizarBadgeModelos();
-          renderListaModelos();
+          renderMsgChips(); atualizarBadgeModelos(); renderListaModelos();
           return;
         }
-      } catch (e) { console.warn('Cache local ativado:', e); }
+      } catch (e) { console.warn('Cache local:', e); }
     }
     mensagensCache = JSON.parse(localStorage.getItem('cgd_mensagens_v4') || '[]');
     campanhasCache = JSON.parse(localStorage.getItem('cgd_campanhas_v4') || '[]');
-    renderMsgChips();
-    atualizarBadgeModelos();
-    renderListaModelos();
+    renderMsgChips(); atualizarBadgeModelos(); renderListaModelos();
   }
 
-  // ==================== CRUD DE MENSAGENS ====================
   function renderMsgChips() {
     const cont = document.getElementById('msgChipsContainer');
     if (!mensagensCache.length) {
-      cont.innerHTML = `<span style="font-size:0.78rem; color:var(--gray-muted);">Nenhuma mensagem salva ainda. Escreva abaixo, dê um título e clique em <strong>Salvar no Sheets</strong>.</span>`;
+      cont.innerHTML = `<span style="font-size:0.78rem; color:var(--gray-muted);">Nenhuma mensagem salva ainda.</span>`;
       return;
     }
     cont.innerHTML = mensagensCache.map((m, idx) => `
@@ -1096,17 +1351,14 @@
     document.getElementById('btnExcluirMsg').classList.add('hidden');
     renderMsgChips();
     validarEAtualizarPreview();
-    if (focar) {
-      document.getElementById('msgTituloInput').focus();
-      showToast('Campos limpos para criar nova mensagem.');
-    }
+    if (focar) { document.getElementById('msgTituloInput').focus(); showToast('Pronto para nova mensagem.'); }
   }
 
   async function salvarMensagemNoAppsScript() {
     const titulo = document.getElementById('msgTituloInput').value.trim();
     const texto = document.getElementById('msgTemplate').value;
     if (!titulo) { document.getElementById('msgTituloInput').focus(); return showToast('Informe um título.'); }
-    if (!texto.trim()) return showToast('Escreva o texto da mensagem antes de salvar.');
+    if (!texto.trim()) return showToast('Escreva o texto antes de salvar.');
 
     const id = editingMsgId || ('msg_' + Date.now());
     const obj = { id, titulo, texto, atualizado_em: new Date().toLocaleString('pt-BR') };
@@ -1119,10 +1371,9 @@
     const api = localStorage.getItem('cgd_waseller_api') || '';
     if (api) {
       try {
-        const res = await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'saveMessage', id, titulo, texto }) });
-        const data = await res.json();
-        if (data.ok) { showToast(`"${titulo}" salva no Google Sheets! Clique nela acima para usar.`); return; }
-      } catch (e) { showToast('Salva localmente (verifique o Apps Script).'); return; }
+        const data = await (await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'saveMessage', id, titulo, texto }) })).json();
+        if (data.ok) { showToast(`"${titulo}" salva no Google Sheets!`); return; }
+      } catch (e) { showToast('Salva localmente (verifique a API).'); return; }
     }
     showToast(`"${titulo}" salva!`);
   }
@@ -1140,10 +1391,8 @@
     limparEditorMensagem(false);
 
     const api = localStorage.getItem('cgd_waseller_api') || '';
-    if (api) {
-      try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'deleteMessage', id: deletedId }) }); } catch (e) {}
-    }
-    showToast(`Mensagem "${m.titulo}" excluída.`);
+    if (api) { try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'deleteMessage', id: deletedId }) }); } catch (e) {} }
+    showToast(`"${m.titulo}" excluída.`);
   }
 
   // ==================== TAGS ====================
@@ -1161,24 +1410,18 @@
     if (/[A-Z]/.test(nome) && !CAMEL_NATIVAS.has(nome)) p.push('contém maiúscula');
     return p;
   }
-  function garantirCustomVar(nome, valorPadrao) {
-    const clean = sanitizarTagNome(nome);
-    if (!tagConfigs.some(t => t.key === clean)) {
-      tagConfigs.push({ key: clean, label: 'Variável fixa', tag: clean, enabled: true, locked: false, isCustom: true, fixedValue: valorPadrao });
-    }
-  }
   function adicionarVariavelPersonalizada() {
     const nomeRaw = document.getElementById('novaVarNome').value.trim();
     const valor = document.getElementById('novaVarValor').value.trim();
     if (!nomeRaw) return showToast('Digite o nome da nova variável.');
     const nomeLimpo = sanitizarTagNome(nomeRaw);
     const ex = tagConfigs.find(t => t.key === nomeLimpo);
-    if (ex && ex.isCustom) { ex.fixedValue = valor; ex.enabled = true; }
+    if (ex && ex.isCustom) { ex.fixedValue = valor; ex.sourceKey = null; ex.enabled = true; }
     else if (!ex) tagConfigs.push({ key: nomeLimpo, label: 'Variável fixa', tag: nomeLimpo, enabled: true, locked: false, isCustom: true, fixedValue: valor });
     else return showToast('Já existe uma coluna nativa com esse nome.');
     document.getElementById('novaVarNome').value = '';
     document.getElementById('novaVarValor').value = '';
-    renderTagEditor(); reprocessar(); showToast(`Nova coluna #${nomeLimpo} criada!`);
+    renderTagEditor(); reprocessar(); showToast(`Coluna #${nomeLimpo} criada!`);
   }
   function renderTagEditor() {
     document.getElementById('badgeTags').textContent = tagConfigs.filter(t => t.enabled).length;
@@ -1188,8 +1431,12 @@
         <div class="tag-editor-item">
           <input type="checkbox" ${tc.enabled ? 'checked' : ''} ${tc.locked ? 'disabled' : ''} onchange="toggleTag(${idx}, this.checked)" />
           <input type="text" class="${probs.length ? 'invalid-tag' : ''}" value="${tc.tag}" ${tc.locked ? 'readonly' : ''} oninput="renomearTag(${idx}, this.value)" />
-          ${tc.isCustom ? `<input type="text" value="${tc.fixedValue || ''}" placeholder="Valor fixo" oninput="editarValorCustom(${idx}, this.value)" />` : `<span class="tag-origin">${tc.label}</span>`}
-          ${tc.isCustom ? `<button class="btn btn-danger-soft btn-xs" onclick="removerCustomTag(${idx})"><i class="fa-solid fa-trash"></i></button>` : `<span style="text-align:center; color:${probs.length ? 'var(--danger)' : 'var(--success)'};"><i class="fa-solid ${probs.length ? 'fa-triangle-exclamation' : 'fa-check'}"></i></span>`}
+          ${tc.isCustom && !tc.sourceKey
+            ? `<input type="text" value="${tc.fixedValue || ''}" placeholder="Valor fixo" oninput="editarValorCustom(${idx}, this.value)" />`
+            : `<span class="tag-origin">${tc.label}</span>`}
+          ${tc.isCustom
+            ? `<button class="btn btn-danger-soft btn-xs" onclick="removerCustomTag(${idx})"><i class="fa-solid fa-trash"></i></button>`
+            : `<span style="text-align:center; color:${probs.length ? 'var(--danger)' : 'var(--success)'};"><i class="fa-solid ${probs.length ? 'fa-triangle-exclamation' : 'fa-check'}"></i></span>`}
         </div>`;
     }).join('');
     renderTagsClicaveis(); popularSelectFiltroColunas();
@@ -1204,7 +1451,7 @@
   }
   function renderTagsClicaveis() {
     document.getElementById('tagsBox').innerHTML = tagConfigs.filter(t => t.enabled)
-      .map(t => `<span class="tag-pill ${t.isCustom ? 'custom-pill' : ''}" onclick="inserirTag('#${t.tag}')">#${t.tag}</span>`).join('');
+      .map(t => `<span class="tag-pill ${t.isCustom ? 'custom-pill' : t.promoHighlight ? 'promo-pill' : ''}" onclick="inserirTag('#${t.tag}')" title="${t.label}">#${t.tag}</span>`).join('');
   }
   function inserirTag(tag) {
     const ta = document.getElementById('msgTemplate'), s = ta.selectionStart, e = ta.selectionEnd;
@@ -1213,31 +1460,38 @@
     validarEAtualizarPreview();
   }
 
-  // ==================== VALIDADOR DE TAGS ====================
+  // ==================== VALIDADOR INTELIGENTE ====================
   function validarEAtualizarPreview() {
     const msg = document.getElementById('msgTemplate').value;
     const ativos = tagConfigs.filter(t => t.enabled);
     const mapaAtivos = new Map(ativos.map(t => [t.tag, t]));
-    const erros = [], avisos = [];
+    const erros = [];
 
     ativos.forEach(tc => {
       const probs = validarNomeIndividualTag(tc.tag);
       if (probs.length) {
         const sug = sanitizarTagNome(tc.tag);
-        erros.push({ texto: `Coluna <strong>"${tc.tag}"</strong> fora do padrão: ${probs.join(', ')}.`, acaoLabel: `Corrigir para "${sug}"`, acao: () => { tc.tag = sug; renderTagEditor(); renderTabela(); validarEAtualizarPreview(); } });
+        erros.push({
+          texto: `Coluna <strong>"${tc.tag}"</strong> fora do padrão WaSeller (${probs.join(', ')}).`,
+          acaoLabel: `Padronizar para "${sug}"`,
+          acao: () => { tc.tag = sug; renderTagEditor(); renderTabela(); validarEAtualizarPreview(); }
+        });
       }
     });
 
     if (/@nome\b/i.test(msg)) {
-      erros.push({ texto: `Você usou <strong>@nome</strong>, mas o WaSeller utiliza <strong>#</strong>.`, acaoLabel: `Trocar para #primeiroNome`, acao: () => { document.getElementById('msgTemplate').value = msg.replace(/@nome\b/gi, '#primeiroNome'); validarEAtualizarPreview(); } });
+      erros.push({
+        texto: `Você usou <strong>@nome</strong>, mas o WaSeller utiliza <strong>#</strong>.`,
+        acaoLabel: `Trocar para #primeiroNome`,
+        acao: () => { document.getElementById('msgTemplate').value = msg.replace(/@nome\b/gi, '#primeiroNome'); validarEAtualizarPreview(); }
+      });
     }
 
     const encontradas = new Set();
-    const regexTags = /#([^\s,;!?:()\[\]"*]+)/g;
+    const regexTags = /#([a-zA-Z0-9_À-ÿ.-]+)/g;
     let match;
     while ((match = regexTags.exec(msg)) !== null) {
       let tok = match[1].replace(/[.!?,;:*]+$/, '');
-      if (tok.endsWith('%')) tok = tok.slice(0, -1);
       if (!mapaAtivos.has(tok) && tok.endsWith('x') && mapaAtivos.has(tok.slice(0, -1))) tok = tok.slice(0, -1);
       if (tok) encontradas.add(tok);
     }
@@ -1246,46 +1500,46 @@
       if (mapaAtivos.has(tagUsada)) return;
       const normUsada = sanitizarTagNome(tagUsada);
 
-      const chaveSinonimo = SINONIMOS_TAGS[normUsada];
-      if (chaveSinonimo) {
-        const tcAlvo = tagConfigs.find(t => t.key === chaveSinonimo);
-        if (tcAlvo) {
-          erros.push({
-            texto: `Você escreveu <strong>#${tagUsada}</strong>, mas essa informação já vem do CGD na coluna <strong>#${tcAlvo.tag}</strong> (${tcAlvo.label}).`,
-            acaoLabel: `Usar #${tcAlvo.tag}`,
-            acao: () => { tcAlvo.enabled = true; document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + tcAlvo.tag); renderTagEditor(); aplicarFiltrosEOrdenacao(); validarEAtualizarPreview(); }
-          });
-          return;
-        }
-      }
-
+      // Divergência exata de maiúscula/minúscula com coluna ativa
       const matchAtivo = ativos.find(t => sanitizarTagNome(t.tag) === normUsada);
       if (matchAtivo) {
-        erros.push({ texto: `Tag <strong>#${tagUsada}</strong> diverge da coluna <strong>#${matchAtivo.tag}</strong>.`, acaoLabel: `Corrigir`, acao: () => { document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + matchAtivo.tag); validarEAtualizarPreview(); } });
+        erros.push({
+          texto: `<strong>#${tagUsada}</strong> está com maiúsculas/acentos diferentes da coluna <strong>#${matchAtivo.tag}</strong>.`,
+          acaoLabel: `Corrigir para #${matchAtivo.tag}`,
+          acao: () => {
+            document.getElementById('msgTemplate').value = replaceExactTag(msg, tagUsada, '#' + matchAtivo.tag);
+            validarEAtualizarPreview();
+          }
+        });
         return;
       }
 
+      // Existe na lista mas está desmarcada
       const matchDes = tagConfigs.find(t => t.tag === tagUsada || sanitizarTagNome(t.tag) === normUsada);
       if (matchDes) {
-        erros.push({ texto: `Tag <strong>#${tagUsada}</strong> existe (${matchDes.label}), mas está desmarcada no Editor de Tags.`, acaoLabel: `Ativar #${matchDes.tag}`, acao: () => { matchDes.enabled = true; renderTagEditor(); aplicarFiltrosEOrdenacao(); validarEAtualizarPreview(); } });
+        erros.push({
+          texto: `<strong>#${tagUsada}</strong> existe (${matchDes.label}), mas está desativada.`,
+          acaoLabel: `Ativar #${matchDes.tag}`,
+          acao: () => {
+            matchDes.enabled = true;
+            if (tagUsada !== matchDes.tag) {
+              document.getElementById('msgTemplate').value = replaceExactTag(msg, tagUsada, '#' + matchDes.tag);
+            }
+            renderTagEditor(); aplicarFiltrosEOrdenacao(); validarEAtualizarPreview();
+          }
+        });
         return;
       }
 
-      const sug = sanitizarTagNome(tagUsada);
+      // Qualquer outra tag (#valor1, #valor2, #DATA, #premio...): abre o Modal Elegante!
       erros.push({
-        texto: `Tag <strong>#${tagUsada}</strong> não existe no CGD. Crie uma coluna extra no Excel com valor fixo.`,
-        acaoLabel: `Criar coluna #${sug}`,
-        acao: () => {
-          const v = prompt(`A coluna "${sug}" será criada na planilha do Excel.\nQual valor fixo deseja preencher?`, '');
-          if (v === null) return;
-          garantirCustomVar(sug, v);
-          if (tagUsada !== sug) document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + sug);
-          renderTagEditor(); reprocessar();
-        }
+        texto: `A tag <strong>#${tagUsada}</strong> ainda não está conectada a nenhum valor ou data da planilha.`,
+        acaoLabel: `Configurar #${tagUsada}`,
+        acao: () => abrirResolverTag(tagUsada)
       });
     });
 
-    ultimoDiagnostico = { erros, avisos };
+    ultimoDiagnostico = { erros, avisos: [] };
     const panel = document.getElementById('validatorPanel');
     const kpi = document.getElementById('kpiStatusTags');
     const badge = document.getElementById('badgeTags');
@@ -1298,15 +1552,18 @@
       panel.innerHTML = `<i class="fa-solid fa-circle-info"></i> Clique em uma mensagem salva acima ou escreva um texto para validar as tags.`;
     } else if (erros.length) {
       panel.className = 'validator-panel validator-err';
-      kpi.innerHTML = `<span style="color:var(--danger)">${erros.length} erro(s)</span>`;
+      kpi.innerHTML = `<span style="color:var(--danger)">${erros.length} pendente(s)</span>`;
       badge.classList.add('err');
-      panel.innerHTML = `<strong style="display:block; margin-bottom:4px;">⚠️ Corrija antes de exportar:</strong>` +
-        erros.map((e, i) => { window._acoesCorrecao[i] = e.acao; return `<div class="validator-item"><span><i class="fa-solid fa-circle-xmark"></i> ${e.texto}</span>${e.acao ? `<button class="btn btn-brown btn-xs" onclick="window._acoesCorrecao[${i}]()">${e.acaoLabel}</button>` : ''}</div>`; }).join('');
+      panel.innerHTML = `<strong style="display:block; margin-bottom:4px;">⚠️ Conecte as tags abaixo antes de baixar a planilha:</strong>` +
+        erros.map((e, i) => {
+          window._acoesCorrecao[i] = e.acao;
+          return `<div class="validator-item"><span><i class="fa-solid fa-circle-exclamation"></i> ${e.texto}</span><button class="btn btn-primary btn-xs" onclick="window._acoesCorrecao[${i}]()"><i class="fa-solid fa-wand-magic-sparkles"></i> ${e.acaoLabel}</button></div>`;
+        }).join('');
     } else {
       panel.className = 'validator-panel validator-ok';
       kpi.innerHTML = `<span style="color:var(--success)">100% Validado</span>`;
       badge.classList.remove('err');
-      panel.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>Tudo certo!</strong> Todas as tags do texto batem exatamente com as colunas da planilha.`;
+      panel.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>Tudo certo!</strong> Todas as tags do texto estão conectadas e vão sair certinhas no Excel.`;
     }
     atualizarPreview();
   }
@@ -1335,7 +1592,7 @@
         rawRows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
         ativoPublicoId = '__all__';
         reprocessar();
-        showToast(`"${file.name}" carregado (${rawRows.length} alunos separados por faixa)!`);
+        showToast(`"${file.name}" carregado (${rawRows.length} alunos)!`);
       } catch (err) { showToast('Erro: ' + err.message); }
     };
     reader.readAsArrayBuffer(file);
@@ -1386,10 +1643,10 @@
     ];
     ativoPublicoId = '__all__';
     reprocessar();
-    showToast('4 públicos de exemplo carregados! Clique nos botões de faixa acima da tabela.');
+    showToast('Exemplo carregado! Veja os valores de Economia (R$) e Valor Final na tabela.');
   }
 
-  // ==================== MOTOR FINANCEIRO POR FAIXA ====================
+  // ==================== MOTOR FINANCEIRO ====================
   function normKey(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim(); }
   function getField(row, cands) {
     const keys = Object.keys(row);
@@ -1420,14 +1677,13 @@
     const s = String(v || '').trim(), iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
     return iso ? `${iso[3]}/${iso[2]}/${iso[1]}` : s;
   }
-  function calcularDiasVencimento(dataBR) {
+  function calcularPrazoTexto(dataBR) {
     const m = String(dataBR || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-    if (!m) return { diff: null, dias: '', texto: '' };
+    if (!m) return '';
     const dtV = new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
-    const p = (document.getElementById('dataRefLembrete').value || '').split('-');
-    const dtR = p.length === 3 ? new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])) : new Date(new Date().setHours(0,0,0,0));
+    const dtR = new Date(new Date().setHours(0,0,0,0));
     const diff = Math.round((dtV - dtR) / 86400000);
-    return { diff, dias: String(Math.abs(diff)), texto: diff === 0 ? 'hoje' : diff === 1 ? 'amanhã' : diff > 1 ? `daqui a ${diff} dias` : diff === -1 ? 'ontem' : `há ${Math.abs(diff)} dias` };
+    return diff === 0 ? 'hoje' : diff === 1 ? 'amanhã' : diff > 1 ? `daqui a ${diff} dias` : diff === -1 ? 'ontem' : `há ${Math.abs(diff)} dias`;
   }
   function parsePhone(raw, addDDI) {
     const str = String(raw || '').trim();
@@ -1447,6 +1703,7 @@
     const descontoBase = document.getElementById('descontoBase').value;
     const formatoPercent = document.getElementById('formatoPercent').value;
     const parcelaBase = document.getElementById('parcelaBase').value;
+    const dataPromocaoBR = formatDateBR(document.getElementById('dataPromocao').value);
 
     const modoTelefones = document.getElementById('modoTelefones').value;
     const campoNome = document.getElementById('campoNome').value;
@@ -1475,34 +1732,34 @@
       const atraso = isNaN(parsedAtraso) ? 0 : parsedAtraso;
 
       const vencimento = formatDateBR(getField(row, ['vencimento', 'data']));
-      const vencInfo = calcularDiasVencimento(vencimento);
-
-      // Encontra a estratégia exata para a quantidade de atraso deste aluno
       const est = buscarEstrategiaPorAtraso(atraso);
 
-      // 1) Dívida Base Real (Unitário × Atraso)
+      // 1) Dívida Base Real
       const valorMensalidadeNum = parseMoney(getField(row, ['valor', 'total', 'mensalidade', 'debito']));
       const multiplicador = (modoValorCGD === 'unitario' && atraso > 0) ? atraso : 1;
       const dividaBaseNum = valorMensalidadeNum * multiplicador;
 
-      // 2) Juros da Faixa
+      // 2) Juros
       const percJuros = jurosTipo === 'percent_atraso' ? (est.juros * Math.max(1, atraso)) : est.juros;
       const valorJurosNum = dividaBaseNum * (percJuros / 100);
       const valorComJurosNum = dividaBaseNum + valorJurosNum;
 
-      // 3) Desconto da Faixa
+      // 3) Desconto & Economia em R$
       const baseDesc = descontoBase === 'original' ? dividaBaseNum : valorComJurosNum;
       const percDesc = est.desconto;
-      const valorDescontoNum = baseDesc * (percDesc / 100);
+      const valorEconomiaNum = baseDesc * (percDesc / 100);
       const numStr = String(percDesc).replace('.', ',');
       const textoDesconto = formatoPercent === 'symbol' ? `${numStr}%` : formatoPercent === 'extenso' ? `${numStr} por cento` : numStr;
 
-      // 4) Valor Final e Parcelamento específico da Faixa
-      const valorFinalNum = Math.max(0, valorComJurosNum - valorDescontoNum);
-      const parcelasQtd = Math.max(1, est.parcelas || 1);
-      const valorParcelaNum = (parcelaBase === 'atualizado' ? valorComJurosNum : valorFinalNum) / parcelasQtd;
+      // 4) Valor Final & Parcelamento (0 = À vista)
+      const valorFinalNum = Math.max(0, valorComJurosNum - valorEconomiaNum);
+      const parcelasNum = Math.max(0, parseInt(est.parcelas, 10) || 0);
+      const baseParc = parcelaBase === 'atualizado' ? valorComJurosNum : valorFinalNum;
+      const valorParcelaNum = parcelasNum > 0 ? (baseParc / parcelasNum) : valorFinalNum;
+      const textoParcelas = parcelasNum === 0 ? 'À vista' : String(parcelasNum);
+      const textoCondicao = parcelasNum === 0 ? `À vista (R$ ${formatBRL(valorFinalNum)})` : `${parcelasNum}x de R$ ${formatBRL(valorParcelaNum)}`;
 
-      // 5) Telefones (Fone 1, 2 e 3)
+      // 5) Telefones
       const f1 = parsePhone(getField(row, ['fone 1', 'telefone 1', 'fone1', 'telefone', 'celular', 'whatsapp']), addDDI);
       const f2 = parsePhone(getField(row, ['fone 2', 'telefone 2', 'fone2']), addDDI);
       const f3 = parsePhone(getField(row, ['fone 3', 'telefone 3', 'fone3']), addDDI);
@@ -1532,8 +1789,9 @@
           _baseNum: dividaBaseNum,
           _jurosNum: valorJurosNum,
           _comJurosNum: valorComJurosNum,
+          _economiaNum: valorEconomiaNum,
           _finalNum: valorFinalNum,
-          _parcelamento: `${parcelasQtd}x de R$ ${formatBRL(valorParcelaNum)}`,
+          _parcelamento: textoCondicao,
           matricula,
           nome: nomeUsado,
           primeiroNome,
@@ -1541,21 +1799,26 @@
           responsavel,
           atraso: String(atraso),
           vencimento,
-          dias_vencimento: vencInfo.dias,
-          prazo_texto: vencInfo.texto,
+          data_promocao: dataPromocaoBR,
+          prazo_texto: calcularPrazoTexto(vencimento),
           valor_mensalidade: formatBRL(valorMensalidadeNum),
           divida_base: formatBRL(dividaBaseNum),
           juros_percent: `${String(percJuros).replace('.', ',')}%`,
           juros_reais: formatBRL(valorJurosNum),
           valor: formatBRL(valorComJurosNum),
           desconto: textoDesconto,
-          desconto_reais: formatBRL(valorDescontoNum),
+          economia: formatBRL(valorEconomiaNum),
           valor_final: formatBRL(valorFinalNum),
-          parcelas: String(parcelasQtd),
+          parcelas: textoParcelas,
           valor_parcela: formatBRL(valorParcelaNum)
         };
         primeiroTelefoneValido = false;
-        tagConfigs.filter(t => t.isCustom).forEach(cv => item[cv.key] = cv.fixedValue || '');
+
+        // Preenche colunas personalizadas (espelhadas de cálculo OU valor fixo)
+        tagConfigs.filter(t => t.isCustom).forEach(cv => {
+          item[cv.key] = cv.sourceKey ? (item[cv.sourceKey] ?? '') : (cv.fixedValue || '');
+        });
+
         processedRows.push(item);
       });
     });
@@ -1567,18 +1830,18 @@
   }
 
   function atualizarKPIs(lista) {
-    let alunos = 0, sBase = 0, sJuros = 0, sComJuros = 0, sFinal = 0;
+    let alunos = 0, sBase = 0, sJuros = 0, sComJuros = 0, sEcon = 0, sFinal = 0;
     lista.forEach(r => {
       if (r._isPrimaryPhone) {
         alunos++;
         sBase += r._baseNum;
         sJuros += r._jurosNum;
         sComJuros += r._comJurosNum;
+        sEcon += r._economiaNum;
         sFinal += r._finalNum;
       }
     });
-    const nomePub = getNomePublicoAtivo();
-    document.getElementById('kpiPublicoLabel').textContent = `Contatos (${nomePub})`;
+    document.getElementById('kpiPublicoLabel').textContent = `Contatos (${getNomePublicoAtivo()})`;
     document.getElementById('kpiContatos').textContent = lista.length;
     document.getElementById('kpiAlunosSub').textContent = `${alunos} aluno(s) único(s)`;
     document.getElementById('kpiRemovidos').textContent = removedCount;
@@ -1586,9 +1849,10 @@
     document.getElementById('kpiJuros').textContent = 'R$ ' + formatBRL(sComJuros);
     document.getElementById('kpiJurosSub').textContent = `+ R$ ${formatBRL(sJuros)} de juros`;
     document.getElementById('kpiFinal').textContent = 'R$ ' + formatBRL(sFinal);
+    document.getElementById('kpiEconomiaSub').textContent = `R$ ${formatBRL(sEcon)} em descontos`;
   }
 
-  // ==================== ABAS, FILTROS EXATOS E ORDENAÇÃO ====================
+  // ==================== TABELA, FILTROS & ORDENAÇÃO ====================
   function trocarAbaTabela(aba) {
     abaTabelaAtual = aba;
     document.getElementById('tabBtn_conferencia').classList.toggle('active', aba === 'conferencia');
@@ -1597,65 +1861,34 @@
     popularSelectFiltroColunas();
     aplicarFiltrosEOrdenacao();
   }
-
   function getColunasTabelaAtual() {
     if (abaTabelaAtual === 'conferencia') return COLS_CONFERENCIA;
     return tagConfigs.filter(t => t.enabled).map(t => ({ key: t.key, label: t.tag, mono: true }));
   }
-
   function getBasePublicoAtual() {
-    if (ativoPublicoId === '__all__') return processedRows;
-    return processedRows.filter(r => r._estrategiaId === ativoPublicoId);
+    return ativoPublicoId === '__all__' ? processedRows : processedRows.filter(r => r._estrategiaId === ativoPublicoId);
   }
-
   function popularSelectFiltroColunas() {
     const sel = document.getElementById('filterCol'), prev = sel.value;
-    const cols = getColunasTabelaAtual();
-    sel.innerHTML = '<option value="__all__">Todas as colunas</option>' + cols.map(c => `<option value="${c.key}">${c.label}</option>`).join('');
+    sel.innerHTML = '<option value="__all__">Todas as colunas</option>' + getColunasTabelaAtual().map(c => `<option value="${c.key}">${c.label}</option>`).join('');
     if ([...sel.options].some(o => o.value === prev)) sel.value = prev;
     atualizarValoresRapidos();
   }
-
-  function onFilterColChange() {
-    document.getElementById('filterQuickVal').value = '';
-    atualizarValoresRapidos();
-    aplicarFiltrosEOrdenacao();
-  }
-
+  function onFilterColChange() { document.getElementById('filterQuickVal').value = ''; atualizarValoresRapidos(); aplicarFiltrosEOrdenacao(); }
   function atualizarValoresRapidos() {
-    const colKey = document.getElementById('filterCol').value;
-    const selQuick = document.getElementById('filterQuickVal');
-    const base = getBasePublicoAtual();
-    if (colKey === '__all__' || !base.length) {
-      selQuick.classList.add('hidden');
-      selQuick.value = '';
-      return;
-    }
+    const colKey = document.getElementById('filterCol').value, selQuick = document.getElementById('filterQuickVal'), base = getBasePublicoAtual();
+    if (colKey === '__all__' || !base.length) { selQuick.classList.add('hidden'); selQuick.value = ''; return; }
     const unicos = [...new Set(base.map(r => String(r[colKey] ?? '').trim()).filter(v => v !== ''))];
     if (unicos.length > 0 && unicos.length <= 150) {
       unicos.sort((a, b) => compararValores(a, b));
-      const prevVal = selQuick.value;
-      selQuick.innerHTML = '<option value="">-- Valor exato (Todos) --</option>' +
-        unicos.map(u => `<option value="${u.replace(/"/g, '&quot;')}">${u}</option>`).join('');
-      if (unicos.includes(prevVal)) selQuick.value = prevVal;
+      const prev = selQuick.value;
+      selQuick.innerHTML = '<option value="">-- Valor exato (Todos) --</option>' + unicos.map(u => `<option value="${u.replace(/"/g, '&quot;')}">${u}</option>`).join('');
+      if (unicos.includes(prev)) selQuick.value = prev;
       selQuick.classList.remove('hidden');
-    } else {
-      selQuick.classList.add('hidden');
-      selQuick.value = '';
-    }
+    } else { selQuick.classList.add('hidden'); selQuick.value = ''; }
   }
-
-  function onFilterTextInput() {
-    // Quando digita texto livre, limpa o filtro exato para não conflitar
-    document.getElementById('filterQuickVal').value = '';
-    aplicarFiltrosEOrdenacao();
-  }
-
-  function onFilterQuickChange() {
-    document.getElementById('filterText').value = '';
-    aplicarFiltrosEOrdenacao();
-  }
-
+  function onFilterTextInput() { document.getElementById('filterQuickVal').value = ''; aplicarFiltrosEOrdenacao(); }
+  function onFilterQuickChange() { document.getElementById('filterText').value = ''; aplicarFiltrosEOrdenacao(); }
   function limparFiltrosTabela() {
     document.getElementById('filterCol').value = '__all__';
     document.getElementById('filterText').value = '';
@@ -1664,12 +1897,10 @@
     sortState = { key: null, dir: 'asc' };
     aplicarFiltrosEOrdenacao();
   }
-
   function ordenarPorColuna(key) {
     sortState = sortState.key === key ? { key, dir: sortState.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'asc' };
     aplicarFiltrosEOrdenacao();
   }
-
   function compararValores(a, b) {
     const sa = String(a ?? '').trim(), sb = String(b ?? '').trim();
     const da = sa.match(/^(\d{2})\/(\d{2})\/(\d{4})$/), db = sb.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
@@ -1679,27 +1910,17 @@
     if (!isNaN(na) && !isNaN(nb) && /^[\dR$\s.,%-]+$/.test(sa) && /^[\dR$\s.,%-]+$/.test(sb)) return na - nb;
     return sa.localeCompare(sb, 'pt-BR', { numeric: true, sensitivity: 'base' });
   }
-
   function aplicarFiltrosEOrdenacao() {
-    const basePublico = getBasePublicoAtual();
-    const colKey = document.getElementById('filterCol').value;
-    const quickExact = document.getElementById('filterQuickVal').value;
-    const termo = normKey(document.getElementById('filterText').value);
+    const basePublico = getBasePublicoAtual(), colKey = document.getElementById('filterCol').value;
+    const quickExact = document.getElementById('filterQuickVal').value, termo = normKey(document.getElementById('filterText').value);
     const cols = getColunasTabelaAtual();
 
     filteredRows = basePublico.filter(row => {
-      if (colKey !== '__all__' && quickExact !== '') {
-        return String(row[colKey] ?? '').trim() === quickExact;
-      }
+      if (colKey !== '__all__' && quickExact !== '') return String(row[colKey] ?? '').trim() === quickExact;
       if (!termo) return true;
-      if (colKey === '__all__') return cols.some(c => normKey(row[c.key]).includes(termo));
-      return normKey(row[colKey]).includes(termo);
+      return colKey === '__all__' ? cols.some(c => normKey(row[c.key]).includes(termo)) : normKey(row[colKey]).includes(termo);
     });
-
-    if (sortState.key) {
-      const k = sortState.key, m = sortState.dir === 'asc' ? 1 : -1;
-      filteredRows.sort((a, b) => compararValores(a[k], b[k]) * m);
-    }
+    if (sortState.key) { const k = sortState.key, m = sortState.dir === 'asc' ? 1 : -1; filteredRows.sort((a, b) => compararValores(a[k], b[k]) * m); }
 
     previewIndex = 0;
     atualizarKPIs(filteredRows);
@@ -1707,18 +1928,12 @@
     renderTabela();
     atualizarPreview();
   }
-
   function atualizarTextoBotoesExport() {
-    const base = getBaseExportacao();
-    const pub = document.getElementById('chkExportFiltered').checked ? getNomePublicoAtivo() : 'Todos';
-    document.getElementById('btnExportarWaSeller').innerHTML =
-      `<i class="fa-solid fa-download"></i> Baixar WaSeller: ${pub} (${base.length})`;
-    document.getElementById('btnExportarControle').innerHTML =
-      `<i class="fa-solid fa-file-invoice-dollar"></i> Baixar Conferência (${base.length})`;
+    const base = getBaseExportacao(), pub = document.getElementById('chkExportFiltered').checked ? getNomePublicoAtivo() : 'Todos';
+    document.getElementById('btnExportarWaSeller').innerHTML = `<i class="fa-solid fa-download"></i> Baixar WaSeller: ${pub} (${base.length})`;
+    document.getElementById('btnExportarControle').innerHTML = `<i class="fa-solid fa-file-invoice-dollar"></i> Baixar Conferência (${base.length})`;
   }
-
   function alternarMostrarTodos() { showAllRows = !showAllRows; renderTabela(); }
-
   function renderTabela() {
     const cols = getColunasTabelaAtual();
     document.getElementById('tabelaHead').innerHTML = '<tr>' + cols.map(c => {
@@ -1739,36 +1954,47 @@
       return `<td class="${c.cls || ''}">${val}</td>`;
     }).join('') + '</tr>').join('');
 
-    info.textContent = `Exibindo ${exibidos.length} de ${filteredRows.length} contato(s) no público "${getNomePublicoAtivo()}" (${processedRows.length} na planilha inteira) • Clique nos títulos para ordenar.`;
+    info.textContent = `Exibindo ${exibidos.length} de ${filteredRows.length} contato(s) em "${getNomePublicoAtivo()}" (${processedRows.length} no total) • Clique nos títulos para ordenar.`;
     btnAll.classList.toggle('hidden', filteredRows.length <= 100);
     btnAll.textContent = showAllRows ? 'Mostrar apenas 100' : `Mostrar todos (${filteredRows.length})`;
   }
 
+  // ==================== PRÉVIA WHATSAPP (SEM CORROMPER SUBSTRINGS!) ====================
   function formatWhatsAppPreview(rawText) {
-    const safe = String(rawText || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return safe.replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>');
+    let safe = String(rawText || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    safe = safe.replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>');
+    // Destaca tags que ainda não foram conectadas (clicáveis para configurar!)
+    safe = safe.replace(/#([a-zA-Z0-9_À-ÿ.-]+)/g, (m, t) =>
+      `<span class="unresolved-tag" onclick="abrirResolverTag('${t}')" title="Clique para conectar esta tag">#${t}</span>`
+    );
+    return safe;
   }
 
   function mudarPreview(d) {
-    const b = filteredRows.length ? filteredRows : processedRows;
-    if (!b.length) return;
-    previewIndex = (previewIndex + d + b.length) % b.length;
+    if (!filteredRows.length) return;
+    previewIndex = (previewIndex + d + filteredRows.length) % filteredRows.length;
     atualizarPreview();
   }
 
   function atualizarPreview() {
     const bubble = document.getElementById('previewBubble'), info = document.getElementById('previewInfo');
-    const b = filteredRows;
-    if (!b.length) {
+    if (!filteredRows.length) {
       info.textContent = `Prévia (${getNomePublicoAtivo()} — 0 contatos)`;
       bubble.textContent = processedRows.length ? 'Nenhum contato neste público.' : 'Carregue uma planilha do CGD ou clique em "Carregar Exemplo Real do CGD".';
       return;
     }
-    const row = b[previewIndex] || b[0];
-    info.textContent = `Contato ${previewIndex + 1} de ${b.length} • ${row._faixaNome} • ${row.numero} (${row._rotulo}) • ${row.atraso} atraso(s)`;
+    const row = filteredRows[previewIndex] || filteredRows[0];
+    info.textContent = `Contato ${previewIndex + 1} de ${filteredRows.length} • ${row._faixaNome} • ${row.numero} (${row._rotulo}) • ${row.atraso} atraso(s)`;
     let txt = document.getElementById('msgTemplate').value;
     if (!txt.trim()) { bubble.textContent = 'Selecione uma mensagem salva acima ou escreva no campo de texto para ver a prévia.'; return; }
-    tagConfigs.filter(t => t.enabled).sort((a, b) => b.tag.length - a.tag.length).forEach(tc => { txt = txt.split('#' + tc.tag).join(row[tc.key] ?? ''); });
+
+    // Substituição EXATA (não corrompe #valor1 ou #valor2 ao substituir #valor!)
+    tagConfigs.filter(t => t.enabled)
+      .sort((a, b) => b.tag.length - a.tag.length)
+      .forEach(tc => {
+        txt = replaceExactTag(txt, tc.tag, row[tc.key] ?? '');
+      });
+
     bubble.innerHTML = formatWhatsAppPreview(txt);
   }
 
@@ -1785,21 +2011,16 @@
     XLSX.utils.book_append_sheet(wb, ws, 'Envio_WaSeller');
     XLSX.writeFile(wb, filename);
   }
-
   function getBaseExportacao() { return document.getElementById('chkExportFiltered').checked ? filteredRows : processedRows; }
-
-  function limparSlug(str) {
-    return String(str || 'campanha').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '');
-  }
+  function limparSlug(s) { return String(s || 'campanha').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, ''); }
 
   function exportarWaSeller() {
     const base = getBaseExportacao();
     if (!base.length) return showToast('Nenhum contato neste público para exportar.');
-    if (ultimoDiagnostico.erros.length && !confirm(`Há ${ultimoDiagnostico.erros.length} erro(s) de tag. Baixar mesmo assim?`)) return;
+    if (ultimoDiagnostico.erros.length && !confirm(`Há ${ultimoDiagnostico.erros.length} tag(s) pendente(s) de conexão. Baixar mesmo assim?`)) return;
     const ativos = tagConfigs.filter(t => t.enabled);
     const pub = document.getElementById('chkExportFiltered').checked ? getNomePublicoAtivo() : 'Todos';
-    const slug = limparSlug(pub);
-    gerarXlsxTextoPuro(ativos.map(t => t.tag), base.map(r => ativos.map(t => String(r[t.key] ?? ''))), `WaSeller_${slug}.xlsx`);
+    gerarXlsxTextoPuro(ativos.map(t => t.tag), base.map(r => ativos.map(t => String(r[t.key] ?? ''))), `WaSeller_${limparSlug(pub)}.xlsx`);
     registrarHistoricoAPI(base.length, pub);
     showToast(`Planilha WaSeller "${pub}" baixada (${base.length} contatos)!`);
   }
@@ -1807,8 +2028,8 @@
   function exportarControle() {
     const base = getBaseExportacao();
     if (!base.length) return showToast('Nenhum contato para exportar.');
-    const headers = ['Público / Faixa','Matrícula','Aluno','Responsável','Telefone','Contato','Qtd. Atraso','Vencimento','1 Mensalidade','Dívida Base (× Atraso)','Juros (%)','Juros (R$)','Dívida c/ Juros','Desconto','Desconto (R$)','Valor Final','Parcelas','Valor Parcela'];
-    const body = base.map(r => [r._faixaNome, r.matricula, r.aluno, r.responsavel, r.numero, r._rotulo, r.atraso, r.vencimento, r.valor_mensalidade, r.divida_base, r.juros_percent, r.juros_reais, r.valor, r.desconto, r.desconto_reais, r.valor_final, r.parcelas + 'x', r.valor_parcela]);
+    const headers = ['Público / Faixa','Matrícula','Aluno','Responsável','Telefone','Contato','Atraso','Vencimento CGD','Data Promoção','1 Mensalidade','Dívida Base','Juros (%)','Juros (R$)','Valor Atualizado','Desc (%)','Economia (R$)','Valor Final','Condição'];
+    const body = base.map(r => [r._faixaNome, r.matricula, r.aluno, r.responsavel, r.numero, r._rotulo, r.atraso, r.vencimento, r.data_promocao, r.valor_mensalidade, r.divida_base, r.juros_percent, r.juros_reais, r.valor, r.desconto, r.economia, r.valor_final, r._parcelamento]);
     const pub = document.getElementById('chkExportFiltered').checked ? getNomePublicoAtivo() : 'Todos';
     gerarXlsxTextoPuro(headers, body, `Conferencia_${limparSlug(pub)}.xlsx`);
     showToast(`Conferência "${pub}" baixada (${base.length} registros)!`);
@@ -1823,22 +2044,19 @@
   }
   function getConfigAtual() {
     return {
+      dataPromocao: document.getElementById('dataPromocao').value,
       modoValorCGD: document.getElementById('modoValorCGD').value,
       jurosTipo: document.getElementById('jurosTipo').value,
       descontoBase: document.getElementById('descontoBase').value,
       formatoPercent: document.getElementById('formatoPercent').value,
       parcelaBase: document.getElementById('parcelaBase').value,
-      estrategias,
-      tagConfigs
+      estrategias, tagConfigs
     };
   }
   function atualizarBadgeModelos() { document.getElementById('badgeModelos').textContent = campanhasCache.length; }
   function renderListaModelos() {
     const cont = document.getElementById('modelListContainer');
-    if (!campanhasCache.length) {
-      cont.innerHTML = `<p style="font-size:0.82rem; color:var(--gray-muted); padding:10px 0;">Nenhuma régua salva ainda.</p>`;
-      return;
-    }
+    if (!campanhasCache.length) { cont.innerHTML = `<p style="font-size:0.82rem; color:var(--gray-muted); padding:10px 0;">Nenhuma régua salva ainda.</p>`; return; }
     cont.innerHTML = campanhasCache.map((c, idx) => `
       <div class="model-card">
         <div><strong>⭐ ${c.nome}</strong><small>${c.atualizado_em || 'Salvo no Sheets'}</small></div>
@@ -1855,7 +2073,7 @@
     if (Array.isArray(cfg.estrategias) && cfg.estrategias.length) estrategias = JSON.parse(JSON.stringify(cfg.estrategias));
     if (cfg.tagConfigs) tagConfigs = migrarTagConfigs(cfg.tagConfigs);
     document.getElementById('nomeCampanha').value = c.nome;
-    ['modoValorCGD','jurosTipo','descontoBase','formatoPercent','parcelaBase'].forEach(id => { if (cfg[id] !== undefined) document.getElementById(id).value = cfg[id]; });
+    ['dataPromocao','modoValorCGD','jurosTipo','descontoBase','formatoPercent','parcelaBase'].forEach(id => { if (cfg[id] !== undefined) document.getElementById(id).value = cfg[id]; });
     ativoPublicoId = '__all__';
     renderEstrategias(); renderTagEditor(); reprocessar(); fecharModal('modalModelos');
     showToast(`Régua "${c.nome}" aplicada!`);
@@ -1903,8 +2121,7 @@
   async function registrarHistoricoAPI(qtd, pub) {
     const api = localStorage.getItem('cgd_waseller_api') || ''; if (!api) return;
     const msgNome = document.getElementById('msgTituloInput').value.trim();
-    const label = msgNome ? `${pub} (${msgNome})` : pub;
-    try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'logExport', campanha: label, qtd_contatos: qtd, duplicados_removidos: removedCount, total_original: document.getElementById('kpiBase').textContent, total_com_juros: document.getElementById('kpiJuros').textContent, total_final: document.getElementById('kpiFinal').textContent }) }); } catch (e) {}
+    try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'logExport', campanha: msgNome ? `${pub} (${msgNome})` : pub, qtd_contatos: qtd, duplicados_removidos: removedCount, total_original: document.getElementById('kpiBase').textContent, total_com_juros: document.getElementById('kpiJuros').textContent, total_final: document.getElementById('kpiFinal').textContent }) }); } catch (e) {}
   }
 </script>
 </body>
