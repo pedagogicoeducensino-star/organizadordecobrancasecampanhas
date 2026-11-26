@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central CGD → WaSeller v2.0 | Campanhas, Cobranças e Lembretes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-hover: #e55e00;
+      --gold: #d4af37;
+      --bg: #fffdf5;
+      --card: #ffffff;
+      --dark: #2b2d42;
+      --text: #2b2d42;
+      --muted: #6c757d;
+      --border: #eadfc8;
+      --success: #1b8a5a;
+      --success-bg: #e7f7ef;
+      --warn: #b56500;
+      --warn-bg: #fff4df;
+      --danger: #c1121f;
+      --danger-bg: #fdebec;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 56px; }
+
+    header {
+      background: linear-gradient(135deg, #2b2d42 0%, #1a1c29 100%);
+      color: #fff;
+      padding: 16px 24px;
+      border-bottom: 4px solid var(--primary);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand i { font-size: 1.7rem; color: var(--primary); }
+    .brand h1 { font-size: 1.2rem; font-weight: 700; }
+    .brand small { color: #d8d8d8; font-size: 0.8rem; display: block; }
+
+    .api-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .api-bar input {
+      padding: 7px 10px; border-radius: 6px; border: 1px solid #444;
+      background: #2f3247; color: #fff; font-size: 0.82rem; width: 270px;
+    }
+
+    .container { max-width: 1420px; margin: 20px auto; padding: 0 18px; }
+
+    /* Seletor de Modos */
+    .mode-bar {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px; margin-bottom: 18px;
+    }
+    .mode-btn {
+      background: #fff; border: 2px solid var(--border); border-radius: 10px;
+      padding: 12px 14px; text-align: left; cursor: pointer; transition: .2s;
+      display: flex; align-items: center; gap: 10px; color: var(--text);
+    }
+    .mode-btn i { font-size: 1.25rem; color: var(--gold); }
+    .mode-btn strong { display: block; font-size: 0.9rem; }
+    .mode-btn small { color: var(--muted); font-size: 0.74rem; }
+    .mode-btn:hover { border-color: var(--primary); }
+    .mode-btn.active {
+      border-color: var(--primary); background: #fff7ed;
+      box-shadow: 0 3px 10px rgba(255,107,0,0.12);
+    }
+    .mode-btn.active i { color: var(--primary); }
+
+    /* KPIs */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px; margin-bottom: 18px;
+    }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-left: 4px solid var(--primary); border-radius: 10px; padding: 12px 14px;
+    }
+    .stat-card.gold { border-left-color: var(--gold); }
+    .stat-card.green { border-left-color: var(--success); }
+    .stat-card span { font-size: 0.74rem; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; }
+    .stat-card strong { display: block; font-size: 1.25rem; margin-top: 3px; }
+
+    .main-grid { display: grid; grid-template-columns: 450px 1fr; gap: 20px; align-items: start; }
+    @media (max-width: 1080px) { .main-grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px; margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .card h2 {
+      font-size: 0.96rem; margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border); display: flex; align-items: center;
+      justify-content: space-between; gap: 8px;
+    }
+    .card h2 span.title-left { display: flex; align-items: center; gap: 8px; }
+    .card h2 i { color: var(--primary); }
+
+    .dropzone {
+      border: 2px dashed var(--gold); border-radius: 10px; padding: 20px 14px;
+      text-align: center; cursor: pointer; background: #fffaf0; transition: .2s;
+    }
+    .dropzone:hover, .dropzone.dragover { background: #fff2da; border-color: var(--primary); }
+    .dropzone i { font-size: 1.9rem; color: var(--primary); margin-bottom: 6px; }
+    .dropzone p { font-size: 0.88rem; font-weight: 600; }
+    .dropzone small { color: var(--muted); font-size: 0.76rem; }
+
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .field { margin-bottom: 10px; }
+    .field label { display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 4px; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 7px 9px; border: 1px solid #d5cab3;
+      border-radius: 7px; font-size: 0.85rem; background: #fff; color: var(--text);
+    }
+    .field textarea { min-height: 125px; resize: vertical; line-height: 1.48; }
+
+    .check-group { display: flex; flex-direction: column; gap: 7px; margin: 8px 0; }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; cursor: pointer; }
+    .check-item input { width: auto; accent-color: var(--primary); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 8px 13px; border: none; border-radius: 8px; cursor: pointer;
+      font-weight: 600; font-size: 0.84rem; transition: .18s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-gold { background: var(--gold); color: #1d1e2c; }
+    .btn-gold:hover { filter: brightness(0.95); }
+    .btn-dark { background: var(--dark); color: #fff; }
+    .btn-dark:hover { background: #1a1c29; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { background: #f8f2e4; }
+    .btn-danger-soft { background: var(--danger-bg); color: var(--danger); border: 1px solid #f5c2c7; }
+    .btn-sm { padding: 5px 9px; font-size: 0.76rem; }
+    .btn-xs { padding: 3px 7px; font-size: 0.72rem; border-radius: 6px; }
+    .btn-block { width: 100%; }
+
+    .actions-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+
+    /* Faixas de Desconto Progressivo */
+    .tier-box {
+      background: #fffaf0; border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px; margin-top: 8px;
+    }
+    .tier-row {
+      display: grid; grid-template-columns: 1fr 1fr 85px 30px; gap: 6px;
+      align-items: center; margin-bottom: 6px;
+    }
+    .tier-row input { padding: 5px 7px; font-size: 0.8rem; border: 1px solid #d5cab3; border-radius: 6px; width: 100%; }
+    .tier-header {
+      display: grid; grid-template-columns: 1fr 1fr 85px 30px; gap: 6px;
+      font-size: 0.72rem; font-weight: 700; color: var(--muted); margin-bottom: 5px;
+    }
+
+    /* Gerenciador de Tags */
+    .tag-editor-list {
+      max-height: 270px; overflow-y: auto; border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px; background: #fffdf9;
+    }
+    .tag-editor-item {
+      display: grid; grid-template-columns: 22px 1fr 125px 26px; gap: 6px;
+      align-items: center; padding: 5px 6px; border-bottom: 1px solid #f2ead9;
+      font-size: 0.8rem;
+    }
+    .tag-editor-item:last-child { border-bottom: none; }
+    .tag-editor-item input[type="text"] {
+      padding: 4px 7px; border: 1px solid #d5cab3; border-radius: 5px;
+      font-size: 0.8rem; font-family: monospace; width: 100%;
+    }
+    .tag-editor-item input.invalid-tag { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
+    .tag-editor-item .tag-origin { font-size: 0.72rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* Validador de Tags */
+    .validator-panel {
+      border-radius: 10px; padding: 12px; margin: 10px 0;
+      border: 1px solid var(--border); font-size: 0.82rem;
+    }
+    .validator-ok { background: var(--success-bg); border-color: #b7e4cc; color: var(--success); }
+    .validator-warn { background: var(--warn-bg); border-color: #f6d598; color: var(--warn); }
+    .validator-err { background: var(--danger-bg); border-color: #f5c2c7; color: var(--danger); }
+    .validator-item {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; padding: 6px 0; border-top: 1px dashed rgba(0,0,0,0.1);
+    }
+    .validator-item:first-of-type { border-top: none; padding-top: 2px; }
+    .validator-msg { line-height: 1.35; }
+
+    .tags-box { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .tag-pill {
+      background: #fff3e6; border: 1px solid #ffd0a6; color: #b54700;
+      padding: 4px 8px; border-radius: 99px; font-size: 0.75rem; font-weight: 600;
+      cursor: pointer; transition: .15s; font-family: monospace;
+    }
+    .tag-pill:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .tag-pill.custom-pill { background: #fdf4d7; border-color: var(--gold); color: #7a5c00; }
+
+    .wa-preview {
+      background: #e5ddd5; border-radius: 10px; padding: 13px; margin-top: 10px;
+      border: 1px solid #d5cab3;
+    }
+    .wa-bubble {
+      background: #dcf8c6; border-radius: 8px; padding: 11px 14px;
+      font-size: 0.87rem; white-space: pre-wrap; line-height: 1.45;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.12); max-width: 96%;
+    }
+    .wa-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.77rem; color: #444; margin-bottom: 8px;
+    }
+
+    .table-wrap { overflow-x: auto; max-height: 410px; border: 1px solid var(--border); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    th {
+      position: sticky; top: 0; background: var(--dark); color: #fff;
+      text-align: left; padding: 8px 10px; white-space: nowrap; z-index: 2;
+      font-family: monospace; font-size: 0.78rem;
+    }
+    td { padding: 7px 10px; border-bottom: 1px solid #f0e7d6; white-space: nowrap; }
+    tr:hover td { background: #fff8eb; }
+
+    .badge {
+      display: inline-block; padding: 2px 7px; border-radius: 99px;
+      font-size: 0.71rem; font-weight: 600;
+    }
+    .badge-ok { background: var(--success-bg); color: var(--success); }
+    .badge-warn { background: var(--warn-bg); color: var(--warn); }
+    .badge-err { background: var(--danger-bg); color: var(--danger); }
+
+    .hidden { display: none !important; }
+
+    .toast {
+      position: fixed; bottom: 20px; right: 20px; background: var(--dark); color: #fff;
+      padding: 12px 18px; border-radius: 8px; font-size: 0.85rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2); opacity: 0; pointer-events: none;
+      transition: .25s; border-left: 4px solid var(--primary); z-index: 999;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    <div>
+      <h1>Central CGD → WaSeller v2.0</h1>
+      <small>Cobranças progressivas, lembretes, promoções, leitura de PDF/Excel e validador de tags</small>
+    </div>
+  </div>
+  <div class="api-bar">
+    <input type="url" id="apiUrl" placeholder="URL da API Apps Script (opcional)" />
+    <button class="btn btn-gold btn-sm" onclick="salvarApiUrl()"><i class="fa-solid fa-plug"></i> Conectar</button>
+  </div>
+</header>
+
+<div class="container">
+  <!-- MODOS DE CAMPANHA -->
+  <div class="mode-bar">
+    <button class="mode-btn active" id="mode_cobranca" onclick="trocarModo('cobranca')">
+      <i class="fa-solid fa-hand-holding-dollar"></i>
+      <div><strong>Cobrança & Negociação</strong><small>Juros, descontos por faixa e parcelas</small></div>
+    </button>
+    <button class="mode-btn" id="mode_lembrete" onclick="trocarModo('lembrete')">
+      <i class="fa-solid fa-bell"></i>
+      <div><strong>Lembrete de Vencimento</strong><small>Contagem de dias + valor limpo</small></div>
+    </button>
+    <button class="mode-btn" id="mode_promocao" onclick="trocarModo('promocao')">
+      <i class="fa-solid fa-gift"></i>
+      <div><strong>Promoção / Prêmio</strong><small>Tags extras (#premio, #cupom...)</small></div>
+    </button>
+    <button class="mode-btn" id="mode_aviso" onclick="trocarModo('aviso')">
+      <i class="fa-solid fa-bullhorn"></i>
+      <div><strong>Aviso Geral / Práticas</strong><small>Só contatos limpos + variáveis livres</small></div>
+    </button>
+  </div>
+
+  <!-- KPIs -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span>Contatos Prontos</span>
+      <strong id="kpiContatos">0</strong>
+    </div>
+    <div class="stat-card gold">
+      <span>Duplicados / Inválidos</span>
+      <strong id="kpiRemovidos">0</strong>
+    </div>
+    <div class="stat-card" id="kpiCardOriginal">
+      <span>Total Original</span>
+      <strong id="kpiOriginal">R$ 0,00</strong>
+    </div>
+    <div class="stat-card green" id="kpiCardFinal">
+      <span>Total Final (Negociado)</span>
+      <strong id="kpiFinal">R$ 0,00</strong>
+    </div>
+    <div class="stat-card">
+      <span>Status das Tags</span>
+      <strong id="kpiStatusTags" style="font-size:1rem;">Aguardando...</strong>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <!-- COLUNA ESQUERDA -->
+    <div>
+      <!-- 1. UPLOAD EXCEL / CSV / PDF -->
+      <div class="card">
+        <h2><span class="title-left"><i class="fa-solid fa-file-arrow-up"></i> 1. Importar Dados do CGD</span></h2>
+        <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <p>Arraste ou clique (.xlsx, .csv ou .pdf)</p>
+          <small>Identifica automaticamente planilhas e relatórios PDF do CGD</small>
+          <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.pdf" hidden />
+        </div>
+        <div class="actions-row">
+          <button class="btn btn-outline btn-sm btn-block" onclick="carregarExemploCGD()">
+            <i class="fa-solid fa-flask"></i> Carregar Exemplo CGD (Testar Agora)
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. PERFIS SALVOS -->
+      <div class="card">
+        <h2><span class="title-left"><i class="fa-solid fa-bookmark"></i> 2. Modelos de Campanha</span></h2>
+        <div class="row-2">
+          <div class="field">
+            <label>Abrir Modelo Salvo</label>
+            <select id="selectCampanha" onchange="aplicarCampanhaSelecionada()">
+              <option value="">-- Selecione --</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Nome desta Campanha</label>
+            <input type="text" id="nomeCampanha" value="Cobrança Progressiva" />
+          </div>
+        </div>
+        <button class="btn btn-dark btn-sm btn-block" onclick="salvarCampanha()">
+          <i class="fa-solid fa-floppy-disk"></i> Salvar Campanha (Regras + Tags + Texto)
+        </button>
+      </div>
+
+      <!-- 3A. MOTOR FINANCEIRO (MOSTRADO NO MODO COBRANÇA) -->
+      <div class="card" id="cardFinanceiro">
+        <h2><span class="title-left"><i class="fa-solid fa-calculator"></i> 3. Política de Juros e Descontos</span></h2>
+        <div class="row-2">
+          <div class="field">
+            <label>Regra de Juros</label>
+            <select id="jurosTipo" onchange="reprocessar()">
+              <option value="none">Sem juros (0%)</option>
+              <option value="percent_total" selected>% Fixo sobre a dívida</option>
+              <option value="percent_atraso">% × Qtd. Parcelas em Atraso</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Juros (%)</label>
+            <input type="number" id="jurosValor" value="10" step="0.5" min="0" oninput="reprocessar()" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Política de Desconto</label>
+          <select id="politicaDesconto" onchange="alternarPoliticaDesconto()">
+            <option value="unico">Desconto Único (igual para todos)</option>
+            <option value="faixa_valor" selected>Progressivo por Valor da Dívida</option>
+            <option value="faixa_atraso">Progressivo por Qtd. em Atraso</option>
+          </select>
+        </div>
+
+        <!-- Desconto Único -->
+        <div id="boxDescontoUnico" class="row-2 hidden">
+          <div class="field">
+            <label>Tipo</label>
+            <select id="descontoTipo" onchange="reprocessar()">
+              <option value="percent" selected>Percentual (%)</option>
+              <option value="fixed">Valor Fixo (R$)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Valor</label>
+            <input type="number" id="descontoValor" value="25" step="0.5" min="0" oninput="reprocessar()" />
+          </div>
+        </div>
+
+        <!-- Faixas Progressivas -->
+        <div id="boxFaixas" class="tier-box">
+          <div class="tier-header" id="tierHeader">
+            <span>De (R$)</span><span>Até (R$)</span><span>Desc (%)</span><span></span>
+          </div>
+          <div id="tiersContainer"></div>
+          <button class="btn btn-outline btn-xs" style="margin-top:4px;" onclick="adicionarFaixa()">
+            <i class="fa-solid fa-plus"></i> Adicionar Faixa
+          </button>
+        </div>
+
+        <div class="row-2" style="margin-top:10px;">
+          <div class="field">
+            <label>Aplicar Desconto Sobre</label>
+            <select id="descontoBase" onchange="reprocessar()">
+              <option value="atualizado" selected>Valor c/ Juros</option>
+              <option value="original">Valor Original</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Formato da Tag #desconto</label>
+            <select id="formatoPercent" onchange="reprocessar()">
+              <option value="number" selected>Só número (ex: 25) → mais seguro</option>
+              <option value="symbol">Texto com % (ex: 25%)</option>
+              <option value="extenso">Por extenso (ex: 25 por cento)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row-2">
+          <div class="field">
+            <label>Parcelar em quantas vezes?</label>
+            <input type="number" id="parcelasQtd" value="3" min="1" max="24" oninput="reprocessar()" />
+          </div>
+          <div class="field">
+            <label>Base do Parcelamento</label>
+            <select id="parcelaBase" onchange="reprocessar()">
+              <option value="final" selected>Valor Final (c/ desconto)</option>
+              <option value="atualizado">Valor c/ Juros</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3B. CONFIGURAÇÃO DE LEMBRETE -->
+      <div class="card hidden" id="cardLembrete">
+        <h2><span class="title-left"><i class="fa-solid fa-calendar-day"></i> 3. Regra de Lembrete</span></h2>
+        <div class="row-2">
+          <div class="field">
+            <label>Data Base do Disparo</label>
+            <input type="date" id="dataRefLembrete" onchange="reprocessar()" />
+          </div>
+          <div class="field">
+            <label>Filtrar Vencimentos</label>
+            <select id="filtroLembrete" onchange="reprocessar()">
+              <option value="todos" selected>Manter todos da planilha</option>
+              <option value="futuros">Só ainda não vencidos</option>
+              <option value="ate5">Vencem nos próximos 5 dias</option>
+            </select>
+          </div>
+        </div>
+        <small style="color:var(--muted); font-size:0.78rem;">
+          O sistema gera automaticamente <strong>#dias_vencimento</strong> (ex: <code>5</code>) e <strong>#prazo_texto</strong> (ex: <code>daqui a 5 dias</code>, <code>amanhã</code> ou <code>hoje</code>).
+        </small>
+      </div>
+
+      <!-- 4. CRIAR VARIÁVEIS PERSONALIZADAS & EDITAR TAGS -->
+      <div class="card">
+        <h2>
+          <span class="title-left"><i class="fa-solid fa-tags"></i> 4. Editor de Tags & Variáveis</span>
+          <button class="btn btn-outline btn-xs" onclick="corrigirTodasAsTags()"><i class="fa-solid fa-magic"></i> Padronizar Nomes</button>
+        </h2>
+
+        <div class="row-2">
+          <div class="field">
+            <label>Nova Variável (ex: premio)</label>
+            <input type="text" id="novaVarNome" placeholder="Ex: premio, cupom, local" />
+          </div>
+          <div class="field">
+            <label>Valor para esta Campanha</label>
+            <input type="text" id="novaVarValor" placeholder="Ex: Kit Escolar" />
+          </div>
+        </div>
+        <button class="btn btn-gold btn-sm btn-block" style="margin-bottom:10px;" onclick="adicionarVariavelPersonalizada()">
+          <i class="fa-solid fa-plus"></i> Adicionar Variável na Planilha
+        </button>
+
+        <p style="font-size:0.75rem; color:var(--muted); margin-bottom:6px;">
+          Marque as colunas que vão para o WaSeller e edite o nome da tag se precisar (sem acento, sem espaço e sem ponto):
+        </p>
+        <div class="tag-editor-list" id="tagEditorList"></div>
+      </div>
+
+      <!-- 5. LIMPEZA DE CONTATOS -->
+      <div class="card">
+        <h2><span class="title-left"><i class="fa-solid fa-broom"></i> 5. Limpeza de Contatos (CGD)</span></h2>
+        <div class="row-2">
+          <div class="field">
+            <label>Destinatários (Fone 1 e 2)</label>
+            <select id="modoTelefones" onchange="reprocessar()">
+              <option value="ambos" selected>Enviar para Fone 1 e Fone 2</option>
+              <option value="fone1">Apenas Fone 1 (usa 2 se vazio)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Usar na tag #nome</label>
+            <select id="campoNome" onchange="reprocessar()">
+              <option value="responsavel" selected>Responsável (ou Aluno)</option>
+              <option value="aluno">Sempre nome do Aluno</option>
+            </select>
+          </div>
+        </div>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox" id="chkDDI" checked onchange="reprocessar()" /> Adicionar DDI 55 automaticamente</label>
+          <label class="check-item"><input type="checkbox" id="chkDuplicados" checked onchange="reprocessar()" /> Remover números duplicados</label>
+          <label class="check-item"><input type="checkbox" id="chkCapitalizar" checked onchange="reprocessar()" /> Ajustar maiúsculas/minúsculas nos nomes</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUNA DIREITA -->
+    <div>
+      <!-- SCRIPT + VALIDADOR INTELIGENTE + PRÉVIA -->
+      <div class="card">
+        <h2><span class="title-left"><i class="fa-brands fa-whatsapp"></i> 6. Script da Mensagem & Validador de Tags</span></h2>
+        <p style="font-size:0.78rem; color:var(--muted); margin-bottom:7px;">
+          Clique para inserir tags ativas no texto:
+        </p>
+        <div class="tags-box" id="tagsBox"></div>
+
+        <div class="field">
+          <textarea id="msgTemplate" oninput="validarEAtualizarPreview()"></textarea>
+        </div>
+
+        <!-- PAINEL DO GUARDIÃO DE TAGS -->
+        <div id="validatorPanel" class="validator-panel validator-ok"></div>
+
+        <div class="actions-row">
+          <button class="btn btn-outline btn-sm" onclick="copiarMensagem()">
+            <i class="fa-regular fa-copy"></i> Copiar Script Validado para o WaSeller
+          </button>
+        </div>
+
+        <div class="wa-preview">
+          <div class="wa-meta">
+            <span id="previewInfo">Prévia da mensagem (aguardando dados)</span>
+            <div>
+              <button class="btn btn-outline btn-sm" onclick="mudarPreview(-1)">◀</button>
+              <button class="btn btn-outline btn-sm" onclick="mudarPreview(1)">▶</button>
+            </div>
+          </div>
+          <div class="wa-bubble" id="previewBubble">Carregue uma planilha/PDF do CGD ou clique em "Carregar Exemplo CGD".</div>
+        </div>
+      </div>
+
+      <!-- TABELA + EXPORTAÇÃO -->
+      <div class="card">
+        <h2><span class="title-left"><i class="fa-solid fa-table"></i> 7. Planilha Pronta para o WaSeller (100% Texto Puro)</span></h2>
+        <div class="actions-row" style="margin-bottom:12px;">
+          <button class="btn btn-primary" onclick="exportarWaSeller()">
+            <i class="fa-solid fa-download"></i> Baixar Planilha WaSeller (.xlsx)
+          </button>
+          <button class="btn btn-gold" onclick="exportarControle()">
+            <i class="fa-solid fa-file-invoice-dollar"></i> Baixar Relatório Completo de Controle (.xlsx)
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead id="tabelaHead"></thead>
+            <tbody id="tabelaBody">
+              <tr><td style="text-align:center; padding:24px; color:#888;">Aguardando planilha ou PDF do CGD...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Configura worker do PDF.js
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
+  // Definição padrão das tags do sistema
+  let tagConfigs = [
+    { key: 'numero',         label: 'Telefone (Obrigatório)', tag: 'numero',         enabled: true,  locked: true },
+    { key: 'nome',           label: 'Nome Completo',          tag: 'nome',           enabled: true,  locked: false },
+    { key: 'primeiroNome',   label: 'Primeiro Nome (Nativa)', tag: 'primeiroNome',   enabled: true,  locked: false },
+    { key: 'aluno',          label: 'Nome do Aluno',          tag: 'aluno',          enabled: true,  locked: false },
+    { key: 'contrato',       label: 'Nº Contrato',            tag: 'contrato',       enabled: false, locked: false },
+    { key: 'atraso',         label: 'Qtd. em Atraso',         tag: 'atraso',         enabled: true,  locked: false },
+    { key: 'vencimento',     label: 'Data Vencimento',        tag: 'vencimento',     enabled: true,  locked: false },
+    { key: 'dias_vencimento',label: 'Dias p/ Vencer (Nº)',    tag: 'dias_vencimento',enabled: false, locked: false },
+    { key: 'prazo_texto',    label: 'Prazo por Extenso',      tag: 'prazo_texto',    enabled: false, locked: false },
+    { key: 'valor_original', label: 'Valor Original',         tag: 'valor_original', enabled: false, locked: false },
+    { key: 'valor',          label: 'Valor Atualizado',       tag: 'valor',          enabled: true,  locked: false },
+    { key: 'desconto',       label: 'Desconto Aplicado',      tag: 'desconto',       enabled: true,  locked: false },
+    { key: 'valor_final',    label: 'Valor Final',            tag: 'valor_final',    enabled: true,  locked: false },
+    { key: 'parcelas',       label: 'Qtd. Parcelas',          tag: 'parcelas',       enabled: true,  locked: false },
+    { key: 'valor_parcela',  label: 'Valor da Parcela',       tag: 'valor_parcela',  enabled: true,  locked: false }
+  ];
+
+  // Faixas progressivas padrão
+  let faixasValor = [
+    { min: 0,      max: 200,    desconto: 10 },
+    { min: 200.01, max: 500,    desconto: 20 },
+    { min: 500.01, max: 99999,  desconto: 35 }
+  ];
+
+  let faixasAtraso = [
+    { min: 1, max: 1,  desconto: 5  },
+    { min: 2, max: 3,  desconto: 15 },
+    { min: 4, max: 99, desconto: 30 }
+  ];
+
+  const SCRIPTS_MODO = {
+    cobranca: `Olá, #primeiroNome! Tudo bem?
+
+Identificamos #atraso pendência(s) referente ao aluno(a) #aluno (vencimento #vencimento).
+
+O valor atualizado está em R$ #valor.
+Pela nossa condição especial, liberamos #desconto% de desconto!
+
+✅ Valor à vista com desconto: R$ #valor_final
+💳 Ou em até #parcelasx de R$ #valor_parcela
+
+Vamos aproveitar para regularizar hoje?`,
+    lembrete: `Oi, #primeiroNome! Tudo bem? 😊
+
+Passando apenas para lembrar que a mensalidade de #aluno vence #prazo_texto (dia #vencimento), no valor de R$ #valor_original.
+
+Se precisar da 2ª via ou chave PIX, é só responder por aqui!`,
+    promocao: `Parabéns, #primeiroNome! 🎉
+
+Temos uma ótima notícia para você e #aluno: você garantiu #premio na nossa campanha especial!
+
+🎁 Código / Regra: #cupom
+📅 Validade: até #validade
+
+Responda esta mensagem para confirmar o resgate!`,
+    aviso: `Olá, #primeiroNome! Tudo bem?
+
+Passando para deixar um comunicado importante referente a #aluno:
+📌 #assunto
+
+Qualquer dúvida, nossa equipe está à disposição por aqui!`
+  };
+
+  let modoAtual = 'cobranca';
+  let rawRows = [];
+  let processedRows = [];
+  let removedCount = 0;
+  let previewIndex = 0;
+  let campanhasCache = [];
+  let ultimoDiagnostico = { erros: [], avisos: [] };
+
+  // Tags nativas permitidas com camelCase no WaSeller
+  const CAMEL_NATIVAS = new Set(['primeiroNome']);
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const hojeISO = new Date().toISOString().split('T')[0];
+    document.getElementById('dataRefLembrete').value = hojeISO;
+    document.getElementById('apiUrl').value = localStorage.getItem('cgd_waseller_api') || '';
+
+    renderFaixas();
+    trocarModo('cobranca', true);
+    carregarCampanhas();
+    setupDropzone();
+  });
+
+  function showToast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3400);
+  }
+
+  // ==================== MODOS DE CAMPANHA ====================
+  function trocarModo(modo, inicial = false) {
+    modoAtual = modo;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('mode_' + modo).classList.add('active');
+
+    document.getElementById('cardFinanceiro').classList.toggle('hidden', modo !== 'cobranca');
+    document.getElementById('cardLembrete').classList.toggle('hidden', modo !== 'lembrete');
+    document.getElementById('kpiCardOriginal').classList.toggle('hidden', modo === 'promocao' || modo === 'aviso');
+    document.getElementById('kpiCardFinal').classList.toggle('hidden', modo !== 'cobranca');
+
+    const presetsAtivos = {
+      cobranca: ['numero','nome','primeiroNome','aluno','atraso','vencimento','valor','desconto','valor_final','parcelas','valor_parcela'],
+      lembrete: ['numero','nome','primeiroNome','aluno','vencimento','dias_vencimento','prazo_texto','valor_original'],
+      promocao: ['numero','nome','primeiroNome','aluno'],
+      aviso:    ['numero','nome','primeiroNome','aluno']
+    };
+
+    // Garante variáveis extras úteis para Promoção / Aviso
+    if (modo === 'promocao') {
+      garantirCustomVar('premio', '1 mês de desconto especial');
+      garantirCustomVar('cupom', 'EDUCVIP');
+      garantirCustomVar('validade', '30/11/2026');
+    } else if (modo === 'aviso') {
+      garantirCustomVar('assunto', 'Confirmação de presença na aula prática');
+    }
+
+    const ativosSet = new Set(presetsAtivos[modo]);
+    tagConfigs.forEach(tc => {
+      if (tc.locked) { tc.enabled = true; return; }
+      if (tc.isCustom) {
+        if (modo === 'promocao') tc.enabled = ['premio','cupom','validade'].includes(tc.key);
+        else if (modo === 'aviso') tc.enabled = (tc.key === 'assunto');
+        else tc.enabled = false;
+      } else {
+        tc.enabled = ativosSet.has(tc.key);
+      }
+    });
+
+    if (!inicial || !document.getElementById('msgTemplate').value.trim()) {
+      document.getElementById('msgTemplate').value = SCRIPTS_MODO[modo];
+    }
+
+    const nomesPadrao = {
+      cobranca: 'Cobrança Progressiva',
+      lembrete: 'Lembrete de Vencimento',
+      promocao: 'Campanha Premiada',
+      aviso: 'Aviso Geral / Práticas'
+    };
+    if (!inicial) document.getElementById('nomeCampanha').value = nomesPadrao[modo];
+
+    renderTagEditor();
+    reprocessar();
+  }
+
+  function garantirCustomVar(nome, valorPadrao) {
+    const clean = sanitizarTagNome(nome);
+    if (!tagConfigs.some(t => t.key === clean)) {
+      tagConfigs.push({
+        key: clean,
+        label: 'Extra: ' + valorPadrao,
+        tag: clean,
+        enabled: true,
+        locked: false,
+        isCustom: true,
+        fixedValue: valorPadrao
+      });
+    }
+  }
+
+  // ==================== FAIXAS DE DESCONTO ====================
+  function alternarPoliticaDesconto() {
+    const pol = document.getElementById('politicaDesconto').value;
+    document.getElementById('boxDescontoUnico').classList.toggle('hidden', pol !== 'unico');
+    document.getElementById('boxFaixas').classList.toggle('hidden', pol === 'unico');
+    renderFaixas();
+    reprocessar();
+  }
+
+  function getFaixasAtuais() {
+    return document.getElementById('politicaDesconto').value === 'faixa_atraso' ? faixasAtraso : faixasValor;
+  }
+
+  function renderFaixas() {
+    const pol = document.getElementById('politicaDesconto').value;
+    const isAtraso = pol === 'faixa_atraso';
+    document.getElementById('tierHeader').innerHTML = isAtraso
+      ? '<span>De (Parc.)</span><span>Até (Parc.)</span><span>Desc (%)</span><span></span>'
+      : '<span>De (R$)</span><span>Até (R$)</span><span>Desc (%)</span><span></span>';
+
+    const arr = getFaixasAtuais();
+    const cont = document.getElementById('tiersContainer');
+    cont.innerHTML = arr.map((f, i) => `
+      <div class="tier-row">
+        <input type="number" step="${isAtraso ? '1' : '0.01'}" value="${f.min}" onchange="editarFaixa(${i}, 'min', this.value)" />
+        <input type="number" step="${isAtraso ? '1' : '0.01'}" value="${f.max}" onchange="editarFaixa(${i}, 'max', this.value)" />
+        <input type="number" step="0.5" value="${f.desconto}" onchange="editarFaixa(${i}, 'desconto', this.value)" />
+        <button class="btn btn-danger-soft btn-xs" onclick="removerFaixa(${i})" title="Remover"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    `).join('');
+  }
+
+  function editarFaixa(idx, campo, val) {
+    const arr = getFaixasAtuais();
+    arr[idx][campo] = parseFloat(val) || 0;
+    reprocessar();
+  }
+
+  function adicionarFaixa() {
+    const arr = getFaixasAtuais();
+    const ultimo = arr[arr.length - 1];
+    const novoMin = ultimo ? Number((ultimo.max + 1).toFixed(2)) : 0;
+    arr.push({ min: novoMin, max: novoMin + 500, desconto: 25 });
+    renderFaixas();
+    reprocessar();
+  }
+
+  function removerFaixa(idx) {
+    const arr = getFaixasAtuais();
+    if (arr.length <= 1) return showToast('Mantenha pelo menos uma faixa.');
+    arr.splice(idx, 1);
+    renderFaixas();
+    reprocessar();
+  }
+
+  // ==================== EDITOR DE TAGS & VARIÁVEIS ====================
+  function sanitizarTagNome(str) {
+    const raw = String(str || '').trim().replace(/^#/, '');
+    if (CAMEL_NATIVAS.has(raw)) return raw;
+    return raw
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[\s.\-\/]+/g, '_')
+      .replace(/[^a-z0-9_]/g, '')
+      .replace(/_+/g, '_')
+      .replace(/^_|_$/g, '') || 'tag_personalizada';
+  }
+
+  function validarNomeIndividualTag(nome) {
+    const problemas = [];
+    if (!nome) problemas.push('Nome vazio');
+    if (/\s/.test(nome)) problemas.push('contém espaço (use _)');
+    if (/[À-ÿ]/.test(nome)) problemas.push('contém acento/cedilha');
+    if (/[^a-zA-Z0-9_]/.test(nome)) problemas.push('contém ponto ou símbolo proibido');
+    if (/[A-Z]/.test(nome) && !CAMEL_NATIVAS.has(nome)) problemas.push('contém maiúscula (prefira minúscula)');
+    return problemas;
+  }
+
+  function adicionarVariavelPersonalizada() {
+    const nomeRaw = document.getElementById('novaVarNome').value.trim();
+    const valor = document.getElementById('novaVarValor').value.trim();
+    if (!nomeRaw) return showToast('Digite o nome da nova variável (ex: premio).');
+
+    const nomeLimpo = sanitizarTagNome(nomeRaw);
+    if (nomeRaw.replace(/^#/, '') !== nomeLimpo) {
+      showToast(`Nome ajustado automaticamente para "${nomeLimpo}" (padrão WaSeller).`);
+    }
+
+    const existente = tagConfigs.find(t => t.key === nomeLimpo);
+    if (existente && existente.isCustom) {
+      existente.fixedValue = valor;
+      existente.enabled = true;
+    } else if (!existente) {
+      tagConfigs.push({
+        key: nomeLimpo,
+        label: valor || 'Variável fixa',
+        tag: nomeLimpo,
+        enabled: true,
+        locked: false,
+        isCustom: true,
+        fixedValue: valor
+      });
+    } else {
+      return showToast('Já existe uma coluna nativa com esse nome.');
+    }
+
+    document.getElementById('novaVarNome').value = '';
+    document.getElementById('novaVarValor').value = '';
+    renderTagEditor();
+    reprocessar();
+  }
+
+  function renderTagEditor() {
+    const list = document.getElementById('tagEditorList');
+    list.innerHTML = tagConfigs.map((tc, idx) => {
+      const probs = tc.enabled ? validarNomeIndividualTag(tc.tag) : [];
+      const invalidClass = probs.length ? 'invalid-tag' : '';
+      return `
+        <div class="tag-editor-item">
+          <input type="checkbox" ${tc.enabled ? 'checked' : ''} ${tc.locked ? 'disabled' : ''} onchange="toggleTag(${idx}, this.checked)" />
+          <input type="text" class="${invalidClass}" value="${tc.tag}" ${tc.locked ? 'readonly' : ''}
+                 title="${probs.length ? 'Atenção: ' + probs.join(', ') : 'Nome de tag válido'}"
+                 oninput="renomearTag(${idx}, this.value)" />
+          <span class="tag-origin" title="${tc.isCustom ? 'Valor fixo: ' + tc.fixedValue : tc.label}">
+            ${tc.isCustom ? `📌 ${tc.fixedValue || '(vazio)'}` : tc.label}
+          </span>
+          ${tc.isCustom
+            ? `<button class="btn btn-danger-soft btn-xs" onclick="removerCustomTag(${idx})" title="Excluir"><i class="fa-solid fa-trash"></i></button>`
+            : `<span style="text-align:center; font-size:0.7rem; color:${probs.length ? 'var(--danger)' : 'var(--success)'};">
+                 <i class="fa-solid ${probs.length ? 'fa-triangle-exclamation' : 'fa-check'}"></i>
+               </span>`}
+        </div>
+      `;
+    }).join('');
+    renderTagsClicaveis();
+  }
+
+  function toggleTag(idx, checked) {
+    tagConfigs[idx].enabled = checked;
+    renderTagEditor();
+    renderTabela();
+    validarEAtualizarPreview();
+  }
+
+  function renomearTag(idx, novoNome) {
+    tagConfigs[idx].tag = novoNome;
+    renderTagsClicaveis();
+    renderTabela();
+    validarEAtualizarPreview();
+    // Atualiza visual de erro no input sem perder foco
+    const inputs = document.querySelectorAll('#tagEditorList input[type="text"]');
+    if (inputs[idx]) {
+      const probs = tagConfigs[idx].enabled ? validarNomeIndividualTag(novoNome) : [];
+      inputs[idx].classList.toggle('invalid-tag', probs.length > 0);
+    }
+  }
+
+  function removerCustomTag(idx) {
+    tagConfigs.splice(idx, 1);
+    renderTagEditor();
+    reprocessar();
+  }
+
+  function corrigirTodasAsTags() {
+    let corrigidas = 0;
+    tagConfigs.forEach(tc => {
+      if (tc.locked) return;
+      const limpo = sanitizarTagNome(tc.tag);
+      if (tc.tag !== limpo) {
+        tc.tag = limpo;
+        corrigidas++;
+      }
+    });
+    renderTagEditor();
+    renderTabela();
+    validarEAtualizarPreview();
+    showToast(corrigidas ? `${corrigidas} nome(s) de tag padronizados!` : 'Todos os nomes já estão no padrão correto.');
+  }
+
+  function renderTagsClicaveis() {
+    const box = document.getElementById('tagsBox');
+    box.innerHTML = tagConfigs
+      .filter(t => t.enabled)
+      .map(t => `<span class="tag-pill ${t.isCustom ? 'custom-pill' : ''}" onclick="inserirTag('#${t.tag}')">#${t.tag}</span>`)
+      .join('');
+  }
+
+  function inserirTag(tag) {
+    const ta = document.getElementById('msgTemplate');
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    ta.value = ta.value.substring(0, start) + tag + ta.value.substring(end);
+    ta.focus();
+    ta.selectionStart = ta.selectionEnd = start + tag.length;
+    validarEAtualizarPreview();
+  }
+
+  // ==================== VALIDADOR INTELIGENTE (GUARDIÃO) ====================
+  function validarEAtualizarPreview() {
+    const msg = document.getElementById('msgTemplate').value;
+    const ativos = tagConfigs.filter(t => t.enabled);
+    const mapaAtivos = new Map(ativos.map(t => [t.tag, t]));
+    const erros = [];
+    const avisos = [];
+
+    // 1. Validar critérios dos nomes das colunas ativas
+    const contagemNomes = {};
+    ativos.forEach((tc) => {
+      contagemNomes[tc.tag] = (contagemNomes[tc.tag] || 0) + 1;
+      const probs = validarNomeIndividualTag(tc.tag);
+      if (probs.length) {
+        const sugestao = sanitizarTagNome(tc.tag);
+        erros.push({
+          texto: `Coluna <strong>"${tc.tag}"</strong> fora do padrão: ${probs.join(', ')}.`,
+          acaoLabel: `Corrigir para "${sugestao}"`,
+          acao: () => {
+            tc.tag = sugestao;
+            renderTagEditor();
+            renderTabela();
+            validarEAtualizarPreview();
+          }
+        });
+      }
+    });
+
+    Object.entries(contagemNomes).forEach(([nome, qtd]) => {
+      if (qtd > 1) {
+        erros.push({ texto: `Coluna duplicada: existem ${qtd} colunas chamadas <strong>"${nome}"</strong>.` });
+      }
+    });
+
+    // 2. Detectar erro clássico de tag com espaço no texto (ex: #valor final)
+    ativos.forEach(tc => {
+      if (tc.tag.includes('_')) {
+        const comEspaco = '#' + tc.tag.replace(/_/g, ' ');
+        if (msg.toLowerCase().includes(comEspaco.toLowerCase())) {
+          erros.push({
+            texto: `Você escreveu <strong>"${comEspaco}"</strong> com espaço no texto. O WaSeller não reconhece se a coluna for <strong>#${tc.tag}</strong>.`,
+            acaoLabel: `Trocar para #${tc.tag}`,
+            acao: () => {
+              const regex = new RegExp(comEspaco.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+              document.getElementById('msgTemplate').value = msg.replace(regex, '#' + tc.tag);
+              validarEAtualizarPreview();
+            }
+          });
+        }
+      }
+    });
+
+    // 3. Extrair todas as #tags usadas no texto
+    const encontradas = new Set();
+    const regexTags = /#([^\s,;!?:()\[\]"]+)/g;
+    let match;
+    while ((match = regexTags.exec(msg)) !== null) {
+      let tokenBruto = match[1];
+      // Remove pontuação normal de fim de frase ou % colado (ex: #valor., #desconto%, #parcelasx)
+      let tokenLimpo = tokenBruto.replace(/[.!?,;:]+$/, '');
+      if (tokenLimpo.endsWith('%')) tokenLimpo = tokenLimpo.slice(0, -1);
+      // Trata caso comum de "#parcelasx" (ex: 3x)
+      if (!mapaAtivos.has(tokenLimpo) && tokenLimpo.endsWith('x') && mapaAtivos.has(tokenLimpo.slice(0, -1))) {
+        tokenLimpo = tokenLimpo.slice(0, -1);
+      }
+      if (tokenLimpo) encontradas.add(tokenLimpo);
+    }
+
+    encontradas.forEach(tagUsada => {
+      if (mapaAtivos.has(tagUsada)) return; // Match exato!
+
+      // Verifica se existe coluna ativa mas com diferença de maiúscula/minúscula/acento/ponto
+      const normUsada = sanitizarTagNome(tagUsada);
+      const matchAproximadoAtivo = ativos.find(t => sanitizarTagNome(t.tag) === normUsada);
+      if (matchAproximadoAtivo) {
+        erros.push({
+          texto: `Tag <strong>#${tagUsada}</strong> no texto diverge da planilha (<strong>#${matchAproximadoAtivo.tag}</strong>). Maiúsculas, acentos ou pontos diferentes quebram o envio.`,
+          acaoLabel: `Corrigir para #${matchAproximadoAtivo.tag}`,
+          acao: () => {
+            document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + matchAproximadoAtivo.tag);
+            validarEAtualizarPreview();
+          }
+        });
+        return;
+      }
+
+      // Verifica se a coluna existe mas está desativada
+      const matchDesativado = tagConfigs.find(t => t.tag === tagUsada || sanitizarTagNome(t.tag) === normUsada);
+      if (matchDesativado) {
+        erros.push({
+          texto: `Você usou <strong>#${tagUsada}</strong> no texto, mas a coluna <strong>"${matchDesativado.label}"</strong> está desmarcada no Editor de Tags.`,
+          acaoLabel: `Ativar coluna #${matchDesativado.tag}`,
+          acao: () => {
+            matchDesativado.enabled = true;
+            if (tagUsada !== matchDesativado.tag) {
+              document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + matchDesativado.tag);
+            }
+            renderTagEditor();
+            renderTabela();
+            validarEAtualizarPreview();
+          }
+        });
+        return;
+      }
+
+      // Não existe em lugar nenhum
+      const sugerido = sanitizarTagNome(tagUsada);
+      erros.push({
+        texto: `Tag <strong>#${tagUsada}</strong> está no texto, mas não existe nenhuma coluna correspondente na planilha.`,
+        acaoLabel: `Criar variável #${sugerido}`,
+        acao: () => {
+          const val = prompt(`Qual valor fixo deseja colocar na coluna "${sugerido}"?`, '');
+          if (val === null) return;
+          garantirCustomVar(sugerido, val);
+          if (tagUsada !== sugerido) {
+            document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + sugerido);
+          }
+          renderTagEditor();
+          reprocessar();
+        }
+      });
+    });
+
+    // 4. Avisos úteis
+    if (modoAtual === 'cobranca' && document.getElementById('formatoPercent').value === 'symbol' && msg.includes('#desconto%')) {
+      avisos.push('Você escolheu "Texto com %" na coluna e também colocou "%" no texto (#desconto%). Vai sair "25%%".');
+    }
+    if (encontradas.size === 0) {
+      avisos.push('Nenhuma #tag personalizada encontrada na mensagem. O texto será idêntico para todos os contatos.');
+    }
+
+    ultimoDiagnostico = { erros, avisos };
+    renderValidadorUI(erros, avisos);
+    atualizarPreview();
+  }
+
+  function renderValidadorUI(erros, avisos) {
+    const panel = document.getElementById('validatorPanel');
+    const kpi = document.getElementById('kpiStatusTags');
+    window._acoesCorrecao = [];
+
+    if (erros.length > 0) {
+      panel.className = 'validator-panel validator-err';
+      kpi.innerHTML = `<span style="color:var(--danger)">${erros.length} erro(s)</span>`;
+      const itensHtml = erros.map((e, i) => {
+        let btn = '';
+        if (e.acao) {
+          window._acoesCorrecao[i] = e.acao;
+          btn = `<button class="btn btn-dark btn-xs" onclick="window._acoesCorrecao[${i}]()">${e.acaoLabel}</button>`;
+        }
+        return `<div class="validator-item"><span class="validator-msg"><i class="fa-solid fa-circle-xmark"></i> ${e.texto}</span>${btn}</div>`;
+      }).join('');
+      panel.innerHTML = `<strong style="display:block; margin-bottom:5px;">⚠️ Corrija antes de importar no WaSeller:</strong>${itensHtml}`;
+    } else if (avisos.length > 0) {
+      panel.className = 'validator-panel validator-warn';
+      kpi.innerHTML = `<span style="color:var(--warn)">${avisos.length} aviso(s)</span>`;
+      panel.innerHTML = avisos.map(a => `<div class="validator-item"><span class="validator-msg"><i class="fa-solid fa-triangle-exclamation"></i> ${a}</span></div>`).join('');
+    } else {
+      panel.className = 'validator-panel validator-ok';
+      kpi.innerHTML = `<span style="color:var(--success)">100% Validado</span>`;
+      panel.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>Tudo certo!</strong> Todas as tags do texto seguem as regras (sem acento, sem espaço, sem ponto) e batem exatamente com as colunas da planilha.`;
+    }
+  }
+
+  function copiarMensagem() {
+    if (ultimoDiagnostico.erros.length > 0) {
+      showToast('Atenção: há erros de tag indicados no painel vermelho!');
+    }
+    navigator.clipboard.writeText(document.getElementById('msgTemplate').value);
+    showToast('Script copiado para colar no WaSeller!');
+  }
+
+  // ==================== UPLOAD (EXCEL, CSV E PDF) ====================
+  function setupDropzone() {
+    const dz = document.getElementById('dropzone');
+    const input = document.getElementById('fileInput');
+    input.addEventListener('change', e => { if (e.target.files[0]) lerArquivo(e.target.files[0]); });
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+    dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+    dz.addEventListener('drop', e => {
+      e.preventDefault(); dz.classList.remove('dragover');
+      if (e.dataTransfer.files[0]) lerArquivo(e.dataTransfer.files[0]);
+    });
+  }
+
+  function lerArquivo(file) {
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (ext === 'pdf') {
+      lerPDF(file);
+    } else {
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array', cellDates: false });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          const json = XLSX.utils.sheet_to_json(ws, { defval: '' });
+          if (!json.length) return showToast('A planilha está vazia.');
+          rawRows = json;
+          reprocessar();
+          showToast(`Planilha "${file.name}" carregada (${json.length} registros).`);
+        } catch (err) { showToast('Erro ao ler planilha: ' + err.message); }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
+  async function lerPDF(file) {
+    if (!window.pdfjsLib) return showToast('Biblioteca PDF.js não carregada.');
+    showToast('Lendo relatório PDF do CGD...');
+    try {
+      const buffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+      const linhasTexto = [];
+
+      for (let p = 1; p <= pdf.numPages; p++) {
+        const page = await pdf.getPage(p);
+        const content = await page.getTextContent();
+        // Agrupa textos pela coordenada Y (mesma linha visual)
+        const mapaLinhas = [];
+        content.items.forEach(it => {
+          const str = it.str.trim();
+          if (!str) return;
+          const y = Math.round(it.transform[5]);
+          const x = it.transform[4];
+          let linha = mapaLinhas.find(l => Math.abs(l.y - y) <= 4);
+          if (!linha) {
+            linha = { y, items: [] };
+            mapaLinhas.push(linha);
+          }
+          linha.items.push({ x, str });
+        });
+        mapaLinhas.sort((a, b) => b.y - a.y);
+        mapaLinhas.forEach(l => {
+          l.items.sort((a, b) => a.x - b.x);
+          linhasTexto.push(l.items.map(i => i.str).join(' '));
+        });
+      }
+
+      const extraidos = [];
+      const phoneRegex = /\(?\d{2}\)?\s*9?\d{4}[-.\s]?\d{4}(?:\s*\([^)]+\))?/g;
+      const dateRegex = /\b(\d{2}\/\d{2}\/\d{4})\b/;
+      const moneyRegex = /(?:R\$\s*)?(\d{1,3}(?:\.\d{3})*,\d{2})\b/g;
+
+      linhasTexto.forEach(linha => {
+        const phones = linha.match(phoneRegex);
+        if (!phones || !phones.length) return; // Pula cabeçalhos e rodapés sem telefone
+
+        const dateMatch = linha.match(dateRegex);
+        const moneys = [...linha.matchAll(moneyRegex)].map(m => m[1]);
+        const contratoMatch = linha.match(/^\s*(\d{2,8})\b/);
+
+        // Limpa telefone, data, contrato e valor para isolar o nome
+        let resto = linha;
+        if (contratoMatch) resto = resto.replace(contratoMatch[0], '');
+        phones.forEach(ph => resto = resto.replace(ph, ''));
+        if (dateMatch) resto = resto.replace(dateMatch[0], '');
+        moneys.forEach(m => resto = resto.replace('R$', '').replace(m, ''));
+
+        // Captura possível Qtd em atraso (número isolado pequeno antes da data)
+        let atraso = 1;
+        const qtdMatch = resto.match(/\b(\d{1,2})\s*$/);
+        if (qtdMatch) {
+          atraso = parseInt(qtdMatch[1], 10);
+          resto = resto.replace(/\b\d{1,2}\s*$/, '');
+        }
+
+        const nomeLimpo = resto.replace(/\s{2,}/g, ' ').trim();
+        extraidos.push({
+          'Contrato': contratoMatch ? contratoMatch[1] : '',
+          'Aluno': nomeLimpo || 'Aluno',
+          'Responsável': nomeLimpo || 'Responsável',
+          'Fone 1': phones[0] || '',
+          'Fone 2': phones[1] || '',
+          'Qtd. em Atraso': atraso,
+          'Vencimento': dateMatch ? dateMatch[1] : '',
+          'Valor': moneys.length ? moneys[moneys.length - 1] : '0,00'
+        });
+      });
+
+      if (!extraidos.length) {
+        return showToast('Não encontrei linhas com telefone nesse PDF. Tente exportar em Excel pelo CGD.');
+      }
+
+      rawRows = extraidos;
+      reprocessar();
+      showToast(`PDF lido com sucesso! ${extraidos.length} registro(s) extraído(s).`);
+    } catch (err) {
+      showToast('Erro ao processar PDF: ' + err.message);
+    }
+  }
+
+  function carregarExemploCGD() {
+    const hoje = new Date();
+    const addDias = d => {
+      const dt = new Date(hoje.getTime() + d * 86400000);
+      return `${String(dt.getDate()).padStart(2,'0')}/${String(dt.getMonth()+1).padStart(2,'0')}/${dt.getFullYear()}`;
+    };
+
+    rawRows = [
+      {
+        'Contrato': '2872', 'Aluno': 'MARIA LUIZA LOPES LIMA', 'Responsável': 'MARIA LUIZA LOPES LIMA',
+        'Fone 1': '(82) 98790-7830 (Aluno)', 'Fone 2': '',
+        'Qtd. em Atraso': 1, 'Vencimento': addDias(5), 'Valor': '109,90'
+      },
+      {
+        'Contrato': '3104', 'Aluno': 'JOÃO PEDRO SANTOS SILVA', 'Responsável': 'CARLA REGINA SANTOS',
+        'Fone 1': '(79) 99912-3456 (Mãe)', 'Fone 2': '(79) 98844-5566 (Pai)',
+        'Qtd. em Atraso': 3, 'Vencimento': addDias(2), 'Valor': '420,00'
+      },
+      {
+        'Contrato': '3190', 'Aluno': 'PEDRO HENRIQUE COSTA', 'Responsável': 'ROBERTO CARLOS COSTA',
+        'Fone 1': '(79) 99811-2233 (Pai)', 'Fone 2': '',
+        'Qtd. em Atraso': 5, 'Vencimento': addDias(-15), 'Valor': '780,50'
+      }
+    ];
+    reprocessar();
+    showToast('Exemplo CGD carregado com 3 faixas de valor/atraso!');
+  }
+
+  // ==================== HELPERS DE TRATAMENTO ====================
+  function normKey(str) {
+    return String(str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  }
+
+  function getField(row, candidates) {
+    const keys = Object.keys(row);
+    for (const c of candidates) {
+      const found = keys.find(k => normKey(k) === c || normKey(k).includes(c));
+      if (found && row[found] !== '') return row[found];
+    }
+    return '';
+  }
+
+  function capitalizarNome(str) {
+    const preps = new Set(['de', 'da', 'do', 'das', 'dos', 'e']);
+    return String(str || '').trim().toLowerCase().split(/\s+/).map((w, i) => {
+      if (i > 0 && preps.has(w)) return w;
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    }).join(' ');
+  }
+
+  function parseMoney(val) {
+    if (typeof val === 'number') return val;
+    let s = String(val || '0').replace(/[^\d.,-]/g, '').trim();
+    if (!s) return 0;
+    if (s.includes('.') && s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
+    else if (s.includes(',')) s = s.replace(',', '.');
+    return parseFloat(s) || 0;
+  }
+
+  function formatBRL(num) {
+    return (isNaN(num) ? 0 : num).toFixed(2).replace('.', ',');
+  }
+
+  function formatDateBR(val) {
+    if (typeof val === 'number' && val > 20000) {
+      const d = XLSX.SSF.parse_date_code(val);
+      if (d) return `${String(d.d).padStart(2,'0')}/${String(d.m).padStart(2,'0')}/${d.y}`;
+    }
+    const s = String(val || '').trim();
+    const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (iso) return `${iso[3]}/${iso[2]}/${iso[1]}`;
+    return s;
+  }
+
+  function calcularDiasVencimento(dataBR) {
+    const m = String(dataBR || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!m) return { diff: null, dias: '', texto: '' };
+    const dtVenc = new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+    const refStr = document.getElementById('dataRefLembrete').value;
+    const refParts = refStr ? refStr.split('-') : [];
+    const dtRef = refParts.length === 3
+      ? new Date(Number(refParts[0]), Number(refParts[1]) - 1, Number(refParts[2]))
+      : new Date(new Date().setHours(0,0,0,0));
+
+    const diff = Math.round((dtVenc - dtRef) / 86400000);
+    let texto = '';
+    if (diff === 0) texto = 'hoje';
+    else if (diff === 1) texto = 'amanhã';
+    else if (diff > 1) texto = `daqui a ${diff} dias`;
+    else if (diff === -1) texto = 'ontem';
+    else texto = `há ${Math.abs(diff)} dias`;
+
+    return { diff, dias: String(Math.abs(diff)), texto };
+  }
+
+  function parsePhone(raw, addDDI) {
+    const str = String(raw || '').trim();
+    if (!str) return null;
+    const roleMatch = str.match(/\(([A-Za-zÀ-ÿ\s]+)\)\s*$/);
+    const label = roleMatch ? roleMatch[1].trim() : 'Principal';
+    let digits = str.replace(/\D/g, '').replace(/^0+/, '');
+    if (addDDI && (digits.length === 10 || digits.length === 11)) digits = '55' + digits;
+    if (digits.length < 10) return null;
+    return { numero: digits, rotulo: label };
+  }
+
+  function buscarDescontoFaixa(valorRef, faixas) {
+    for (const f of faixas) {
+      if (valorRef >= f.min && valorRef <= f.max) return f.desconto;
+    }
+    return 0;
+  }
+
+  // ==================== MOTOR PRINCIPAL ====================
+  function reprocessar() {
+    const jurosTipo = document.getElementById('jurosTipo').value;
+    const jurosValor = parseFloat(document.getElementById('jurosValor').value) || 0;
+    const polDesconto = document.getElementById('politicaDesconto').value;
+    const descontoTipo = document.getElementById('descontoTipo').value;
+    const descontoValorFixo = parseFloat(document.getElementById('descontoValor').value) || 0;
+    const descontoBase = document.getElementById('descontoBase').value;
+    const formatoPercent = document.getElementById('formatoPercent').value;
+    const parcelasQtd = Math.max(1, parseInt(document.getElementById('parcelasQtd').value) || 1);
+    const parcelaBase = document.getElementById('parcelaBase').value;
+    const filtroLembrete = document.getElementById('filtroLembrete').value;
+
+    const modoTelefones = document.getElementById('modoTelefones').value;
+    const campoNome = document.getElementById('campoNome').value;
+    const addDDI = document.getElementById('chkDDI').checked;
+    const dedup = document.getElementById('chkDuplicados').checked;
+    const cap = document.getElementById('chkCapitalizar').checked;
+
+    processedRows = [];
+    removedCount = 0;
+    const seenPhones = new Set();
+    let somaOriginal = 0, somaFinal = 0;
+
+    rawRows.forEach(row => {
+      const contrato = String(getField(row, ['contrato', 'matricula', 'codigo'])).trim();
+      let aluno = String(getField(row, ['aluno', 'estudante'])).trim();
+      let responsavel = String(getField(row, ['responsavel', 'nome', 'cliente'])).trim() || aluno;
+      if (cap) {
+        aluno = capitalizarNome(aluno);
+        responsavel = capitalizarNome(responsavel);
+      }
+
+      const nomeUsado = (campoNome === 'aluno' && aluno) ? aluno : (responsavel || aluno);
+      const primeiroNome = nomeUsado.split(' ')[0] || '';
+      const atraso = parseInt(getField(row, ['qtd. em atraso', 'qtd', 'atraso', 'parcelas'])) || 1;
+      const vencimento = formatDateBR(getField(row, ['vencimento', 'data']));
+      const vencInfo = calcularDiasVencimento(vencimento);
+      const valorOriginalNum = parseMoney(getField(row, ['valor', 'total', 'mensalidade', 'debito']));
+
+      // Filtro de datas no modo Lembrete
+      if (modoAtual === 'lembrete' && vencInfo.diff !== null) {
+        if (filtroLembrete === 'futuros' && vencInfo.diff < 0) { removedCount++; return; }
+        if (filtroLembrete === 'ate5' && (vencInfo.diff < 0 || vencInfo.diff > 5)) { removedCount++; return; }
+      }
+
+      // Cálculo de juros
+      let percJuros = 0;
+      if (jurosTipo === 'percent_total') percJuros = jurosValor;
+      if (jurosTipo === 'percent_atraso') percJuros = jurosValor * atraso;
+      const valorJurosNum = valorOriginalNum * (percJuros / 100);
+      const valorComJurosNum = valorOriginalNum + valorJurosNum;
+
+      // Cálculo de desconto (Único ou Progressivo)
+      const baseDesc = descontoBase === 'original' ? valorOriginalNum : valorComJurosNum;
+      let valorDescontoNum = 0;
+      let textoDesconto = '';
+      let faixaInfo = 'Único';
+
+      if (polDesconto === 'unico' && descontoTipo === 'fixed') {
+        valorDescontoNum = Math.min(baseDesc, descontoValorFixo);
+        textoDesconto = `R$ ${formatBRL(valorDescontoNum)}`;
+      } else {
+        let percDesc = descontoValorFixo;
+        if (polDesconto === 'faixa_valor') {
+          percDesc = buscarDescontoFaixa(baseDesc, faixasValor);
+          faixaInfo = `Faixa Valor (${percDesc}%)`;
+        } else if (polDesconto === 'faixa_atraso') {
+          percDesc = buscarDescontoFaixa(atraso, faixasAtraso);
+          faixaInfo = `Faixa Atraso (${percDesc}%)`;
+        }
+        valorDescontoNum = baseDesc * (percDesc / 100);
+        const numStr = String(percDesc).replace('.', ',');
+        if (formatoPercent === 'symbol') textoDesconto = `${numStr}%`;
+        else if (formatoPercent === 'extenso') textoDesconto = `${numStr} por cento`;
+        else textoDesconto = numStr;
+      }
+
+      const valorFinalNum = Math.max(0, valorComJurosNum - valorDescontoNum);
+      const baseParc = parcelaBase === 'atualizado' ? valorComJurosNum : valorFinalNum;
+      const valorParcelaNum = baseParc / parcelasQtd;
+
+      // Telefones
+      const f1 = parsePhone(getField(row, ['fone 1', 'telefone 1', 'fone1', 'telefone', 'celular', 'whatsapp']), addDDI);
+      const f2 = parsePhone(getField(row, ['fone 2', 'telefone 2', 'fone2']), addDDI);
+      const telefones = [];
+      if (f1) telefones.push(f1);
+      if (modoTelefones === 'ambos' && f2 && (!f1 || f2.numero !== f1.numero)) telefones.push(f2);
+      else if (modoTelefones === 'fone1' && !f1 && f2) telefones.push(f2);
+
+      if (!telefones.length) { removedCount++; return; }
+
+      telefones.forEach((tel, idx) => {
+        if (dedup && seenPhones.has(tel.numero)) { removedCount++; return; }
+        seenPhones.add(tel.numero);
+
+        if (idx === 0) {
+          somaOriginal += valorOriginalNum;
+          somaFinal += valorFinalNum;
+        }
+
+        const item = {
+          numero: tel.numero,
+          _rotulo: tel.rotulo,
+          _faixa: faixaInfo,
+          nome: nomeUsado,
+          primeiroNome: primeiroNome,
+          aluno: aluno,
+          responsavel: responsavel,
+          contrato: contrato,
+          atraso: String(atraso),
+          vencimento: vencimento,
+          dias_vencimento: vencInfo.dias,
+          prazo_texto: vencInfo.texto,
+          valor_original: formatBRL(valorOriginalNum),
+          juros_reais: formatBRL(valorJurosNum),
+          valor: formatBRL(valorComJurosNum),
+          desconto: textoDesconto,
+          desconto_reais: formatBRL(valorDescontoNum),
+          valor_final: formatBRL(valorFinalNum),
+          parcelas: String(parcelasQtd),
+          valor_parcela: formatBRL(valorParcelaNum)
+        };
+
+        // Anexa valores das variáveis personalizadas
+        tagConfigs.filter(t => t.isCustom).forEach(cv => {
+          item[cv.key] = cv.fixedValue || '';
+        });
+
+        processedRows.push(item);
+      });
+    });
+
+    document.getElementById('kpiContatos').textContent = processedRows.length;
+    document.getElementById('kpiRemovidos').textContent = removedCount;
+    document.getElementById('kpiOriginal').textContent = 'R$ ' + formatBRL(somaOriginal);
+    document.getElementById('kpiFinal').textContent = 'R$ ' + formatBRL(somaFinal);
+
+    previewIndex = 0;
+    renderTabela();
+    validarEAtualizarPreview();
+  }
+
+  function renderTabela() {
+    const ativos = tagConfigs.filter(t => t.enabled);
+    const thead = document.getElementById('tabelaHead');
+    const tbody = document.getElementById('tabelaBody');
+
+    thead.innerHTML = '<tr>' + ativos.map(t => `<th>${t.tag}</th>`).join('') + '</tr>';
+
+    if (!processedRows.length) {
+      tbody.innerHTML = `<tr><td colspan="${ativos.length}" style="text-align:center; padding:24px; color:#888;">Nenhum contato carregado.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = processedRows.slice(0, 150).map(r =>
+      '<tr>' + ativos.map(t => `<td>${r[t.key] ?? ''}</td>`).join('') + '</tr>'
+    ).join('');
+  }
+
+  function mudarPreview(delta) {
+    if (!processedRows.length) return;
+    previewIndex = (previewIndex + delta + processedRows.length) % processedRows.length;
+    atualizarPreview();
+  }
+
+  function atualizarPreview() {
+    const bubble = document.getElementById('previewBubble');
+    const info = document.getElementById('previewInfo');
+    if (!processedRows.length) {
+      info.textContent = 'Prévia da mensagem (nenhum dado carregado)';
+      bubble.textContent = 'Carregue uma planilha/PDF do CGD ou clique em "Carregar Exemplo CGD".';
+      return;
+    }
+
+    const row = processedRows[previewIndex];
+    info.textContent = `Contato ${previewIndex + 1} de ${processedRows.length} • ${row.numero} (${row._rotulo}) ${modoAtual === 'cobranca' ? '• ' + row._faixa : ''}`;
+
+    let txt = document.getElementById('msgTemplate').value;
+    const ativosOrdenados = tagConfigs.filter(t => t.enabled).sort((a, b) => b.tag.length - a.tag.length);
+    ativosOrdenados.forEach(tc => {
+      txt = txt.split('#' + tc.tag).join(row[tc.key] ?? '');
+    });
+    bubble.textContent = txt;
+  }
+
+  // ==================== EXPORTAÇÃO XLSX 100% TEXTO PURO ====================
+  function gerarXlsxTextoPuro(headers, rowsArray, filename) {
+    const aoa = [headers, ...rowsArray];
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    const range = XLSX.utils.decode_range(ws['!ref']);
+
+    for (let R = range.s.r; R <= range.e.r; ++R) {
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+        const addr = XLSX.utils.encode_cell({ r: R, c: C });
+        if (ws[addr]) {
+          ws[addr].v = String(ws[addr].v ?? '');
+          ws[addr].t = 's';
+          ws[addr].z = '@';
+          delete ws[addr].w;
+        }
+      }
+    }
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Envio_WaSeller');
+    XLSX.writeFile(wb, filename);
+  }
+
+  function exportarWaSeller() {
+    if (!processedRows.length) return showToast('Carregue os dados primeiro.');
+    if (ultimoDiagnostico.erros.length > 0) {
+      const ok = confirm(`Existem ${ultimoDiagnostico.erros.length} erro(s) de tag apontados no Validador.\n\nDeseja baixar a planilha mesmo assim?`);
+      if (!ok) return;
+    }
+
+    const ativos = tagConfigs.filter(t => t.enabled);
+    const headers = ativos.map(t => t.tag);
+    const body = processedRows.map(r => ativos.map(t => String(r[t.key] ?? '')));
+    const slug = (document.getElementById('nomeCampanha').value || modoAtual).replace(/\s+/g, '_');
+
+    gerarXlsxTextoPuro(headers, body, `WaSeller_${slug}.xlsx`);
+    registrarHistoricoAPI();
+    showToast('Planilha WaSeller (100% texto puro) baixada!');
+  }
+
+  function exportarControle() {
+    if (!processedRows.length) return showToast('Carregue os dados primeiro.');
+    const headers = [
+      'Contrato', 'Aluno', 'Responsável', 'Telefone', 'Tipo Contato',
+      'Qtd. Atraso', 'Vencimento', 'Prazo', 'Valor Original',
+      'Juros (R$)', 'Valor Atualizado', 'Regra Desconto', 'Desconto',
+      'Desconto (R$)', 'Valor Final', 'Parcelas', 'Valor Parcela'
+    ];
+    const body = processedRows.map(r => [
+      r.contrato, r.aluno, r.responsavel, r.numero, r._rotulo,
+      r.atraso, r.vencimento, r.prazo_texto, r.valor_original,
+      r.juros_reais, r.valor, r._faixa, r.desconto,
+      r.desconto_reais, r.valor_final, r.parcelas + 'x', r.valor_parcela
+    ]);
+    const slug = (document.getElementById('nomeCampanha').value || modoAtual).replace(/\s+/g, '_');
+    gerarXlsxTextoPuro(headers, body, `Controle_Interno_${slug}.xlsx`);
+    showToast('Relatório completo de controle baixado!');
+  }
+
+  // ==================== API APPS SCRIPT / LOCALSTORAGE ====================
+  function salvarApiUrl() {
+    const url = document.getElementById('apiUrl').value.trim();
+    localStorage.setItem('cgd_waseller_api', url);
+    showToast(url ? 'API conectada! Carregando modelos...' : 'Modo offline (navegador) ativado.');
+    carregarCampanhas();
+  }
+
+  function getConfigAtual() {
+    return {
+      modoAtual,
+      jurosTipo: document.getElementById('jurosTipo').value,
+      jurosValor: document.getElementById('jurosValor').value,
+      politicaDesconto: document.getElementById('politicaDesconto').value,
+      descontoTipo: document.getElementById('descontoTipo').value,
+      descontoValor: document.getElementById('descontoValor').value,
+      descontoBase: document.getElementById('descontoBase').value,
+      formatoPercent: document.getElementById('formatoPercent').value,
+      parcelasQtd: document.getElementById('parcelasQtd').value,
+      parcelaBase: document.getElementById('parcelaBase').value,
+      faixasValor,
+      faixasAtraso,
+      tagConfigs
+    };
+  }
+
+  async function carregarCampanhas() {
+    const api = localStorage.getItem('cgd_waseller_api') || '';
+    if (api) {
+      try {
+        const res = await fetch(`${api}?action=listCampaigns`);
+        const data = await res.json();
+        if (data.ok) {
+          campanhasCache = data.campanhas || [];
+          renderSelectCampanhas();
+          return;
+        }
+      } catch (e) { console.warn('Fallback local:', e); }
+    }
+    campanhasCache = JSON.parse(localStorage.getItem('cgd_campanhas_v2') || '[]');
+    renderSelectCampanhas();
+  }
+
+  function renderSelectCampanhas() {
+    const sel = document.getElementById('selectCampanha');
+    sel.innerHTML = '<option value="">-- Selecione --</option>' +
+      campanhasCache.map((c, idx) => `<option value="${idx}">${c.nome}</option>`).join('');
+  }
+
+  function aplicarCampanhaSelecionada() {
+    const idx = document.getElementById('selectCampanha').value;
+    if (idx === '') return;
+    const c = campanhasCache[idx];
+    if (!c) return;
+    const cfg = c.config || {};
+
+    if (cfg.faixasValor) faixasValor = cfg.faixasValor;
+    if (cfg.faixasAtraso) faixasAtraso = cfg.faixasAtraso;
+    if (cfg.tagConfigs) tagConfigs = cfg.tagConfigs;
+
+    document.getElementById('nomeCampanha').value = c.nome;
+    if (cfg.modoAtual) trocarModo(cfg.modoAtual, true);
+    ['jurosTipo','jurosValor','politicaDesconto','descontoTipo','descontoValor','descontoBase','formatoPercent','parcelasQtd','parcelaBase'].forEach(id => {
+      if (cfg[id] !== undefined) document.getElementById(id).value = cfg[id];
+    });
+    if (c.mensagem) document.getElementById('msgTemplate').value = c.mensagem;
+
+    alternarPoliticaDesconto();
+    renderTagEditor();
+    reprocessar();
+    showToast(`Modelo "${c.nome}" carregado!`);
+  }
+
+  async function salvarCampanha() {
+    const nome = document.getElementById('nomeCampanha').value.trim();
+    if (!nome) return showToast('Dê um nome para a campanha.');
+
+    const nova = {
+      id: 'camp_' + Date.now(),
+      nome,
+      config: getConfigAtual(),
+      mensagem: document.getElementById('msgTemplate').value
+    };
+
+    const idxExist = campanhasCache.findIndex(c => c.nome.toLowerCase() === nome.toLowerCase());
+    if (idxExist >= 0) campanhasCache[idxExist] = nova;
+    else campanhasCache.push(nova);
+    localStorage.setItem('cgd_campanhas_v2', JSON.stringify(campanhasCache));
+    renderSelectCampanhas();
+
+    const api = localStorage.getItem('cgd_waseller_api') || '';
+    if (api) {
+      try {
+        await fetch(api, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'saveCampaign', ...nova })
+        });
+        showToast(`Campanha "${nome}" salva no Google Sheets!`);
+        return;
+      } catch (e) {
+        showToast('Salva localmente (erro ao conectar na API).');
+        return;
+      }
+    }
+    showToast(`Campanha "${nome}" salva no navegador!`);
+  }
+
+  async function registrarHistoricoAPI() {
+    const api = localStorage.getItem('cgd_waseller_api') || '';
+    if (!api) return;
+    try {
+      await fetch(api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'logExport',
+          campanha: document.getElementById('nomeCampanha').value,
+          qtd_contatos: processedRows.length,
+          duplicados_removidos: removedCount,
+          total_original: document.getElementById('kpiOriginal').textContent,
+          total_com_juros: '-',
+          total_final: document.getElementById('kpiFinal').textContent
+        })
+      });
+    } catch (e) { console.warn('Erro ao registrar histórico:', e); }
+  }
+</script>
+</body>
+</html>
