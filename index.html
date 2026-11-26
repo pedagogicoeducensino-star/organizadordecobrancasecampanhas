@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Central CGD → WaSeller v4.0 | Educ Centro de Ensino</title>
+  <title>Central CGD → WaSeller v4.1 | Educ Centro de Ensino</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -69,24 +69,24 @@
     }
     .pill-count.err { background: #ff4d4d; color: #fff; }
 
-    .container { max-width: 1440px; margin: 18px auto; padding: 0 18px; }
+    .container { max-width: 1460px; margin: 18px auto; padding: 0 18px; }
 
     .stats-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-      gap: 12px; margin-bottom: 16px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 11px; margin-bottom: 16px;
     }
     .stat-card {
       background: var(--card); border: 1px solid var(--beige-border);
-      border-left: 4px solid var(--orange); border-radius: 10px; padding: 11px 14px;
+      border-left: 4px solid var(--orange); border-radius: 10px; padding: 11px 13px;
     }
     .stat-card.gold { border-left-color: var(--gold-bright); }
     .stat-card.brown { border-left-color: var(--brown); }
     .stat-card.green { border-left-color: var(--success); }
-    .stat-card span { font-size: 0.71rem; color: var(--gray-muted); text-transform: uppercase; letter-spacing: .4px; font-weight: 600; }
-    .stat-card strong { display: block; font-size: 1.22rem; margin-top: 2px; color: var(--brown-dark); }
+    .stat-card span { font-size: 0.69rem; color: var(--gray-muted); text-transform: uppercase; letter-spacing: .35px; font-weight: 700; display: block; }
+    .stat-card strong { display: block; font-size: 1.16rem; margin-top: 2px; color: var(--brown-dark); }
+    .stat-card small { font-size: 0.71rem; color: var(--gray-muted); }
 
-    /* ESTRUTURA FIXA DE 2 COLUNAS + TABELA LARGA EMBAIXO */
-    .workspace-grid { display: grid; grid-template-columns: 410px 1fr; gap: 18px; align-items: start; margin-bottom: 18px; }
+    .workspace-grid { display: grid; grid-template-columns: 420px 1fr; gap: 18px; align-items: start; margin-bottom: 18px; }
     @media (max-width: 1040px) { .workspace-grid { grid-template-columns: 1fr; } }
 
     .card {
@@ -98,31 +98,36 @@
     .card h2 {
       font-size: 0.94rem; margin-bottom: 12px; padding-bottom: 8px;
       border-bottom: 1px solid var(--beige-soft); display: flex; align-items: center;
-      justify-content: space-between; gap: 8px; color: var(--brown-dark);
+      justify-content: space-between; gap: 8px; color: var(--brown-dark); flex-wrap: wrap;
     }
     .card h2 .title-left { display: flex; align-items: center; gap: 8px; }
     .card h2 i { color: var(--orange); }
 
     .dropzone {
-      border: 2px dashed var(--gold); border-radius: 10px; padding: 18px 14px;
+      border: 2px dashed var(--gold); border-radius: 10px; padding: 17px 14px;
       text-align: center; cursor: pointer; background: var(--beige-bg); transition: .18s;
     }
     .dropzone:hover, .dropzone.dragover { background: var(--beige-soft); border-color: var(--orange); }
-    .dropzone i { font-size: 1.8rem; color: var(--orange); margin-bottom: 6px; }
-    .dropzone p { font-size: 0.87rem; font-weight: 700; color: var(--brown-dark); }
-    .dropzone small { color: var(--gray-muted); font-size: 0.75rem; }
+    .dropzone i { font-size: 1.75rem; color: var(--orange); margin-bottom: 6px; }
+    .dropzone p { font-size: 0.86rem; font-weight: 700; color: var(--brown-dark); }
+    .dropzone small { color: var(--gray-muted); font-size: 0.74rem; }
 
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .field { margin-bottom: 10px; }
-    .field label { display: block; font-size: 0.76rem; font-weight: 700; margin-bottom: 4px; color: var(--brown); }
+    .field label { display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; color: var(--brown); }
     .field input, .field select, .field textarea {
       width: 100%; padding: 7px 9px; border: 1px solid #d7c9b0;
-      border-radius: 7px; font-size: 0.84rem; background: #fff; color: var(--brown-dark);
+      border-radius: 7px; font-size: 0.83rem; background: #fff; color: var(--brown-dark);
     }
     .field input:focus, .field select:focus, .field textarea:focus {
       outline: none; border-color: var(--orange); box-shadow: 0 0 0 2px rgba(232,106,0,0.14);
     }
     .field textarea { min-height: 170px; resize: vertical; line-height: 1.48; }
+
+    .highlight-box {
+      background: #fff8eb; border: 1px solid #f0d49c; border-radius: 9px;
+      padding: 9px 11px; margin-bottom: 11px;
+    }
 
     /* BANCO DE MENSAGENS DO APPS SCRIPT */
     .msg-bank-box {
@@ -147,17 +152,14 @@
     .msg-chip.active { background: var(--brown-dark); color: #fff; border-color: var(--brown-dark); }
     .msg-chip.active i { color: var(--gold-bright); }
 
-    .msg-editor-bar {
-      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
-      margin-bottom: 10px;
-    }
+    .msg-editor-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
     .msg-editor-bar input {
       flex: 1; min-width: 210px; padding: 7px 10px; border: 1px solid #d7c9b0;
       border-radius: 7px; font-size: 0.84rem; font-weight: 600; color: var(--brown-dark);
     }
 
-    .check-group { display: flex; flex-direction: column; gap: 8px; margin: 8px 0; }
-    .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.83rem; cursor: pointer; color: var(--brown-dark); }
+    .check-group { display: flex; flex-direction: column; gap: 7px; margin: 6px 0; }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.81rem; cursor: pointer; color: var(--brown-dark); }
     .check-item input { width: auto; accent-color: var(--orange); }
 
     .btn {
@@ -228,6 +230,17 @@
       box-shadow: 0 1px 2px rgba(0,0,0,0.1); color: #1f2c1f;
     }
 
+    /* ABAS DA TABELA DE BAIXO */
+    .table-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .tab-btn {
+      padding: 8px 14px; border-radius: 8px; border: 1.5px solid var(--beige-border);
+      background: var(--beige-bg); color: var(--brown); font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: .15s;
+    }
+    .tab-btn:hover { border-color: var(--orange); }
+    .tab-btn.active { background: var(--brown-dark); color: #fff; border-color: var(--brown-dark); }
+    .tab-btn.active i { color: var(--gold-bright); }
+
     .table-toolbar {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
       gap: 10px; padding: 10px 12px; background: var(--beige-bg);
@@ -240,19 +253,23 @@
     }
     .filter-controls input { min-width: 190px; flex: 1; max-width: 280px; }
 
-    .table-wrap { overflow-x: auto; max-height: 460px; border: 1px solid var(--beige-border); border-radius: 8px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.81rem; }
+    .table-wrap { overflow-x: auto; max-height: 480px; border: 1px solid var(--beige-border); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
     th {
       position: sticky; top: 0; background: var(--brown-dark); color: #fff;
-      text-align: left; padding: 9px 11px; white-space: nowrap; z-index: 2;
-      font-family: monospace; font-size: 0.78rem; cursor: pointer; user-select: none;
+      text-align: left; padding: 9px 10px; white-space: nowrap; z-index: 2;
+      font-size: 0.77rem; cursor: pointer; user-select: none;
     }
+    th.mono { font-family: monospace; }
     th:hover { background: var(--brown); }
     th.sorted { background: var(--orange); color: #fff; }
-    th .sort-ind { margin-left: 5px; font-size: 0.7rem; opacity: .75; }
-    td { padding: 7px 11px; border-bottom: 1px solid var(--beige-soft); white-space: nowrap; color: var(--gray-text); }
+    th .sort-ind { margin-left: 5px; font-size: 0.68rem; opacity: .78; }
+    td { padding: 7px 10px; border-bottom: 1px solid var(--beige-soft); white-space: nowrap; color: var(--gray-text); }
     tr:nth-child(even) td { background: #fdfaf4; }
     tr:hover td { background: #fff2de; color: var(--brown-dark); }
+    td.num-strong { font-weight: 700; color: var(--brown-dark); }
+    td.num-green { font-weight: 700; color: var(--success); }
+    td.num-warn { font-weight: 700; color: var(--orange); }
 
     .table-footer {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
@@ -304,7 +321,7 @@
       font-size: 0.8rem; font-family: monospace; width: 100%;
     }
     .tag-editor-item input.invalid-tag { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
-    .tag-origin { font-size: 0.75rem; color: var(--gray-muted); }
+    .tag-origin { font-size: 0.74rem; color: var(--gray-muted); }
 
     .model-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
     .model-card {
@@ -317,6 +334,7 @@
 
     .badge { display: inline-block; padding: 2px 7px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; }
     .badge-gold { background: #fdf0c2; color: var(--brown); }
+    .badge-ok { background: var(--success-bg); color: var(--success); }
     .hidden { display: none !important; }
 
     .toast {
@@ -334,8 +352,8 @@
   <div class="brand">
     <div class="brand-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
     <div>
-      <h1>Central CGD → WaSeller v4.0</h1>
-      <small id="headerSubtitle">Educ Centro de Ensino • Mensagens sincronizadas com Google Sheets</small>
+      <h1>Central CGD → WaSeller v4.1</h1>
+      <small>Educ Centro de Ensino • Conferência financeira real + mensagens no Google Sheets</small>
     </div>
   </div>
 
@@ -355,18 +373,43 @@
 </header>
 
 <div class="container">
-  <!-- KPIs FIXOS -->
+  <!-- KPIs REAIS (COM MULTIPLICAÇÃO DE PARCELAS) -->
   <div class="stats-grid">
-    <div class="stat-card"><span>Contatos Prontos</span><strong id="kpiContatos">0</strong></div>
-    <div class="stat-card gold"><span>Duplicados / Inválidos</span><strong id="kpiRemovidos">0</strong></div>
-    <div class="stat-card brown"><span>Total Original</span><strong id="kpiOriginal">R$ 0,00</strong></div>
-    <div class="stat-card green"><span>Total Final (Negociado)</span><strong id="kpiFinal">R$ 0,00</strong></div>
-    <div class="stat-card"><span>Validação das Tags</span><strong id="kpiStatusTags" style="font-size:0.98rem;">Aguardando...</strong></div>
+    <div class="stat-card">
+      <span>Contatos Prontos</span>
+      <strong id="kpiContatos">0</strong>
+      <small id="kpiAlunosSub">0 alunos únicos</small>
+    </div>
+    <div class="stat-card gold">
+      <span>Duplicados / Inválidos</span>
+      <strong id="kpiRemovidos">0</strong>
+      <small>removidos na limpeza</small>
+    </div>
+    <div class="stat-card brown">
+      <span>Dívida Base (Sem Juros)</span>
+      <strong id="kpiBase">R$ 0,00</strong>
+      <small>mensalidade × atraso</small>
+    </div>
+    <div class="stat-card">
+      <span>Dívida Atualizada (c/ Juros)</span>
+      <strong id="kpiJuros">R$ 0,00</strong>
+      <small id="kpiJurosSub">+ R$ 0,00 de juros</small>
+    </div>
+    <div class="stat-card green">
+      <span>Total Final (Negociado)</span>
+      <strong id="kpiFinal">R$ 0,00</strong>
+      <small>após descontos</small>
+    </div>
+    <div class="stat-card">
+      <span>Validação das Tags</span>
+      <strong id="kpiStatusTags" style="font-size:0.96rem;">Aguardando...</strong>
+      <small>texto × colunas Excel</small>
+    </div>
   </div>
 
-  <!-- WORKSPACE COM ESTRUTURA 100% FIXA -->
+  <!-- WORKSPACE FIXO -->
   <div class="workspace-grid">
-    <!-- COLUNA ESQUERDA FIXA -->
+    <!-- ESQUERDA -->
     <div>
       <!-- 1. IMPORTAR CGD -->
       <div class="card">
@@ -377,26 +420,42 @@
         <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
           <i class="fa-solid fa-cloud-arrow-up"></i>
           <p>Arraste ou clique (.xlsx, .csv ou .pdf)</p>
-          <small>Lê Contrato (#matricula), Aluno, Responsável, Fone 1/2, Atraso, Vencimento e Valor</small>
+          <small>Lê Contrato (#matricula), Aluno, Responsável, Fone 1/2/3, Atraso, Vencimento e Valor</small>
           <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.pdf" hidden />
         </div>
         <div class="actions-row">
           <button class="btn btn-outline btn-sm btn-block" onclick="carregarExemploCGD()">
-            <i class="fa-solid fa-flask"></i> Carregar Exemplo CGD para Testar
+            <i class="fa-solid fa-flask"></i> Carregar Exemplo Real do CGD (Testar Cálculo)
           </button>
         </div>
       </div>
 
-      <!-- 2. REGRAS DE CÁLCULO & VENCIMENTO (SEMPRE VISÍVEL, NUNCA MUDA) -->
+      <!-- 2. POLÍTICA FINANCEIRA -->
       <div class="card">
-        <h2><span class="title-left"><i class="fa-solid fa-calculator"></i> 2. Política de Juros, Descontos e Datas</span></h2>
+        <h2><span class="title-left"><i class="fa-solid fa-calculator"></i> 2. Cálculo Real da Dívida, Juros e Descontos</span></h2>
+
+        <!-- REGRA DE LEITURA DO VALOR DO CGD -->
+        <div class="highlight-box">
+          <div class="field" style="margin-bottom:6px;">
+            <label><i class="fa-solid fa-layer-group" style="color:var(--orange);"></i> Como interpretar a coluna "Valor" do CGD?</label>
+            <select id="modoValorCGD" onchange="reprocessar()">
+              <option value="unitario" selected>Valor de 1 mensalidade (Multiplicar por Qtd. Atraso)</option>
+              <option value="total">Valor já totalizado (Não multiplicar)</option>
+            </select>
+          </div>
+          <label class="check-item" style="font-size:0.78rem;">
+            <input type="checkbox" id="chkSemJurosZero" checked onchange="reprocessar()" />
+            Não aplicar juros quando Qtd. em Atraso for 0 (em dia)
+          </label>
+        </div>
+
         <div class="row-2">
           <div class="field">
             <label>Regra de Juros (interno)</label>
             <select id="jurosTipo" onchange="reprocessar()">
               <option value="none">Sem juros (0%)</option>
-              <option value="percent_total" selected>% Fixo sobre a dívida</option>
-              <option value="percent_atraso">% × Qtd. em Atraso</option>
+              <option value="percent_total" selected>% Fixo sobre a dívida base</option>
+              <option value="percent_atraso">% × Qtd. em Atraso (acumulado)</option>
             </select>
           </div>
           <div class="field">
@@ -409,7 +468,7 @@
           <label>Política de Desconto</label>
           <select id="politicaDesconto" onchange="alternarPoliticaDesconto()">
             <option value="unico">Desconto Único (igual para todos)</option>
-            <option value="faixa_valor" selected>Progressivo por Valor da Dívida</option>
+            <option value="faixa_valor" selected>Progressivo por Valor Total da Dívida</option>
             <option value="faixa_atraso">Progressivo por Qtd. em Atraso</option>
           </select>
         </div>
@@ -440,8 +499,8 @@
           <div class="field">
             <label>Aplicar Desconto Sobre</label>
             <select id="descontoBase" onchange="reprocessar()">
-              <option value="atualizado" selected>Valor c/ Juros</option>
-              <option value="original">Valor Original</option>
+              <option value="atualizado" selected>Dívida c/ Juros</option>
+              <option value="original">Dívida Base (sem juros)</option>
             </select>
           </div>
           <div class="field">
@@ -463,7 +522,7 @@
             <label>Base do Parcelamento</label>
             <select id="parcelaBase" onchange="reprocessar()">
               <option value="final" selected>Valor Final (c/ desconto)</option>
-              <option value="atualizado">Valor c/ Juros</option>
+              <option value="atualizado">Dívida c/ Juros</option>
             </select>
           </div>
         </div>
@@ -487,25 +546,24 @@
       </div>
     </div>
 
-    <!-- COLUNA DIREITA FIXA: MENSAGENS DO APPS SCRIPT + EDITOR + PRÉVIA -->
+    <!-- DIREITA: MENSAGENS DO GOOGLE SHEETS -->
     <div class="card">
       <h2>
         <span class="title-left"><i class="fa-brands fa-whatsapp"></i> 3. Mensagens da Campanha (Google Sheets)</span>
         <button class="btn btn-outline btn-xs" onclick="abrirModal('modalTags')"><i class="fa-solid fa-pen"></i> Editar Tags</button>
       </h2>
 
-      <!-- LISTA DE MENSAGENS VINDAS DO APPS SCRIPT -->
       <div class="msg-bank-box">
         <div class="msg-bank-top">
           <strong>
             <i class="fa-solid fa-database" style="color:var(--orange);"></i>
-            Mensagens salvas na sua planilha:
+            Clique na mensagem que deseja usar (salvas no Google Sheets):
           </strong>
           <div style="display:flex; gap:6px;">
             <button class="btn btn-outline btn-xs" onclick="sincronizarTudo()" title="Recarregar do Google Sheets">
               <i class="fa-solid fa-rotate"></i> Atualizar Lista
             </button>
-            <button class="btn btn-gold btn-xs" onclick="novaMensagem()">
+            <button class="btn btn-gold btn-xs" onclick="limparEditorMensagem(true)">
               <i class="fa-solid fa-plus"></i> Nova Mensagem
             </button>
           </div>
@@ -515,7 +573,6 @@
         </div>
       </div>
 
-      <!-- TÍTULO E AÇÕES DE SALVAR/ATUALIZAR/EXCLUIR NO APPS SCRIPT -->
       <div class="msg-editor-bar">
         <input type="text" id="msgTituloInput" placeholder="Título da mensagem (ex: Cobrança Mensalidade Maio)" />
         <button class="btn btn-primary btn-sm" id="btnSalvarMsg" onclick="salvarMensagemNoAppsScript()">
@@ -532,7 +589,7 @@
       <div class="tags-box" id="tagsBox"></div>
 
       <div class="field">
-        <textarea id="msgTemplate" oninput="validarEAtualizarPreview()" placeholder="Selecione uma mensagem salva acima ou escreva aqui usando as #tags..."></textarea>
+        <textarea id="msgTemplate" oninput="validarEAtualizarPreview()" placeholder="Clique em uma mensagem salva acima ou escreva uma nova usando as #tags..."></textarea>
       </div>
 
       <div id="validatorPanel" class="validator-panel validator-ok"></div>
@@ -551,30 +608,40 @@
             <button class="btn btn-outline btn-xs" onclick="mudarPreview(1)">▶</button>
           </div>
         </div>
-        <div class="wa-bubble" id="previewBubble">Carregue uma planilha/PDF do CGD ou clique em "Carregar Exemplo CGD".</div>
+        <div class="wa-bubble" id="previewBubble">Carregue uma planilha/PDF do CGD ou clique em "Carregar Exemplo Real do CGD".</div>
       </div>
     </div>
   </div>
 
-  <!-- TABELA FULL-WIDTH -->
+  <!-- TABELA FULL-WIDTH COM 2 ABAS: CONFERÊNCIA AMPLA E WASELLER -->
   <div class="card">
     <h2>
-      <span class="title-left"><i class="fa-solid fa-table"></i> 4. Planilha Pronta para o WaSeller (100% Texto Puro)</span>
+      <span class="title-left"><i class="fa-solid fa-table"></i> 4. Conferência Financeira & Planilha WaSeller</span>
       <div style="display:flex; flex-wrap:wrap; gap:8px;">
         <button class="btn btn-primary btn-sm" onclick="exportarWaSeller()">
-          <i class="fa-solid fa-download"></i> Baixar Planilha WaSeller (.xlsx)
+          <i class="fa-solid fa-download"></i> Baixar Planilha WaSeller (.xlsx Texto Puro)
         </button>
         <button class="btn btn-gold btn-sm" onclick="exportarControle()">
-          <i class="fa-solid fa-file-invoice-dollar"></i> Baixar Controle Interno (.xlsx)
+          <i class="fa-solid fa-file-invoice-dollar"></i> Baixar Conferência Completa (.xlsx)
         </button>
       </div>
     </h2>
+
+    <!-- SELETOR DE ABAS DA TABELA -->
+    <div class="table-tabs">
+      <button type="button" class="tab-btn active" id="tabBtn_conferencia" onclick="trocarAbaTabela('conferencia')">
+        <i class="fa-solid fa-magnifying-glass-dollar"></i> Conferência Financeira (Visão Ampla)
+      </button>
+      <button type="button" class="tab-btn" id="tabBtn_waseller" onclick="trocarAbaTabela('waseller')">
+        <i class="fa-brands fa-whatsapp"></i> Planilha WaSeller (Exatamente o que vai no Excel)
+      </button>
+    </div>
 
     <div class="table-toolbar">
       <div class="filter-controls">
         <i class="fa-solid fa-filter" style="color:var(--orange);"></i>
         <select id="filterCol" onchange="onFilterColChange()"><option value="__all__">Todas as colunas</option></select>
-        <input type="text" id="filterText" placeholder="Filtrar por matrícula, nome, atraso, valor..." oninput="aplicarFiltrosEOrdenacao()" />
+        <input type="text" id="filterText" placeholder="Filtrar por matrícula, aluno, atraso, valor..." oninput="aplicarFiltrosEOrdenacao()" />
         <select id="filterQuickVal" class="hidden" onchange="aplicarFiltroRapido()"><option value="">-- Valor exato --</option></select>
         <button class="btn btn-outline btn-xs" onclick="limparFiltrosTabela()"><i class="fa-solid fa-eraser"></i> Limpar</button>
       </div>
@@ -599,7 +666,7 @@
   </div>
 </div>
 
-<!-- MODAL REGRAS SALVAS (CAMPANHAS) -->
+<!-- MODAL REGRAS SALVAS -->
 <div class="modal-backdrop hidden" id="modalModelos" onclick="fecharModalBackdrop(event, 'modalModelos')">
   <div class="modal-box">
     <div class="modal-header">
@@ -645,15 +712,15 @@
     <div class="modal-body">
       <div style="background:var(--beige-bg); border:1px solid var(--beige-border); border-radius:10px; padding:12px; margin-bottom:12px;">
         <div class="row-2">
-          <div class="field"><label>Nova Variável (ex: premio, cupom)</label><input type="text" id="novaVarNome" placeholder="Sem acento ou espaço" /></div>
-          <div class="field"><label>Valor Fixo para esta Campanha</label><input type="text" id="novaVarValor" placeholder="Ex: Kit Escolar" /></div>
+          <div class="field"><label>Nova Variável (ex: premio, chave_pix)</label><input type="text" id="novaVarNome" placeholder="Sem acento ou espaço" /></div>
+          <div class="field"><label>Valor Fixo para esta Campanha</label><input type="text" id="novaVarValor" placeholder="Ex: CNPJ 00.000.000/0001-00" /></div>
         </div>
         <button class="btn btn-gold btn-sm btn-block" onclick="adicionarVariavelPersonalizada()">
-          <i class="fa-solid fa-plus"></i> Adicionar Variável na Planilha
+          <i class="fa-solid fa-plus"></i> Criar Nova Coluna na Planilha
         </button>
       </div>
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <span style="font-size:0.78rem; color:var(--gray-muted);">Marque as colunas desejadas e edite nomes (sem acento, espaço ou ponto):</span>
+        <span style="font-size:0.78rem; color:var(--gray-muted);">Marque as colunas que vão para o Excel do WaSeller:</span>
         <button class="btn btn-outline btn-xs" onclick="corrigirTodasAsTags()"><i class="fa-solid fa-magic"></i> Padronizar Nomes</button>
       </div>
       <div class="tag-editor-list" id="tagEditorList"></div>
@@ -674,10 +741,10 @@
     <div class="modal-body">
       <div class="row-2">
         <div class="field">
-          <label>Destinatários (Fone 1 e 2)</label>
+          <label>Destinatários (Fone 1, 2 e 3)</label>
           <select id="modoTelefones" onchange="reprocessar()">
-            <option value="ambos" selected>Enviar para Fone 1 e Fone 2</option>
-            <option value="fone1">Apenas Fone 1 (usa 2 se vazio)</option>
+            <option value="todos" selected>Enviar para Fone 1, Fone 2 e Fone 3</option>
+            <option value="fone1">Apenas 1 telefone (usa 2/3 se vazio)</option>
           </select>
         </div>
         <div class="field">
@@ -716,40 +783,81 @@
   }
 
   const DEFAULT_TAG_CONFIGS = [
-    { key: 'numero',          label: 'Telefone (Obrigatório)',   tag: 'numero',          enabled: true,  locked: true },
-    { key: 'matricula',       label: 'Matrícula / Contrato CGD', tag: 'matricula',       enabled: true,  locked: false },
-    { key: 'nome',            label: 'Nome Completo',            tag: 'nome',            enabled: true,  locked: false },
-    { key: 'primeiroNome',    label: 'Primeiro Nome (Nativa)',   tag: 'primeiroNome',    enabled: true,  locked: false },
-    { key: 'aluno',           label: 'Nome do Aluno',            tag: 'aluno',           enabled: true,  locked: false },
-    { key: 'atraso',          label: 'Qtd. em Atraso',           tag: 'atraso',          enabled: true,  locked: false },
-    { key: 'vencimento',      label: 'Data Vencimento',          tag: 'vencimento',      enabled: true,  locked: false },
-    { key: 'dias_vencimento', label: 'Dias p/ Vencer (Nº)',      tag: 'dias_vencimento', enabled: false, locked: false },
-    { key: 'prazo_texto',     label: 'Prazo por Extenso',        tag: 'prazo_texto',     enabled: false, locked: false },
-    { key: 'valor_original',  label: 'Valor Original',           tag: 'valor_original',  enabled: false, locked: false },
-    { key: 'valor',           label: 'Valor Atualizado',         tag: 'valor',           enabled: true,  locked: false },
-    { key: 'desconto',        label: 'Desconto Aplicado',        tag: 'desconto',        enabled: true,  locked: false },
-    { key: 'valor_final',     label: 'Valor Final',              tag: 'valor_final',     enabled: true,  locked: false },
-    { key: 'parcelas',        label: 'Qtd. Parcelas',            tag: 'parcelas',        enabled: true,  locked: false },
-    { key: 'valor_parcela',   label: 'Valor da Parcela',         tag: 'valor_parcela',   enabled: true,  locked: false }
+    { key: 'numero',            label: 'Telefone (Obrigatório)',       tag: 'numero',            enabled: true,  locked: true },
+    { key: 'matricula',         label: 'Matrícula / Contrato CGD',     tag: 'matricula',         enabled: true,  locked: false },
+    { key: 'nome',              label: 'Nome Completo',                tag: 'nome',              enabled: true,  locked: false },
+    { key: 'primeiroNome',      label: 'Primeiro Nome (Nativa)',       tag: 'primeiroNome',      enabled: true,  locked: false },
+    { key: 'aluno',             label: 'Nome do Aluno',                tag: 'aluno',             enabled: true,  locked: false },
+    { key: 'atraso',            label: 'Qtd. Parcelas em Atraso',      tag: 'atraso',            enabled: true,  locked: false },
+    { key: 'vencimento',        label: 'Data de Vencimento (CGD)',     tag: 'vencimento',        enabled: true,  locked: false },
+    { key: 'valor_mensalidade', label: 'Valor de 1 Mensalidade (CGD)', tag: 'valor_mensalidade', enabled: false, locked: false },
+    { key: 'divida_base',       label: 'Dívida Base (Mensal. × Atraso)',tag: 'divida_base',      enabled: false, locked: false },
+    { key: 'valor',             label: 'Dívida Atualizada (c/ Juros)', tag: 'valor',             enabled: true,  locked: false },
+    { key: 'desconto',          label: 'Desconto Aplicado',            tag: 'desconto',          enabled: true,  locked: false },
+    { key: 'valor_final',       label: 'Valor Final (c/ Desconto)',    tag: 'valor_final',       enabled: true,  locked: false },
+    { key: 'parcelas',          label: 'Qtd. Parcelas (Acordo)',       tag: 'parcelas',          enabled: true,  locked: false },
+    { key: 'valor_parcela',     label: 'Valor da Parcela (Acordo)',    tag: 'valor_parcela',     enabled: true,  locked: false },
+    { key: 'dias_vencimento',   label: 'Dias p/ Vencer (Nº)',          tag: 'dias_vencimento',   enabled: false, locked: false },
+    { key: 'prazo_texto',       label: 'Prazo por Extenso',            tag: 'prazo_texto',       enabled: false, locked: false }
   ];
+
+  // Colunas fixas da Aba de Conferência Financeira (Visão Ampla)
+  const COLS_CONFERENCIA = [
+    { key: 'matricula',         label: 'Matrícula' },
+    { key: 'aluno',             label: 'Aluno' },
+    { key: 'responsavel',       label: 'Responsável' },
+    { key: 'numero',            label: 'Telefone' },
+    { key: '_rotulo',           label: 'Contato' },
+    { key: 'atraso',            label: 'Atraso (Qtd)', cls: 'num-strong' },
+    { key: 'vencimento',        label: 'Vencimento' },
+    { key: 'valor_mensalidade', label: '1 Mensalidade' },
+    { key: 'divida_base',       label: 'Dívida Base (× Atraso)', cls: 'num-strong' },
+    { key: 'juros_percent',     label: 'Juros (%)' },
+    { key: 'juros_reais',       label: 'Juros (R$)', cls: 'num-warn' },
+    { key: 'valor',             label: 'Dívida c/ Juros', cls: 'num-strong' },
+    { key: 'desconto',          label: 'Desconto' },
+    { key: 'valor_final',       label: 'Valor Final', cls: 'num-green' },
+    { key: '_parcelamento',     label: 'Parcelamento' }
+  ];
+
+  // Reconhecimento inteligente de sinônimos no Validador de Tags
+  const SINONIMOS_TAGS = {
+    'contrato': 'matricula',
+    'data_vencimento': 'vencimento',
+    'data_de_vencimento': 'vencimento',
+    'dt_vencimento': 'vencimento',
+    'data': 'vencimento',
+    'mensalidade': 'valor_mensalidade',
+    'valor_unitario': 'valor_mensalidade',
+    'valor_original': 'divida_base',
+    'divida': 'divida_base',
+    'divida_total': 'valor',
+    'valor_total': 'valor',
+    'qtd_atraso': 'atraso',
+    'parcelas_atraso': 'atraso',
+    'telefone': 'numero',
+    'celular': 'numero',
+    'whatsapp': 'numero'
+  };
 
   let tagConfigs = JSON.parse(JSON.stringify(DEFAULT_TAG_CONFIGS));
 
   let faixasValor = [
-    { min: 0,      max: 200,    desconto: 10 },
-    { min: 200.01, max: 500,    desconto: 20 },
-    { min: 500.01, max: 99999,  desconto: 35 }
+    { min: 0,       max: 300,   desconto: 10 },
+    { min: 300.01,  max: 1000,  desconto: 20 },
+    { min: 1000.01, max: 99999, desconto: 35 }
   ];
 
   let faixasAtraso = [
-    { min: 1, max: 1,  desconto: 5  },
-    { min: 2, max: 3,  desconto: 15 },
-    { min: 4, max: 99, desconto: 30 }
+    { min: 1, max: 2,  desconto: 10 },
+    { min: 3, max: 6,  desconto: 20 },
+    { min: 7, max: 99, desconto: 35 }
   ];
 
   let mensagensCache = [];
   let editingMsgId = '';
   let campanhasCache = [];
+  let abaTabelaAtual = 'conferencia';
 
   let rawRows = [];
   let processedRows = [];
@@ -778,15 +886,11 @@
   function migrarTagConfigs(savedList) {
     if (!Array.isArray(savedList) || !savedList.length) return JSON.parse(JSON.stringify(DEFAULT_TAG_CONFIGS));
     const list = JSON.parse(JSON.stringify(savedList));
-    if (!list.some(t => t.key === 'matricula')) {
-      const oldContrato = list.find(t => t.key === 'contrato');
-      if (oldContrato) {
-        oldContrato.key = 'matricula'; oldContrato.tag = 'matricula';
-        oldContrato.label = 'Matrícula / Contrato CGD'; oldContrato.enabled = true;
-      } else {
-        list.splice(1, 0, { key: 'matricula', label: 'Matrícula / Contrato CGD', tag: 'matricula', enabled: true, locked: false });
+    DEFAULT_TAG_CONFIGS.forEach(def => {
+      if (!list.some(t => t.key === def.key)) {
+        list.push(JSON.parse(JSON.stringify(def)));
       }
-    }
+    });
     return list;
   }
 
@@ -803,7 +907,7 @@
     const el = document.getElementById('toast');
     el.textContent = msg;
     el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 3200);
+    setTimeout(() => el.classList.remove('show'), 3400);
   }
 
   // ==================== SINCRONIZAÇÃO COM GOOGLE APPS SCRIPT ====================
@@ -821,14 +925,10 @@
           renderMsgChips();
           atualizarBadgeModelos();
           renderListaModelos();
-          // Carrega a 1ª mensagem automaticamente só se o editor estiver vazio
-          if (!document.getElementById('msgTemplate').value.trim() && mensagensCache.length) {
-            selecionarMensagem(0, true);
-          }
           return;
         }
       } catch (e) {
-        console.warn('Falha ao sincronizar com Apps Script, usando cache local:', e);
+        console.warn('Falha ao sincronizar, usando cache local:', e);
       }
     }
     mensagensCache = JSON.parse(localStorage.getItem('cgd_mensagens_v4') || '[]');
@@ -836,12 +936,9 @@
     renderMsgChips();
     atualizarBadgeModelos();
     renderListaModelos();
-    if (!document.getElementById('msgTemplate').value.trim() && mensagensCache.length) {
-      selecionarMensagem(0, true);
-    }
   }
 
-  // ==================== CRUD DE MENSAGENS (SEM ALTERAR O LAYOUT) ====================
+  // ==================== CRUD DE MENSAGENS (LIMPA AO SALVAR) ====================
   function renderMsgChips() {
     const cont = document.getElementById('msgChipsContainer');
     if (!mensagensCache.length) {
@@ -855,10 +952,9 @@
     `).join('');
   }
 
-  function selecionarMensagem(idx, silencioso = false) {
+  function selecionarMensagem(idx) {
     const m = mensagensCache[idx];
     if (!m) return;
-    // Apenas preenche título e texto — NUNCA altera estrutura ou cards da página!
     editingMsgId = m.id;
     document.getElementById('msgTituloInput').value = m.titulo;
     document.getElementById('msgTemplate').value = m.texto;
@@ -866,10 +962,10 @@
     document.getElementById('btnExcluirMsg').classList.remove('hidden');
     renderMsgChips();
     validarEAtualizarPreview();
-    if (!silencioso) showToast(`Mensagem "${m.titulo}" carregada.`);
+    showToast(`Mensagem "${m.titulo}" carregada.`);
   }
 
-  function novaMensagem() {
+  function limparEditorMensagem(focar = false) {
     editingMsgId = '';
     document.getElementById('msgTituloInput').value = '';
     document.getElementById('msgTemplate').value = '';
@@ -877,8 +973,10 @@
     document.getElementById('btnExcluirMsg').classList.add('hidden');
     renderMsgChips();
     validarEAtualizarPreview();
-    document.getElementById('msgTituloInput').focus();
-    showToast('Pronto para criar uma nova mensagem.');
+    if (focar) {
+      document.getElementById('msgTituloInput').focus();
+      showToast('Campos limpos para criar nova mensagem.');
+    }
   }
 
   async function salvarMensagemNoAppsScript() {
@@ -897,11 +995,10 @@
     if (idx >= 0) mensagensCache[idx] = obj;
     else mensagensCache.push(obj);
 
-    editingMsgId = id;
     localStorage.setItem('cgd_mensagens_v4', JSON.stringify(mensagensCache));
-    document.getElementById('btnSalvarMsg').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Atualizar no Sheets';
-    document.getElementById('btnExcluirMsg').classList.remove('hidden');
-    renderMsgChips();
+
+    // Limpa os campos logo após salvar — usuário clica no chip quando quiser usar
+    limparEditorMensagem(false);
 
     const api = localStorage.getItem('cgd_waseller_api') || '';
     if (api) {
@@ -913,15 +1010,15 @@
         });
         const data = await res.json();
         if (data.ok) {
-          showToast(`Mensagem "${titulo}" salva no Google Sheets!`);
+          showToast(`"${titulo}" salva no Google Sheets! Clique nela acima quando quiser usar.`);
           return;
         }
       } catch (e) {
-        showToast('Salva localmente (verifique se atualizou a versão do Apps Script).');
+        showToast('Salva localmente (verifique a implantação do Apps Script).');
         return;
       }
     }
-    showToast(`Mensagem "${titulo}" salva!`);
+    showToast(`"${titulo}" salva! Clique nela acima quando quiser usar.`);
   }
 
   async function excluirMensagemAtual() {
@@ -934,7 +1031,7 @@
     mensagensCache.splice(idx, 1);
     localStorage.setItem('cgd_mensagens_v4', JSON.stringify(mensagensCache));
     const deletedId = m.id;
-    novaMensagem();
+    limparEditorMensagem(false);
 
     const api = localStorage.getItem('cgd_waseller_api') || '';
     if (api) {
@@ -1009,7 +1106,7 @@
     else return showToast('Já existe uma coluna nativa com esse nome.');
     document.getElementById('novaVarNome').value = '';
     document.getElementById('novaVarValor').value = '';
-    renderTagEditor(); reprocessar(); showToast(`Variável #${nomeLimpo} adicionada!`);
+    renderTagEditor(); reprocessar(); showToast(`Nova coluna #${nomeLimpo} criada na planilha!`);
   }
   function renderTagEditor() {
     document.getElementById('badgeTags').textContent = tagConfigs.filter(t => t.enabled).length;
@@ -1019,7 +1116,7 @@
         <div class="tag-editor-item">
           <input type="checkbox" ${tc.enabled ? 'checked' : ''} ${tc.locked ? 'disabled' : ''} onchange="toggleTag(${idx}, this.checked)" />
           <input type="text" class="${probs.length ? 'invalid-tag' : ''}" value="${tc.tag}" ${tc.locked ? 'readonly' : ''} oninput="renomearTag(${idx}, this.value)" />
-          ${tc.isCustom ? `<input type="text" value="${tc.fixedValue || ''}" oninput="editarValorCustom(${idx}, this.value)" />` : `<span class="tag-origin">${tc.label}</span>`}
+          ${tc.isCustom ? `<input type="text" value="${tc.fixedValue || ''}" placeholder="Valor fixo" oninput="editarValorCustom(${idx}, this.value)" />` : `<span class="tag-origin">${tc.label}</span>`}
           ${tc.isCustom ? `<button class="btn btn-danger-soft btn-xs" onclick="removerCustomTag(${idx})"><i class="fa-solid fa-trash"></i></button>` : `<span style="text-align:center; color:${probs.length ? 'var(--danger)' : 'var(--success)'};"><i class="fa-solid ${probs.length ? 'fa-triangle-exclamation' : 'fa-check'}"></i></span>`}
         </div>`;
     }).join('');
@@ -1044,7 +1141,7 @@
     validarEAtualizarPreview();
   }
 
-  // ==================== VALIDADOR ====================
+  // ==================== VALIDADOR INTELIGENTE (COM SINÔNIMOS) ====================
   function validarEAtualizarPreview() {
     const msg = document.getElementById('msgTemplate').value;
     const ativos = tagConfigs.filter(t => t.enabled);
@@ -1081,27 +1178,51 @@
       if (mapaAtivos.has(tagUsada)) return;
       const normUsada = sanitizarTagNome(tagUsada);
 
-      if (normUsada === 'contrato' && mapaAtivos.has('matricula')) {
-        erros.push({
-          texto: `Você escreveu <strong>#${tagUsada}</strong>, mas a coluna na planilha se chama <strong>#matricula</strong>.`,
-          acaoLabel: `Trocar para #matricula`,
-          acao: () => { document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#matricula'); validarEAtualizarPreview(); }
-        });
-        return;
+      // 1) Verifica se é sinônimo de alguma coluna nativa do CGD / cálculo
+      const chaveSinonimo = SINONIMOS_TAGS[normUsada];
+      if (chaveSinonimo) {
+        const tcAlvo = tagConfigs.find(t => t.key === chaveSinonimo);
+        if (tcAlvo) {
+          erros.push({
+            texto: `Você escreveu <strong>#${tagUsada}</strong>, mas essa informação já vem do CGD na coluna <strong>#${tcAlvo.tag}</strong> (${tcAlvo.label}).`,
+            acaoLabel: `Usar #${tcAlvo.tag}`,
+            acao: () => {
+              tcAlvo.enabled = true;
+              document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + tcAlvo.tag);
+              renderTagEditor(); aplicarFiltrosEOrdenacao(); validarEAtualizarPreview();
+            }
+          });
+          return;
+        }
       }
 
+      // 2) Divergência de maiúscula/acento com coluna ativa
       const matchAtivo = ativos.find(t => sanitizarTagNome(t.tag) === normUsada);
       if (matchAtivo) {
         erros.push({ texto: `Tag <strong>#${tagUsada}</strong> diverge da coluna <strong>#${matchAtivo.tag}</strong>.`, acaoLabel: `Corrigir`, acao: () => { document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + matchAtivo.tag); validarEAtualizarPreview(); } });
         return;
       }
+
+      // 3) Coluna existe mas está desmarcada
       const matchDes = tagConfigs.find(t => t.tag === tagUsada || sanitizarTagNome(t.tag) === normUsada);
       if (matchDes) {
-        erros.push({ texto: `Tag <strong>#${tagUsada}</strong> está desmarcada no Editor de Tags.`, acaoLabel: `Ativar #${matchDes.tag}`, acao: () => { matchDes.enabled = true; renderTagEditor(); aplicarFiltrosEOrdenacao(); validarEAtualizarPreview(); } });
+        erros.push({ texto: `Tag <strong>#${tagUsada}</strong> existe (${matchDes.label}), mas está desmarcada no Editor de Tags.`, acaoLabel: `Ativar #${matchDes.tag}`, acao: () => { matchDes.enabled = true; renderTagEditor(); aplicarFiltrosEOrdenacao(); validarEAtualizarPreview(); } });
         return;
       }
+
+      // 4) Variável realmente nova (valor fixo na nova coluna do Excel)
       const sug = sanitizarTagNome(tagUsada);
-      erros.push({ texto: `Tag <strong>#${tagUsada}</strong> não existe na planilha.`, acaoLabel: `Criar #${sug}`, acao: () => { const v = prompt(`Valor fixo para "${sug}":`, ''); if (v === null) return; garantirCustomVar(sug, v); renderTagEditor(); reprocessar(); } });
+      erros.push({
+        texto: `Tag <strong>#${tagUsada}</strong> não existe no CGD. Você pode criar uma coluna extra no Excel com valor fixo para esta campanha.`,
+        acaoLabel: `Criar coluna #${sug}`,
+        acao: () => {
+          const v = prompt(`A coluna "${sug}" será criada na planilha do Excel.\nQual valor fixo deseja preencher para todos os contatos?`, '');
+          if (v === null) return;
+          garantirCustomVar(sug, v);
+          if (tagUsada !== sug) document.getElementById('msgTemplate').value = msg.split('#' + tagUsada).join('#' + sug);
+          renderTagEditor(); reprocessar();
+        }
+      });
     });
 
     ultimoDiagnostico = { erros, avisos };
@@ -1110,7 +1231,12 @@
     const badge = document.getElementById('badgeTags');
     window._acoesCorrecao = [];
 
-    if (erros.length) {
+    if (!msg.trim()) {
+      panel.className = 'validator-panel validator-warn';
+      kpi.innerHTML = `<span style="color:var(--warn)">Sem texto</span>`;
+      badge.classList.remove('err');
+      panel.innerHTML = `<i class="fa-solid fa-circle-info"></i> Clique em uma mensagem salva acima ou escreva um texto para validar as tags.`;
+    } else if (erros.length) {
       panel.className = 'validator-panel validator-err';
       kpi.innerHTML = `<span style="color:var(--danger)">${erros.length} erro(s)</span>`;
       badge.classList.add('err');
@@ -1126,11 +1252,13 @@
   }
 
   function copiarMensagem() {
-    navigator.clipboard.writeText(document.getElementById('msgTemplate').value);
+    const txt = document.getElementById('msgTemplate').value;
+    if (!txt.trim()) return showToast('Selecione ou escreva uma mensagem primeiro.');
+    navigator.clipboard.writeText(txt);
     showToast('Script copiado para colar no WaSeller!');
   }
 
-  // ==================== UPLOAD ====================
+  // ==================== UPLOAD (EXCEL, CSV, PDF — COM FONE 1, 2 E 3) ====================
   function setupDropzone() {
     const dz = document.getElementById('dropzone'), input = document.getElementById('fileInput');
     input.addEventListener('change', e => { if (e.target.files[0]) lerArquivo(e.target.files[0]); });
@@ -1146,7 +1274,7 @@
         const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array', cellDates: false });
         rawRows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
         reprocessar();
-        showToast(`"${file.name}" carregado (${rawRows.length} registros).`);
+        showToast(`"${file.name}" carregado (${rawRows.length} alunos).`);
       } catch (err) { showToast('Erro: ' + err.message); }
     };
     reader.readAsArrayBuffer(file);
@@ -1181,7 +1309,7 @@
         let atraso = 0; const qm = resto.match(/\b(\d{1,2})\s*$/);
         if (qm) { atraso = parseInt(qm[1], 10); resto = resto.replace(/\b\d{1,2}\s*$/, ''); }
         const nomeLimpo = resto.replace(/\s{2,}/g, ' ').trim();
-        extraidos.push({ 'Contrato': cm ? cm[1] : '', 'Aluno': nomeLimpo || 'Aluno', 'Responsável': nomeLimpo || 'Responsável', 'Fone 1': phones[0] || '', 'Fone 2': phones[1] || '', 'Qtd. em Atraso': atraso, 'Vencimento': dm ? dm[1] : '', 'Valor': ms.length ? ms[ms.length - 1] : '0,00' });
+        extraidos.push({ 'Contrato': cm ? cm[1] : '', 'Aluno': nomeLimpo || 'Aluno', 'Responsável': nomeLimpo || 'Responsável', 'Fone 1': phones[0] || '', 'Fone 2': phones[1] || '', 'Fone 3': phones[2] || '', 'Qtd. em Atraso': atraso, 'Vencimento': dm ? dm[1] : '', 'Valor': ms.length ? ms[ms.length - 1] : '0,00' });
       });
       if (!extraidos.length) return showToast('Nenhum telefone encontrado no PDF.');
       rawRows = extraidos; reprocessar(); showToast(`PDF lido (${extraidos.length} registros).`);
@@ -1190,14 +1318,14 @@
 
   function carregarExemploCGD() {
     rawRows = [
-      { 'Contrato': '1069', 'Aluno': 'Filipe Messias Sales Vieira', 'Responsável': 'José Vieira Dos Santos Filho', 'Fone 1': '(79) 98131-5431 [Darci (mãe)]', 'Fone 2': '', 'Qtd. em Atraso': 6, 'Vencimento': '30/11/2026', 'Valor': '169,90' },
-      { 'Contrato': '1382', 'Aluno': 'João Clebson Dos Santos', 'Responsável': 'Adenizia dos Santos Barbosa', 'Fone 1': '(79) 99138-7132 [Aluno]', 'Fone 2': '(79) 9936-5188 [Mãe]', 'Qtd. em Atraso': 14, 'Vencimento': '30/11/2026', 'Valor': '189,90' },
-      { 'Contrato': '1733', 'Aluno': 'Tacila Mireli Santos Da Cruz', 'Responsável': 'Tacila Mireli Santos Da Cruz', 'Fone 1': '(79) 99838-4817 [Tacila]', 'Fone 2': '(79) 9931-6631 [Neuzeni (mãe)]', 'Qtd. em Atraso': 0, 'Vencimento': '30/11/2026', 'Valor': '149,90' }
+      { 'Contrato': '1906', 'Aluno': 'Vitória Gabriele Madalena dos Santos', 'Responsável': 'Miriam de Andrade', 'Fone 1': '(79) 9847-5724 [Aluna]', 'Fone 2': '(79) 98868-7508 [Mãe]', 'Fone 3': '', 'Qtd. em Atraso': 3, 'Vencimento': '30/11/2026', 'Valor': '129,90' },
+      { 'Contrato': '1869', 'Aluno': 'Gabriela Bonfim Xavier Cavalcante', 'Responsável': 'Fabiana Alves Bonfim', 'Fone 1': '(79) 98174-6891 [Mãe]', 'Fone 2': '', 'Fone 3': '', 'Qtd. em Atraso': 16, 'Vencimento': '30/11/2026', 'Valor': '169,90' },
+      { 'Contrato': '1733', 'Aluno': 'Tacila Mireli Santos Da Cruz', 'Responsável': 'Tacila Mireli Santos Da Cruz', 'Fone 1': '(79) 99838-4817 [Tacila]', 'Fone 2': '(79) 9931-6631 [Neuzeni (mãe)]', 'Fone 3': '(79) 99911-2233 [Pai]', 'Qtd. em Atraso': 0, 'Vencimento': '30/11/2026', 'Valor': '149,90' }
     ];
-    reprocessar(); showToast('Exemplo no padrão real do CGD carregado!');
+    reprocessar(); showToast('Exemplo carregado! Confira na aba Conferência Financeira.');
   }
 
-  // ==================== MOTOR ====================
+  // ==================== MOTOR FINANCEIRO REAL ====================
   function normKey(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim(); }
   function getField(row, cands) {
     const keys = Object.keys(row);
@@ -1251,6 +1379,8 @@
   function buscarDescontoFaixa(v, f) { for (const x of f) if (v >= x.min && v <= x.max) return x.desconto; return 0; }
 
   function reprocessar() {
+    const modoValorCGD = document.getElementById('modoValorCGD').value;
+    const semJurosZero = document.getElementById('chkSemJurosZero').checked;
     const jurosTipo = document.getElementById('jurosTipo').value;
     const jurosValor = parseFloat(document.getElementById('jurosValor').value) || 0;
     const polDesconto = document.getElementById('politicaDesconto').value;
@@ -1270,7 +1400,7 @@
 
     processedRows = []; removedCount = 0;
     const seenPhones = new Set();
-    let somaOriginal = 0, somaFinal = 0;
+    let alunosUnicos = 0, somaBase = 0, somaJurosReais = 0, somaComJuros = 0, somaFinal = 0;
 
     rawRows.forEach(row => {
       let matricula = String(getField(row, ['contrato', 'contrat', 'matricula', 'codigo'])).trim();
@@ -1291,18 +1421,28 @@
 
       const vencimento = formatDateBR(getField(row, ['vencimento', 'data']));
       const vencInfo = calcularDiasVencimento(vencimento);
-      const valorOriginalNum = parseMoney(getField(row, ['valor', 'total', 'mensalidade', 'debito']));
 
       if (vencInfo.diff !== null) {
         if (filtroLembrete === 'futuros' && vencInfo.diff < 0) { removedCount++; return; }
         if (filtroLembrete === 'ate5' && (vencInfo.diff < 0 || vencInfo.diff > 5)) { removedCount++; return; }
       }
 
-      let percJuros = jurosTipo === 'percent_total' ? jurosValor : jurosTipo === 'percent_atraso' ? jurosValor * atraso : 0;
-      const valorJurosNum = valorOriginalNum * (percJuros / 100);
-      const valorComJurosNum = valorOriginalNum + valorJurosNum;
+      // 1) Valor Unitário vs Dívida Base Real (Unitário × Qtd. Atraso)
+      const valorMensalidadeNum = parseMoney(getField(row, ['valor', 'total', 'mensalidade', 'debito']));
+      const multiplicador = (modoValorCGD === 'unitario' && atraso > 0) ? atraso : 1;
+      const dividaBaseNum = valorMensalidadeNum * multiplicador;
 
-      const baseDesc = descontoBase === 'original' ? valorOriginalNum : valorComJurosNum;
+      // 2) Juros sobre a Dívida Base (respeitando Atraso = 0)
+      let percJuros = 0;
+      if (!(semJurosZero && atraso === 0)) {
+        if (jurosTipo === 'percent_total') percJuros = jurosValor;
+        else if (jurosTipo === 'percent_atraso') percJuros = jurosValor * Math.max(1, atraso);
+      }
+      const valorJurosNum = dividaBaseNum * (percJuros / 100);
+      const valorComJurosNum = dividaBaseNum + valorJurosNum;
+
+      // 3) Desconto sobre a Dívida Acumulada
+      const baseDesc = descontoBase === 'original' ? dividaBaseNum : valorComJurosNum;
       let valorDescontoNum = 0, textoDesconto = '', faixaInfo = 'Único';
 
       if (polDesconto === 'unico' && descontoTipo === 'fixed') {
@@ -1320,29 +1460,61 @@
       const valorFinalNum = Math.max(0, valorComJurosNum - valorDescontoNum);
       const valorParcelaNum = (parcelaBase === 'atualizado' ? valorComJurosNum : valorFinalNum) / parcelasQtd;
 
+      // 4) Extração de Fone 1, Fone 2 e Fone 3
       const f1 = parsePhone(getField(row, ['fone 1', 'telefone 1', 'fone1', 'telefone', 'celular', 'whatsapp']), addDDI);
       const f2 = parsePhone(getField(row, ['fone 2', 'telefone 2', 'fone2']), addDDI);
+      const f3 = parsePhone(getField(row, ['fone 3', 'telefone 3', 'fone3']), addDDI);
+
+      const candidatos = [f1, f2, f3].filter(Boolean);
       const telefones = [];
-      if (f1) telefones.push(f1);
-      if (modoTelefones === 'ambos' && f2 && (!f1 || f2.numero !== f1.numero)) telefones.push(f2);
-      else if (modoTelefones === 'fone1' && !f1 && f2) telefones.push(f2);
+      if (modoTelefones === 'fone1') {
+        if (candidatos.length) telefones.push(candidatos[0]);
+      } else {
+        candidatos.forEach(c => {
+          if (!telefones.some(t => t.numero === c.numero)) telefones.push(c);
+        });
+      }
 
       if (!telefones.length) { removedCount++; return; }
 
-      telefones.forEach((tel, idx) => {
+      let contouAluno = false;
+      telefones.forEach(tel => {
         if (dedup && seenPhones.has(tel.numero)) { removedCount++; return; }
         seenPhones.add(tel.numero);
-        if (idx === 0) { somaOriginal += valorOriginalNum; somaFinal += valorFinalNum; }
+
+        if (!contouAluno) {
+          contouAluno = true;
+          alunosUnicos++;
+          somaBase += dividaBaseNum;
+          somaJurosReais += valorJurosNum;
+          somaComJuros += valorComJurosNum;
+          somaFinal += valorFinalNum;
+        }
 
         const item = {
-          numero: tel.numero, _rotulo: tel.rotulo, _faixa: faixaInfo,
-          matricula, contrato: matricula,
-          nome: nomeUsado, primeiroNome, aluno, responsavel,
-          atraso: String(atraso), vencimento, dias_vencimento: vencInfo.dias, prazo_texto: vencInfo.texto,
-          valor_original: formatBRL(valorOriginalNum), juros_reais: formatBRL(valorJurosNum),
-          valor: formatBRL(valorComJurosNum), desconto: textoDesconto,
-          desconto_reais: formatBRL(valorDescontoNum), valor_final: formatBRL(valorFinalNum),
-          parcelas: String(parcelasQtd), valor_parcela: formatBRL(valorParcelaNum)
+          numero: tel.numero,
+          _rotulo: tel.rotulo,
+          _faixa: faixaInfo,
+          _parcelamento: `${parcelasQtd}x de R$ ${formatBRL(valorParcelaNum)}`,
+          matricula,
+          nome: nomeUsado,
+          primeiroNome,
+          aluno,
+          responsavel,
+          atraso: String(atraso),
+          vencimento,
+          dias_vencimento: vencInfo.dias,
+          prazo_texto: vencInfo.texto,
+          valor_mensalidade: formatBRL(valorMensalidadeNum),
+          divida_base: formatBRL(dividaBaseNum),
+          juros_percent: `${String(percJuros).replace('.', ',')}%`,
+          juros_reais: formatBRL(valorJurosNum),
+          valor: formatBRL(valorComJurosNum),
+          desconto: textoDesconto,
+          desconto_reais: formatBRL(valorDescontoNum),
+          valor_final: formatBRL(valorFinalNum),
+          parcelas: String(parcelasQtd),
+          valor_parcela: formatBRL(valorParcelaNum)
         };
         tagConfigs.filter(t => t.isCustom).forEach(cv => item[cv.key] = cv.fixedValue || '');
         processedRows.push(item);
@@ -1350,8 +1522,11 @@
     });
 
     document.getElementById('kpiContatos').textContent = processedRows.length;
+    document.getElementById('kpiAlunosSub').textContent = `${alunosUnicos} aluno(s) único(s)`;
     document.getElementById('kpiRemovidos').textContent = removedCount;
-    document.getElementById('kpiOriginal').textContent = 'R$ ' + formatBRL(somaOriginal);
+    document.getElementById('kpiBase').textContent = 'R$ ' + formatBRL(somaBase);
+    document.getElementById('kpiJuros').textContent = 'R$ ' + formatBRL(somaComJuros);
+    document.getElementById('kpiJurosSub').textContent = `+ R$ ${formatBRL(somaJurosReais)} de juros`;
     document.getElementById('kpiFinal').textContent = 'R$ ' + formatBRL(somaFinal);
 
     previewIndex = 0;
@@ -1360,10 +1535,25 @@
     validarEAtualizarPreview();
   }
 
-  // ==================== TABELA, FILTROS E ORDENAÇÃO ====================
+  // ==================== ABAS, FILTROS E ORDENAÇÃO DA TABELA ====================
+  function trocarAbaTabela(aba) {
+    abaTabelaAtual = aba;
+    document.getElementById('tabBtn_conferencia').classList.toggle('active', aba === 'conferencia');
+    document.getElementById('tabBtn_waseller').classList.toggle('active', aba === 'waseller');
+    sortState = { key: null, dir: 'asc' };
+    popularSelectFiltroColunas();
+    aplicarFiltrosEOrdenacao();
+  }
+
+  function getColunasTabelaAtual() {
+    if (abaTabelaAtual === 'conferencia') return COLS_CONFERENCIA;
+    return tagConfigs.filter(t => t.enabled).map(t => ({ key: t.key, label: t.tag, mono: true }));
+  }
+
   function popularSelectFiltroColunas() {
     const sel = document.getElementById('filterCol'), prev = sel.value;
-    sel.innerHTML = '<option value="__all__">Todas as colunas</option>' + tagConfigs.filter(t => t.enabled).map(t => `<option value="${t.key}">${t.tag}</option>`).join('');
+    const cols = getColunasTabelaAtual();
+    sel.innerHTML = '<option value="__all__">Todas as colunas</option>' + cols.map(c => `<option value="${c.key}">${c.label}</option>`).join('');
     if ([...sel.options].some(o => o.value === prev)) sel.value = prev;
     atualizarValoresRapidos();
   }
@@ -1401,27 +1591,27 @@
   }
   function aplicarFiltrosEOrdenacao() {
     const colKey = document.getElementById('filterCol').value, termo = normKey(document.getElementById('filterText').value);
-    const ativos = tagConfigs.filter(t => t.enabled);
-    filteredRows = processedRows.filter(row => !termo ? true : colKey === '__all__' ? ativos.some(t => normKey(row[t.key]).includes(termo)) : normKey(row[colKey]).includes(termo));
+    const cols = getColunasTabelaAtual();
+    filteredRows = processedRows.filter(row => !termo ? true : colKey === '__all__' ? cols.some(c => normKey(row[c.key]).includes(termo)) : normKey(row[colKey]).includes(termo));
     if (sortState.key) { const k = sortState.key, m = sortState.dir === 'asc' ? 1 : -1; filteredRows.sort((a, b) => compararValores(a[k], b[k]) * m); }
     previewIndex = 0; renderTabela(); atualizarPreview();
   }
   function alternarMostrarTodos() { showAllRows = !showAllRows; renderTabela(); }
   function renderTabela() {
-    const ativos = tagConfigs.filter(t => t.enabled);
-    document.getElementById('tabelaHead').innerHTML = '<tr>' + ativos.map(t => {
-      const s = sortState.key === t.key;
-      return `<th class="${s ? 'sorted' : ''}" onclick="ordenarPorColuna('${t.key}')">${t.tag} <span class="sort-ind">${s ? (sortState.dir === 'asc' ? '▲' : '▼') : '⇅'}</span></th>`;
+    const cols = getColunasTabelaAtual();
+    document.getElementById('tabelaHead').innerHTML = '<tr>' + cols.map(c => {
+      const s = sortState.key === c.key;
+      return `<th class="${c.mono ? 'mono ' : ''}${s ? 'sorted' : ''}" onclick="ordenarPorColuna('${c.key}')">${c.label} <span class="sort-ind">${s ? (sortState.dir === 'asc' ? '▲' : '▼') : '⇅'}</span></th>`;
     }).join('') + '</tr>';
 
     const tbody = document.getElementById('tabelaBody'), info = document.getElementById('tableCountInfo'), btnAll = document.getElementById('btnShowAllRows');
     if (!filteredRows.length) {
-      tbody.innerHTML = `<tr><td colspan="${ativos.length}" style="text-align:center; padding:26px; color:#888;">${processedRows.length ? 'Nenhum contato corresponde ao filtro.' : 'Aguardando planilha ou PDF do CGD...'}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="${cols.length}" style="text-align:center; padding:26px; color:#888;">${processedRows.length ? 'Nenhum contato corresponde ao filtro.' : 'Aguardando planilha ou PDF do CGD...'}</td></tr>`;
       info.textContent = processedRows.length ? `0 de ${processedRows.length} contatos` : 'Nenhum registro carregado.';
       btnAll.classList.add('hidden'); return;
     }
     const exibidos = filteredRows.slice(0, showAllRows ? filteredRows.length : 100);
-    tbody.innerHTML = exibidos.map(r => '<tr>' + ativos.map(t => `<td>${r[t.key] ?? ''}</td>`).join('') + '</tr>').join('');
+    tbody.innerHTML = exibidos.map(r => '<tr>' + cols.map(c => `<td class="${c.cls || ''}">${r[c.key] ?? ''}</td>`).join('') + '</tr>').join('');
     info.textContent = `Exibindo ${exibidos.length} de ${filteredRows.length} contato(s) (${processedRows.length} no total) • Clique nos títulos para ordenar.`;
     btnAll.classList.toggle('hidden', filteredRows.length <= 100);
     btnAll.textContent = showAllRows ? 'Mostrar apenas 100' : `Mostrar todos (${filteredRows.length})`;
@@ -1436,10 +1626,11 @@
   function atualizarPreview() {
     const bubble = document.getElementById('previewBubble'), info = document.getElementById('previewInfo');
     const b = filteredRows.length ? filteredRows : processedRows;
-    if (!b.length) { info.textContent = 'Prévia da mensagem (aguardando dados)'; bubble.textContent = 'Carregue uma planilha/PDF do CGD ou clique em "Carregar Exemplo CGD".'; return; }
+    if (!b.length) { info.textContent = 'Prévia da mensagem (aguardando dados)'; bubble.textContent = 'Carregue uma planilha/PDF do CGD ou clique em "Carregar Exemplo Real do CGD".'; return; }
     const row = b[previewIndex] || b[0];
-    info.textContent = `Contato ${previewIndex + 1} de ${b.length} • ${row.numero} (${row._rotulo}) • Matrícula ${row.matricula}`;
+    info.textContent = `Contato ${previewIndex + 1} de ${b.length} • ${row.numero} (${row._rotulo}) • Matrícula ${row.matricula} • ${row.atraso}x atraso`;
     let txt = document.getElementById('msgTemplate').value;
+    if (!txt.trim()) { bubble.textContent = 'Selecione uma mensagem salva acima ou escreva no campo de texto para ver a prévia.'; return; }
     tagConfigs.filter(t => t.enabled).sort((a, b) => b.tag.length - a.tag.length).forEach(tc => { txt = txt.split('#' + tc.tag).join(row[tc.key] ?? ''); });
     bubble.innerHTML = formatWhatsAppPreview(txt);
   }
@@ -1470,22 +1661,22 @@
   function exportarControle() {
     const base = getBaseExportacao();
     if (!base.length) return showToast('Nenhum contato para exportar.');
-    const headers = ['Matrícula','Aluno','Responsável','Telefone','Tipo Contato','Qtd. Atraso','Vencimento','Prazo','Valor Original','Juros (R$)','Valor Atualizado','Regra Desconto','Desconto','Desconto (R$)','Valor Final','Parcelas','Valor Parcela'];
-    const body = base.map(r => [r.matricula, r.aluno, r.responsavel, r.numero, r._rotulo, r.atraso, r.vencimento, r.prazo_texto, r.valor_original, r.juros_reais, r.valor, r._faixa, r.desconto, r.desconto_reais, r.valor_final, r.parcelas + 'x', r.valor_parcela]);
-    const slug = (document.getElementById('msgTituloInput').value || 'controle').replace(/\s+/g, '_');
-    gerarXlsxTextoPuro(headers, body, `Controle_Interno_${slug}.xlsx`);
-    showToast(`Controle Interno baixado (${base.length} registros)!`);
+    const headers = ['Matrícula','Aluno','Responsável','Telefone','Contato','Qtd. Atraso','Vencimento','1 Mensalidade','Dívida Base (× Atraso)','Juros (%)','Juros (R$)','Dívida c/ Juros','Regra Desconto','Desconto','Desconto (R$)','Valor Final','Parcelas','Valor Parcela'];
+    const body = base.map(r => [r.matricula, r.aluno, r.responsavel, r.numero, r._rotulo, r.atraso, r.vencimento, r.valor_mensalidade, r.divida_base, r.juros_percent, r.juros_reais, r.valor, r._faixa, r.desconto, r.desconto_reais, r.valor_final, r.parcelas + 'x', r.valor_parcela]);
+    const slug = (document.getElementById('msgTituloInput').value || 'conferencia').replace(/\s+/g, '_');
+    gerarXlsxTextoPuro(headers, body, `Conferencia_Financeira_${slug}.xlsx`);
+    showToast(`Conferência Financeira baixada (${base.length} registros)!`);
   }
 
-  // ==================== REGRAS SALVAS (CAMPANHAS) & API ====================
+  // ==================== REGRAS SALVAS & API ====================
   function salvarApiUrl() {
     const url = document.getElementById('apiUrl').value.trim();
     localStorage.setItem('cgd_waseller_api', url);
-    showToast(url ? 'API salva! Sincronizando com Google Sheets...' : 'Modo offline ativado.');
+    showToast(url ? 'API salva! Sincronizando...' : 'Modo offline ativado.');
     sincronizarTudo();
   }
   function getConfigAtual() {
-    return { jurosTipo: document.getElementById('jurosTipo').value, jurosValor: document.getElementById('jurosValor').value, politicaDesconto: document.getElementById('politicaDesconto').value, descontoTipo: document.getElementById('descontoTipo').value, descontoValor: document.getElementById('descontoValor').value, descontoBase: document.getElementById('descontoBase').value, formatoPercent: document.getElementById('formatoPercent').value, parcelasQtd: document.getElementById('parcelasQtd').value, parcelaBase: document.getElementById('parcelaBase').value, faixasValor, faixasAtraso, tagConfigs };
+    return { modoValorCGD: document.getElementById('modoValorCGD').value, semJurosZero: document.getElementById('chkSemJurosZero').checked, jurosTipo: document.getElementById('jurosTipo').value, jurosValor: document.getElementById('jurosValor').value, politicaDesconto: document.getElementById('politicaDesconto').value, descontoTipo: document.getElementById('descontoTipo').value, descontoValor: document.getElementById('descontoValor').value, descontoBase: document.getElementById('descontoBase').value, formatoPercent: document.getElementById('formatoPercent').value, parcelasQtd: document.getElementById('parcelasQtd').value, parcelaBase: document.getElementById('parcelaBase').value, faixasValor, faixasAtraso, tagConfigs };
   }
   function atualizarBadgeModelos() { document.getElementById('badgeModelos').textContent = campanhasCache.length; }
   function renderListaModelos() {
@@ -1511,7 +1702,8 @@
     if (cfg.faixasAtraso) faixasAtraso = JSON.parse(JSON.stringify(cfg.faixasAtraso));
     if (cfg.tagConfigs) tagConfigs = migrarTagConfigs(cfg.tagConfigs);
     document.getElementById('nomeCampanha').value = c.nome;
-    ['jurosTipo','jurosValor','politicaDesconto','descontoTipo','descontoValor','descontoBase','formatoPercent','parcelasQtd','parcelaBase'].forEach(id => { if (cfg[id] !== undefined) document.getElementById(id).value = cfg[id]; });
+    if (cfg.semJurosZero !== undefined) document.getElementById('chkSemJurosZero').checked = cfg.semJurosZero;
+    ['modoValorCGD','jurosTipo','jurosValor','politicaDesconto','descontoTipo','descontoValor','descontoBase','formatoPercent','parcelasQtd','parcelaBase'].forEach(id => { if (cfg[id] !== undefined) document.getElementById(id).value = cfg[id]; });
     alternarPoliticaDesconto(); renderTagEditor(); reprocessar(); fecharModal('modalModelos');
     showToast(`Regras "${c.nome}" aplicadas!`);
   }
@@ -1557,7 +1749,7 @@
   }
   async function registrarHistoricoAPI(qtd) {
     const api = localStorage.getItem('cgd_waseller_api') || ''; if (!api) return;
-    try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'logExport', campanha: document.getElementById('msgTituloInput').value || 'Avulsa', qtd_contatos: qtd, duplicados_removidos: removedCount, total_original: document.getElementById('kpiOriginal').textContent, total_com_juros: '-', total_final: document.getElementById('kpiFinal').textContent }) }); } catch (e) {}
+    try { await fetch(api, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'logExport', campanha: document.getElementById('msgTituloInput').value || 'Avulsa', qtd_contatos: qtd, duplicados_removidos: removedCount, total_original: document.getElementById('kpiBase').textContent, total_com_juros: document.getElementById('kpiJuros').textContent, total_final: document.getElementById('kpiFinal').textContent }) }); } catch (e) {}
   }
 </script>
 </body>
